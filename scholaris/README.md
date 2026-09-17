@@ -1,7 +1,6 @@
-# Scholaris — Student Information System
+# RegEngine — Campus Registration Management System
 
-A full-stack student/faculty/attendance registrar system, with **two
-interchangeable backends implementing the same REST API**:
+A full-stack student registration and campus management system, with a **pure Java micro-kernel (zero external frameworks or dependencies)** and a rich, friendly collegiate web portal:
 
 - a **Java** backend (no frameworks, no external libraries — just the
   JDK), for running locally or hosting on anything that runs an

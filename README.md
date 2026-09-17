@@ -1,14 +1,14 @@
 <div align="center">
 
-# 🏛️ Scholaris
-### **Enterprise Academic Registrar & Student Information System**
+# 🏛️ RegEngine
+### **Modern Campus Registration & Student Lifecycle Management System**
 
 [![Java](https://img.shields.io/badge/Java-17%20%7C%2021%20%7C%2025-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/)
 [![Architecture](https://img.shields.io/badge/Architecture-Dependency--Free%20Micro--Kernel-10B981?style=for-the-badge)](https://github.com)
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-3B82F6?style=for-the-badge)](https://github.com)
-[![UI/UX](https://img.shields.io/badge/Design-Luxury%20Glassmorphic%20Console-F59E0B?style=for-the-badge)](https://github.com)
+[![UI/UX](https://img.shields.io/badge/Design-Collegiate%20Glassmorphic%20Console-F59E0B?style=for-the-badge)](https://github.com)
 
-**Scholaris** is an ultra-modern, blazing-fast Student Information and Academic Registrar System designed for universities, colleges, and academic institutes. Built with a **pure Java micro-kernel (zero external dependencies)** and a **luxury $10,000-tier web interface** with 3D cryptographic ID generation, real-time analytics, biometric attendance tracking, and instant search.
+**RegEngine** is a complete, friendly, and lightning-fast Campus Registration & Student Lifecycle Management System built for universities, colleges, and polytechnics. Built with a **pure Java micro-kernel (zero external dependencies or frameworks)** and a **modern, college-friendly web interface** featuring a 5-step detailed registration wizard, clean empty database for user inputs, 3D holographic digital ID badges, live attendance terminal, faculty directory, and comprehensive student academic dossiers.
 
 [Explore Features](#-key-features) • [Quick Start](#-quick-start-in-60-seconds) • [Architecture](#-architecture) • [REST API](#-rest-api-reference)
 

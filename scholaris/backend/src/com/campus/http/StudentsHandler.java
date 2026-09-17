@@ -23,7 +23,6 @@ public class StudentsHandler implements HttpHandler {
         if (ApiSupport.handledPreflight(exchange)) return;
         String method = exchange.getRequestMethod();
         String tail = ApiSupport.pathTail(exchange, PREFIX);
-        System.out.println(method + " " + exchange.getRequestURI().getPath());
         try {
             if ("GET".equalsIgnoreCase(method) && tail.isEmpty()) {
                 list(exchange);
@@ -54,24 +53,49 @@ public class StudentsHandler implements HttpHandler {
         String course = req(body, "course");
 
         Course courseDef = Course.byCode(course);
-        if (courseDef == null) throw new IllegalArgumentException("Unknown course code: " + course);
+        if (courseDef == null) throw new IllegalArgumentException("Unknown programme code: " + course);
 
         boolean duplicate = data.students.all().stream()
             .anyMatch(s -> s.getRollNumber().equalsIgnoreCase(roll));
-        if (duplicate) throw new IllegalArgumentException("A student with roll number " + roll + " is already registered.");
+        if (duplicate) throw new IllegalArgumentException("A student with Registration/Roll number " + roll + " is already registered.");
 
         long enrolledInCourse = data.students.all().stream().filter(s -> s.getCourse().equals(course)).count();
         if (enrolledInCourse >= courseDef.capacity) {
-            throw new IllegalArgumentException(courseDef.name + " has reached its capacity of " + courseDef.capacity + " seats.");
+            throw new IllegalArgumentException(courseDef.name + " has reached its intake capacity of " + courseDef.capacity + " seats.");
         }
 
         Student student = new Student(
-            AppData.newId("stu"), roll, name,
-            str(body, "fatherName"), str(body, "motherName"), str(body, "phone"),
-            str(body, "address"), str(body, "percentage12"), course, Instant.now().toString()
+            AppData.newId("stu"),
+            roll,
+            name,
+            str(body, "gender"),
+            str(body, "dob"),
+            str(body, "bloodGroup"),
+            str(body, "category"),
+            str(body, "aadharNumber"),
+            course,
+            str(body, "batchYear"),
+            str(body, "admissionType"),
+            str(body, "percentage10"),
+            str(body, "percentage12"),
+            str(body, "previousSchool"),
+            str(body, "fatherName"),
+            str(body, "fatherOccupation"),
+            str(body, "motherName"),
+            str(body, "motherOccupation"),
+            str(body, "guardianPhone"),
+            str(body, "guardianEmail"),
+            str(body, "phone"),
+            str(body, "email"),
+            str(body, "emergencyContact"),
+            str(body, "address"),
+            str(body, "cityStatePin"),
+            str(body, "accommodation"),
+            str(body, "busRoute"),
+            Instant.now().toString()
         );
         data.students.add(student);
-        data.log(name + " (" + roll + ") enrolled in " + courseDef.name + ".");
+        data.log(name + " (" + roll + ") registered in " + courseDef.name + ".");
         ApiSupport.sendJson(exchange, 201, student.toMap());
     }
 
@@ -79,7 +103,7 @@ public class StudentsHandler implements HttpHandler {
         Student target = data.students.all().stream().filter(s -> s.getId().equals(id)).findFirst().orElse(null);
         if (target == null) { ApiSupport.sendError(exchange, 404, "Student not found."); return; }
         data.students.removeById(Student::getId, id);
-        data.log(target.getName() + " (" + target.getRollNumber() + ") was removed from the register.");
+        data.log(target.getName() + " (" + target.getRollNumber() + ") was removed from the active register.");
         ApiSupport.sendJson(exchange, 200, Map.of("removed", true));
     }
 

@@ -38,11 +38,11 @@ public class Main {
         server.start();
 
         System.out.println("========================================================");
-        System.out.println(" Scholaris registrar server running");
-        System.out.println(" Site:  http://localhost:" + port + "/");
-        System.out.println(" App:   http://localhost:" + port + "/app.html");
-        System.out.println(" API:   http://localhost:" + port + "/api/dashboard");
-        System.out.println(" Data:  " + dataDir.toAbsolutePath());
+        System.out.println(" RegEngine Campus Registration Server running");
+        System.out.println(" Portal: http://localhost:" + port + "/");
+        System.out.println(" App:    http://localhost:" + port + "/app.html");
+        System.out.println(" API:    http://localhost:" + port + "/api/dashboard");
+        System.out.println(" Data:   " + dataDir.toAbsolutePath());
         System.out.println("========================================================");
     }
 }

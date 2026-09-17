@@ -7,6 +7,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,7 +23,6 @@ public class FacultyHandler implements HttpHandler {
         if (ApiSupport.handledPreflight(exchange)) return;
         String method = exchange.getRequestMethod();
         String tail = ApiSupport.pathTail(exchange, PREFIX);
-        System.out.println(method + " " + exchange.getRequestURI().getPath());
         try {
             if ("GET".equalsIgnoreCase(method) && tail.isEmpty()) {
                 list(exchange);
@@ -53,12 +53,28 @@ public class FacultyHandler implements HttpHandler {
         Course courseDef = Course.byCode(course);
         if (courseDef == null) throw new IllegalArgumentException("Unknown course code: " + course);
 
+        String empId = str(body, "employeeId");
+        if (empId == null || empId.isBlank()) {
+            empId = "EMP-" + (100 + data.faculty.all().size() + 1);
+        }
+
         Faculty f = new Faculty(
-            AppData.newId("fac"), name, req(body, "designation"), req(body, "department"),
-            req(body, "subject"), course, str(body, "experience"), req(body, "email"), req(body, "phone")
+            AppData.newId("fac"),
+            empId,
+            name,
+            req(body, "designation"),
+            req(body, "department"),
+            str(body, "qualification"),
+            req(body, "subject"),
+            course,
+            str(body, "experience"),
+            req(body, "email"),
+            req(body, "phone"),
+            str(body, "officeRoom"),
+            Instant.now().toString()
         );
         data.faculty.add(f);
-        data.log(name + " joined as " + f.getDesignation() + " for " + courseDef.name + ".");
+        data.log(name + " registered as " + f.getDesignation() + " in " + f.toMap().get("department") + ".");
         ApiSupport.sendJson(exchange, 201, f.toMap());
     }
 
