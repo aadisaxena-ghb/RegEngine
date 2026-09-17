@@ -1,0 +1,21 @@
+# Java compiled files
+*.class
+out/
+backend/out/
+scholaris/backend/out/
+
+# Data directory (uncomment if you want fresh seeds on clone)
+# backend/data/
+# scholaris/backend/data/
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.idea/
+*.iml
+.vscode/
+*.log
+
+# Node dependencies
+node_modules/
+.vercel

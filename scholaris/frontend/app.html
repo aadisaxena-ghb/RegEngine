@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scholaris Console — Executive Academic Registrar Platform</title>
+  <meta name="description" content="Scholaris Console: Enterprise student records, biometric attendance, faculty allocations, and digital holographic ID generation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    .app-layout {
+      display: flex;
+      min-height: 100vh;
+      background: var(--bg-base);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      flex-shrink: 0;
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      z-index: 50;
+      transition: width var(--transition-smooth);
+    }
+    .sidebar-brand {
+      padding: 22px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .sidebar-brand .mark {
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent-gold) 0%, #D97706 100%);
+      color: #090D14;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 17px;
+      box-shadow: 0 4px 12px var(--accent-gold-glow);
+    }
+    .sidebar-brand .name {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 17px;
+      letter-spacing: -0.01em;
+    }
+    .sidebar-brand .sub {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .sidebar-nav {
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      overflow-y: auto;
+    }
+    .nav-section-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 10px 12px 4px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+    .nav-item svg {
+      width: 18px; height: 18px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      transition: color var(--transition-fast);
+    }
+    .nav-item:hover {
+      background: var(--bg-surface-hover);
+      color: var(--text-primary);
+    }
+    .nav-item:hover svg {
+      color: var(--accent-gold);
+    }
+    .nav-item.active {
+      background: var(--accent-gold-bg);
+      color: var(--accent-gold-soft);
+      border-left: 3px solid var(--accent-gold);
+    }
+    .nav-item.active svg {
+      color: var(--accent-gold);
+    }
+    .nav-item .nav-badge {
+      margin-left: auto;
+      font-size: 10.5px;
+      padding: 2px 7px;
+      border-radius: var(--radius-full);
+      background: var(--bg-surface-elevated);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .sidebar-footer {
+      padding: 16px 18px;
+      border-top: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .system-status-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+    .status-pulse {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .status-pulse .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px var(--accent-emerald);
+    }
+    .status-pulse .dot.off {
+      background: var(--accent-rose);
+      box-shadow: 0 0 8px var(--accent-rose);
+    }
+
+    /* Main Content Area */
+    .main-wrapper {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Topbar */
+    .topbar {
+      height: 72px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .topbar-heading h1 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .topbar-heading .sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .cmd-trigger-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-medium);
+      color: var(--text-muted);
+      padding: 7px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .cmd-trigger-btn:hover {
+      border-color: var(--border-bright);
+      color: var(--text-primary);
+    }
+    .cmd-trigger-btn kbd {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 10.5px;
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+    }
+
+    /* Views */
+    .view-pane {
+      display: none;
+      padding: 32px;
+      flex: 1;
+      animation: fadeInView 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .view-pane.active {
+      display: block;
+    }
+    @keyframes fadeInView {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+    .kpi-card {
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi-card::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 80px; height: 80px;
+      background: radial-gradient(circle, var(--accent-emerald-glow) 0%, transparent 70%);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    .kpi-card.gold::after {
+      background: radial-gradient(circle, var(--accent-gold-glow) 0%, transparent 70%);
+    }
+    .kpi-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .kpi-label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .kpi-icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--accent-gold);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .kpi-icon svg { width: 16px; height: 16px; }
+    .kpi-value {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .kpi-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Grid Layouts */
+    .dashboard-two-col {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* Form Preview Split */
+    .register-split-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .kpi-grid { grid-template-columns: 1fr 1fr; }
+      .dashboard-two-col { grid-template-columns: 1fr; }
+      .register-split-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 800px) {
+      .sidebar {
+        position: fixed;
+        bottom: 0; top: auto;
+        left: 0; width: 100%;
+        height: 64px;
+        flex-direction: row;
+        border-right: none;
+        border-top: 1px solid var(--border-subtle);
+        z-index: 100;
+      }
+      .sidebar-brand, .sidebar-footer, .nav-section-label { display: none; }
+      .sidebar-nav { flex-direction: row; padding: 4px; justify-content: space-around; width: 100%; }
+      .nav-item { flex-direction: column; gap: 3px; font-size: 10px; padding: 6px 4px; text-align: center; border-left: none !important; }
+      .nav-item .nav-badge { display: none; }
+      .main-wrapper { padding-bottom: 70px; }
+      .view-pane { padding: 18px; }
+      .topbar { padding: 0 18px; }
+      .kpi-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Confetti Canvas -->
+<canvas id="confetti-canvas" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999;"></canvas>
+
+<div class="app-layout">
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="mark">S</div>
+      <div>
+        <div class="name">Scholaris<span style="color:var(--accent-gold)">.</span></div>
+        <div class="sub">Executive Registrar Console</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav" id="app-nav">
+      <div class="nav-section-label">Main Console</div>
+      <button class="nav-item active" data-view="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+        <span>Dashboard</span>
+      </button>
+
+      <button class="nav-item" data-view="register">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+        <span>Enrolment Studio</span>
+      </button>
+
+      <button class="nav-item" data-view="records">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M3.5 9h17M8.5 9v11.5"/></svg>
+        <span>Student Records</span>
+        <span class="nav-badge" id="nav-badge-students">0</span>
+      </button>
+
+      <button class="nav-item" data-view="attendance">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <span>Attendance Suite</span>
+      </button>
+
+      <div class="nav-section-label">Institutional</div>
+      <button class="nav-item" data-view="faculty">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6"/></svg>
+        <span>Faculty Directory</span>
+        <span class="nav-badge" id="nav-badge-faculty">0</span>
+      </button>
+
+      <button class="nav-item" data-view="courses">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6.5l9-3 9 3-9 3-9-3z"/><path d="M7 9.5v6c0 1.4 2.5 2.5 5 2.5s5-1.1 5-2.5v-6"/></svg>
+        <span>Programmes & Seats</span>
+      </button>
+
+      <button class="nav-item" data-view="export">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span>Data & Exports</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="system-status-indicator">
+        <div class="status-pulse">
+          <span class="dot" id="status-dot"></span>
+          <span id="status-text">Connecting to API…</span>
+        </div>
+        <span class="mono" id="latency-tag" style="font-size:10.5px; color:var(--text-dim);">0ms</span>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <a href="index.html" class="mono" style="font-size:11px; color:var(--text-muted); display:flex; align-items:center; gap:4px;">
+          ← Overview site
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Work Area -->
+  <main class="main-wrapper">
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-heading">
+          <h1 id="view-title">Executive Dashboard</h1>
+          <div class="sub" id="view-meta">Institutional telemetry, student enrolments, and attendance analytics</div>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <!-- Command Palette Trigger -->
+        <button class="cmd-trigger-btn" id="cmd-trigger-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span>Search & Actions…</span>
+          <kbd>⌘K</kbd>
+        </button>
+
+        <!-- Sound FX Toggle -->
+        <button class="audio-toggle-btn" id="app-sound-btn" title="Toggle SFX">
+          <div class="audio-bars">
+            <div class="audio-bar"></div>
+            <div class="audio-bar"></div>
+            <div class="audio-bar"></div>
+          </div>
+          <span>SFX</span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button class="btn-icon" id="app-theme-btn" title="Toggle Theme" aria-label="Toggle Theme">
+          <svg id="app-theme-sun" style="display:none; width:17px; height:17px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg id="app-theme-moon" style="width:17px; height:17px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        </button>
+
+        <!-- User Role Avatar -->
+        <div style="display:flex; align-items:center; gap:10px; padding-left:10px; border-left:1px solid var(--border-subtle);">
+          <div style="width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg, #3B82F6, #1D4ED8); color:#FFF; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px;">
+            AD
+          </div>
+          <div style="font-size:12px; line-height:1.2;">
+            <div style="font-weight:700;">Academic Dean</div>
+            <div style="color:var(--text-dim); font-size:10.5px;">Registrar Admin</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- VIEWS -->
+
+    <!-- View 1: Dashboard -->
+    <section id="view-dashboard" class="view-pane active">
+      <!-- KPI Row -->
+      <div class="kpi-grid" id="kpi-row"></div>
+
+      <!-- Two Col Charts & Ledger -->
+      <div class="dashboard-two-col">
+        <div style="display:flex; flex-direction:column; gap:24px;">
+          <!-- Programme Enrolment Breakdown -->
+          <div class="card glass-card" style="padding:24px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
+              <div>
+                <h3 style="font-size:17px; font-weight:700;">Enrolment by Academic Stream</h3>
+                <div style="font-size:12.5px; color:var(--text-muted);">Current intake distribution across active programmes</div>
+              </div>
+              <span class="badge badge-emerald">REAL-TIME</span>
+            </div>
+            <div id="dashboard-distribution-bars"></div>
+          </div>
+
+          <!-- Quick Action Launchpad -->
+          <div class="card glass-card" style="padding:24px;">
+            <h3 style="font-size:17px; font-weight:700; margin-bottom:14px;">Quick Action Launchpad</h3>
+            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:14px;">
+              <button class="btn btn-ghost" style="justify-content:flex-start; padding:14px;" data-quick="register">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent-emerald)"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <span>Enrol Student</span>
+              </button>
+              <button class="btn btn-ghost" style="justify-content:flex-start; padding:14px;" data-quick="attendance">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent-gold)"><path d="M9 11l3 3L22 4"/></svg>
+                <span>Take Attendance</span>
+              </button>
+              <button class="btn btn-ghost" style="justify-content:flex-start; padding:14px;" data-quick="export">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent-cyan)"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/></svg>
+                <span>Export Ledger</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Activity Stream -->
+        <div class="card glass-card" style="padding:24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <div>
+              <h3 style="font-size:17px; font-weight:700;">Live Registrar Audit Ledger</h3>
+              <div style="font-size:12.5px; color:var(--text-muted);">Real-time stream of mutations & admissions</div>
+            </div>
+            <span class="badge badge-gold">AUDIT LOG</span>
+          </div>
+          <div id="dashboard-activity-feed" style="display:flex; flex-direction:column; gap:10px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- View 2: Enrolment Studio (Register Student) -->
+    <section id="view-register" class="view-pane">
+      <div class="register-split-grid">
+        <!-- Form Left -->
+        <div class="card glass-card" style="padding:32px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <div>
+              <h2 style="font-size:20px; font-weight:700;">New Student Enrolment Form</h2>
+              <div style="font-size:13px; color:var(--text-muted);">Direct admission dispatch to <code class="mono">POST /api/students</code></div>
+            </div>
+            <button class="btn btn-sm btn-ghost" id="autofill-btn">
+              <span>✨ Magic Autofill Demo Data</span>
+            </button>
+          </div>
+
+          <form id="register-form">
+            <div class="field-row">
+              <div class="field">
+                <label>Roll Number (Unique ID)</label>
+                <input type="text" id="f-roll" placeholder="e.g. SIT24CS310" class="mono" required>
+              </div>
+              <div class="field">
+                <label>Student Full Name</label>
+                <input type="text" id="f-name" placeholder="e.g. Aadi Kulkarni" required>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label>Father's Name</label>
+                <input type="text" id="f-father" placeholder="e.g. Suresh Kulkarni" required>
+              </div>
+              <div class="field">
+                <label>Mother's Name</label>
+                <input type="text" id="f-mother" placeholder="e.g. Meera Kulkarni" required>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label>Phone Number</label>
+                <input type="tel" id="f-phone" placeholder="e.g. 9876543210" class="mono" required>
+              </div>
+              <div class="field">
+                <label>12th / Qualifying Score (%)</label>
+                <input type="number" step="0.1" min="0" max="100" id="f-percent" placeholder="e.g. 94.8" class="mono" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Academic Programme Stream</label>
+              <select id="f-course" required></select>
+            </div>
+
+            <div class="field">
+              <label>Permanent Residential Address</label>
+              <textarea id="f-address" rows="2" placeholder="Street address, city, state, postal code" required></textarea>
+            </div>
+
+            <div style="display:flex; gap:12px; margin-top:12px;">
+              <button type="submit" class="btn btn-primary btn-lg btn-shimmer" style="flex:1;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                <span>Enrol Student & Generate ID</span>
+              </button>
+              <button type="reset" class="btn btn-ghost" id="form-reset-btn">Clear</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Live ID Card Preview Right -->
+        <div>
+          <div style="margin-bottom:12px; font-size:13px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.04em;">
+            Live ID Card Preview (Updates in real-time)
+          </div>
+          <div class="idcard-perspective-wrap">
+            <div class="idcard-3d" id="preview-holo-card">
+              <div class="idcard-holo-sheen"></div>
+              <div class="idcard-top-stripe"></div>
+              <div class="idcard-head">
+                <div class="idcard-inst-brand">
+                  <div class="idcard-seal">S</div>
+                  <div>
+                    <div class="idcard-inst-name">Scholaris Institute</div>
+                    <div class="idcard-inst-sub">Verified Student Identity</div>
+                  </div>
+                </div>
+                <span class="badge badge-gold">PREVIEW</span>
+              </div>
+              <div class="idcard-body">
+                <div class="idcard-profile-row">
+                  <div class="idcard-avatar" id="prev-avatar">--</div>
+                  <div>
+                    <div class="idcard-name-title" id="prev-name">Student Name</div>
+                    <div class="idcard-roll-badge" id="prev-roll">SIT24XXXXX</div>
+                  </div>
+                </div>
+                <div class="idcard-grid">
+                  <div>
+                    <div class="k">Programme</div>
+                    <div class="v" id="prev-course">Select Programme</div>
+                  </div>
+                  <div>
+                    <div class="k">Father's Name</div>
+                    <div class="v" id="prev-father">—</div>
+                  </div>
+                  <div>
+                    <div class="k">Phone</div>
+                    <div class="v mono" id="prev-phone">—</div>
+                  </div>
+                  <div>
+                    <div class="k">Merit Percentage</div>
+                    <div class="v" id="prev-percent">—</div>
+                  </div>
+                </div>
+                <div class="idcard-qr-section">
+                  <div class="idcard-qr-box" id="preview-qr-mount"></div>
+                  <div class="idcard-meta-right">
+                    <div style="font-size:10px; color:#94A3B8;">REGISTRAR VERIFIED</div>
+                    <div class="idcard-att-badge">NEW ADMIT</div>
+                    <div class="idcard-sig">Registrar Signature ✍️</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- View 3: Student Records Explorer -->
+    <section id="view-records" class="view-pane">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:20px; flex-wrap:wrap;">
+        <div style="display:flex; gap:12px; flex:1; max-width:640px;">
+          <input type="text" id="rec-search-input" placeholder="Search by name, roll number, or phone..." style="flex:1;">
+          <select id="rec-course-filter" style="max-width:200px;"></select>
+          <select id="rec-standing-filter" style="max-width:180px;">
+            <option value="">All Attendance</option>
+            <option value="good">Safe (≥ 75%)</option>
+            <option value="critical">Defaulter (&lt; 75%)</option>
+          </select>
+        </div>
+
+        <div style="display:flex; gap:10px; align-items:center;">
+          <!-- Batch Actions -->
+          <div id="batch-actions-bar" style="display:none; gap:8px;">
+            <button class="btn btn-sm btn-ghost" id="batch-csv-btn">📥 Batch Export CSV</button>
+            <button class="btn btn-sm btn-danger" id="batch-delete-btn">🗑️ Batch Delete (<span id="batch-count">0</span>)</button>
+          </div>
+
+          <button class="btn btn-emerald btn-sm" data-quick="register">
+            <span>+ Add Student</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Table Container -->
+      <div class="table-container card glass-card" id="records-table-container"></div>
+    </section>
+
+    <!-- View 4: Smart Attendance Suite -->
+    <section id="view-attendance" class="view-pane">
+      <div class="dashboard-two-col">
+        <!-- Attendance Marking Terminal -->
+        <div class="card glass-card" style="padding:28px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <div>
+              <h2 style="font-size:19px; font-weight:700;">Cohort Attendance Terminal</h2>
+              <div style="font-size:12.5px; color:var(--text-muted);">Select programme and session date to record standing</div>
+            </div>
+            <span class="badge badge-emerald" id="att-summary-badge">0% MARKED</span>
+          </div>
+
+          <div class="field-row" style="margin-bottom:20px;">
+            <div class="field" style="margin-bottom:0;">
+              <label>Academic Programme</label>
+              <select id="att-prog-select"></select>
+            </div>
+            <div class="field" style="margin-bottom:0;">
+              <label>Session Date</label>
+              <input type="date" id="att-date-input">
+            </div>
+          </div>
+
+          <!-- Roster Container -->
+          <div id="att-roster-mount"></div>
+        </div>
+
+        <!-- Defaulters Watchlist & Analytics -->
+        <div style="display:flex; flex-direction:column; gap:24px;">
+          <!-- Attendance Standing Health -->
+          <div class="card glass-card" style="padding:24px;">
+            <h3 style="font-size:17px; font-weight:700; margin-bottom:4px;">Institutional Attendance Standing</h3>
+            <div style="font-size:12.5px; color:var(--text-muted); margin-bottom:16px;">Mandatory 75% minimum threshold monitoring</div>
+            <div id="att-standing-list" style="max-height:420px; overflow-y:auto;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- View 5: Faculty Hub -->
+    <section id="view-faculty" class="view-pane">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:16px;">
+        <div style="display:flex; gap:12px; flex:1; max-width:540px;">
+          <input type="text" id="fac-search-input" placeholder="Search faculty by name, department, or subject...">
+        </div>
+        <button class="btn btn-primary" id="open-add-fac-btn">
+          <span>+ Add Faculty Member</span>
+        </button>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:20px;" id="faculty-cards-grid"></div>
+    </section>
+
+    <!-- View 6: Programmes & Capacity Studio -->
+    <section id="view-courses" class="view-pane">
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:24px;" id="courses-grid-mount"></div>
+    </section>
+
+    <!-- View 7: Data Center & Exports -->
+    <section id="view-export" class="view-pane">
+      <div style="max-width:880px;">
+        <div class="card glass-card" style="padding:32px; margin-bottom:28px;">
+          <h2 style="font-size:22px; font-weight:700; margin-bottom:8px;">Institutional Data Center & Backups</h2>
+          <p style="color:var(--text-secondary); font-size:14.5px; margin-bottom:24px;">Export raw or formatted registrar records for compliance reporting, audits, and official transcripts.</p>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+            <div class="card" style="padding:22px; background:var(--bg-surface-elevated);">
+              <h4 style="font-size:16px; margin-bottom:6px;">Enrolled Students Ledger (CSV)</h4>
+              <p style="font-size:12.5px; color:var(--text-muted); margin-bottom:14px;">Full roster including Roll Number, Contacts, Address, and 12th percentage.</p>
+              <button class="btn btn-emerald btn-sm" id="export-students-csv">📥 Download Students CSV</button>
+            </div>
+
+            <div class="card" style="padding:22px; background:var(--bg-surface-elevated);">
+              <h4 style="font-size:16px; margin-bottom:6px;">Attendance Master Ledger (CSV)</h4>
+              <p style="font-size:12.5px; color:var(--text-muted); margin-bottom:14px;">All recorded session timestamps, present/absent tallies, and percentage metrics.</p>
+              <button class="btn btn-gold btn-sm" id="export-att-csv">📥 Download Attendance CSV</button>
+            </div>
+
+            <div class="card" style="padding:22px; background:var(--bg-surface-elevated);">
+              <h4 style="font-size:16px; margin-bottom:6px;">Faculty Directory (CSV)</h4>
+              <p style="font-size:12.5px; color:var(--text-muted); margin-bottom:14px;">Professors, designations, subjects taught, and experience years.</p>
+              <button class="btn btn-ghost btn-sm" id="export-faculty-csv">📥 Download Faculty CSV</button>
+            </div>
+
+            <div class="card" style="padding:22px; background:var(--bg-surface-elevated);">
+              <h4 style="font-size:16px; margin-bottom:6px;">Full Institutional JSON Backup</h4>
+              <p style="font-size:12.5px; color:var(--text-muted); margin-bottom:14px;">Raw JSON payload of all entities suitable for cold storage backups.</p>
+              <button class="btn btn-primary btn-sm" id="export-json-backup">📦 Download Full JSON</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Command Palette Modal (Ctrl+K) -->
+<div class="cmd-palette-backdrop" id="cmd-palette-modal" style="display:none;">
+  <div class="cmd-palette">
+    <div class="cmd-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="cmd-input" id="cmd-input" placeholder="Type a command, student name, or view...">
+      <span class="cmd-badge">ESC</span>
+    </div>
+    <div class="cmd-results" id="cmd-results"></div>
+    <div class="cmd-footer">
+      <span>Navigation: <kbd class="mono">↑</kbd> <kbd class="mono">↓</kbd> to select</span>
+      <span>Execute: <kbd class="mono">↵ Enter</kbd></span>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Root Container -->
+<div id="modal-root"></div>
+
+<!-- Toast Notifications Container -->
+<div id="toast-root"></div>
+
+<script src="assets/config.js"></script>
+<script src="assets/qrcode.min.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

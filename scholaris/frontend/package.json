@@ -1,0 +1,9 @@
+{
+  "name": "scholaris-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static site + console for Scholaris, plus Vercel serverless functions mirroring the Java backend's REST API.",
+  "dependencies": {
+    "@upstash/redis": "^1.34.3"
+  }
+}

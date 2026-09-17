@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scholaris — Enterprise Academic Registrar & Student Information System</title>
+  <meta name="description" content="Scholaris is an ultra-modern, lightning-fast Student Information & Registrar System built on a pure Java engine with zero external dependencies.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    /* Hero Ambient Canvas */
+    #ambient-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    /* Navigation */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-glass);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: background var(--transition-smooth);
+    }
+    .nav-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+    }
+    .brand-mark {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent-gold) 0%, #D97706 100%);
+      color: #090D14;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 19px;
+      font-weight: 800;
+      box-shadow: 0 4px 14px var(--accent-gold-glow);
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+    .nav-links a {
+      transition: color var(--transition-fast);
+      position: relative;
+    }
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      position: relative;
+      z-index: 10;
+      padding: 80px 0 70px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .hero-title {
+      font-size: 52px;
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin: 20px 0 22px;
+    }
+    .text-gradient {
+      background: linear-gradient(135deg, #FFFFFF 20%, #94A3B8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    [data-theme="light"] .text-gradient {
+      background: linear-gradient(135deg, #0F172A 20%, #475569 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .text-gradient-gold {
+      background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-lede {
+      font-size: 18px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 32px;
+      max-width: 540px;
+    }
+    .hero-cta-group {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    .hero-trust-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .hero-trust-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .hero-trust-item svg {
+      color: var(--accent-emerald);
+      width: 16px; height: 16px;
+    }
+
+    /* Interactive Hero Sandbox Simulator */
+    .sandbox-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg), 0 0 50px -15px var(--accent-emerald-glow);
+      position: relative;
+    }
+    .sandbox-header {
+      background: var(--bg-surface-elevated);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .window-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .window-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--border-bright);
+    }
+    .window-dot.red { background: #EF4444; }
+    .window-dot.yellow { background: #F59E0B; }
+    .window-dot.green { background: #10B981; }
+
+    .sandbox-tab-bar {
+      display: flex;
+      background: rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .sandbox-tab {
+      flex: 1;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-align: center;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all var(--transition-fast);
+      background: none;
+      border-top: none; border-left: none; border-right: none;
+    }
+    .sandbox-tab:hover {
+      color: var(--text-secondary);
+    }
+    .sandbox-tab.active {
+      color: var(--accent-gold-soft);
+      border-bottom-color: var(--accent-gold);
+      background: rgba(245, 158, 11, 0.06);
+    }
+    .sandbox-body {
+      padding: 22px;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Stats Ribbon */
+    .stats-ribbon {
+      position: relative;
+      z-index: 10;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      background: var(--bg-glass);
+      backdrop-filter: blur(12px);
+      padding: 36px 0;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .stat-ribbon-item {
+      text-align: left;
+    }
+    .stat-ribbon-num {
+      font-family: var(--font-display);
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+    .stat-ribbon-num span {
+      font-size: 20px;
+      color: var(--accent-gold);
+    }
+    .stat-ribbon-label {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Section Shells */
+    section {
+      position: relative;
+      z-index: 10;
+      padding: 96px 0;
+    }
+    .section-header {
+      max-width: 680px;
+      margin-bottom: 54px;
+    }
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent-emerald);
+      font-size: 12.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 16.5px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* Feature Grid */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .feature-card {
+      padding: 30px 28px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-icon-wrap {
+      width: 50px; height: 50px;
+      border-radius: 12px;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-medium);
+      color: var(--accent-gold);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 22px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+    .feature-icon-wrap svg {
+      width: 24px; height: 24px;
+    }
+    .feature-card h3 {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .feature-card p {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .feature-badge-corner {
+      position: absolute;
+      top: 20px; right: 20px;
+    }
+
+    /* Interactive Architecture & API Explorer */
+    .arch-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+    }
+    .arch-info {
+      padding: 48px;
+      background: var(--bg-surface);
+    }
+    .arch-code-side {
+      background: #06090F;
+      padding: 36px;
+      border-left: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+    }
+    .api-endpoint-selector {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .api-endpoint-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-family: var(--font-mono);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .api-endpoint-btn.active {
+      background: var(--accent-emerald-bg);
+      border-color: var(--accent-emerald);
+      color: var(--accent-emerald-soft);
+      font-weight: 600;
+    }
+    .code-editor-box {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: #E2E8F0;
+      line-height: 1.7;
+      overflow-x: auto;
+      position: relative;
+    }
+    .code-action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+    }
+
+    /* Comparison Matrix */
+    .compare-table-wrap {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--bg-surface);
+    }
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .compare-table th {
+      background: var(--bg-surface-elevated);
+      padding: 18px 22px;
+      text-align: left;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border-medium);
+    }
+    .compare-table td {
+      padding: 16px 22px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+    }
+    .compare-table tr:hover td {
+      background: var(--bg-surface-hover);
+    }
+    .compare-table .highlight-col {
+      background: rgba(16, 185, 129, 0.04);
+      font-weight: 600;
+      color: var(--accent-emerald-soft);
+    }
+
+    /* FAQ Accordion */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .faq-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 22px 24px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .faq-item:hover {
+      border-color: var(--border-medium);
+    }
+    .faq-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .faq-answer {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 12px;
+      line-height: 1.6;
+      display: none;
+    }
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+    .faq-item.open .faq-toggle-icon {
+      transform: rotate(45deg);
+      color: var(--accent-gold);
+    }
+    .faq-toggle-icon {
+      transition: transform var(--transition-fast);
+      font-size: 18px;
+      color: var(--text-dim);
+    }
+
+    /* CTA Banner */
+    .cta-glow-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(245, 158, 11, 0.12) 100%), var(--bg-surface);
+      border: 1px solid var(--border-emerald);
+      border-radius: var(--radius-xl);
+      padding: 64px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 20px 60px -15px var(--accent-emerald-glow);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      padding: 64px 0 36px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    .footer-brand p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 12px;
+      max-width: 320px;
+    }
+    .footer-col h4 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+    }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-col a {
+      font-size: 14px;
+      color: var(--text-secondary);
+      transition: color var(--transition-fast);
+    }
+    .footer-col a:hover {
+      color: var(--text-primary);
+    }
+    .footer-bottom {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .feature-grid { grid-template-columns: 1fr 1fr; }
+      .arch-container { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .hero-title { font-size: 38px; }
+      .nav-links { display: none; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .faq-grid { grid-template-columns: 1fr; }
+      .cta-glow-card { flex-direction: column; text-align: center; gap: 24px; padding: 40px 24px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Ambient Animated Particles -->
+<canvas id="ambient-canvas"></canvas>
+
+<!-- Top Navigation -->
+<nav class="site-nav">
+  <div class="wrap nav-wrap">
+    <a href="index.html" class="brand-logo">
+      <div class="brand-mark">S</div>
+      <span>Scholaris<span style="color:var(--accent-gold)">.</span></span>
+    </a>
+
+    <div class="nav-links">
+      <a href="#product">Product Suite</a>
+      <a href="#sandbox">Live Sandbox</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#api-explorer">API Playground</a>
+      <a href="#benchmark">Benchmark</a>
+      <a href="#faq">FAQ</a>
+    </div>
+
+    <div class="nav-actions">
+      <!-- Sound FX Toggle -->
+      <button class="audio-toggle-btn" id="sound-btn" title="Toggle UI Sound Effects">
+        <div class="audio-bars">
+          <div class="audio-bar"></div>
+          <div class="audio-bar"></div>
+          <div class="audio-bar"></div>
+        </div>
+        <span>SFX</span>
+      </button>
+
+      <!-- Theme Switcher -->
+      <button class="btn-icon" id="theme-btn" title="Toggle Theme" aria-label="Toggle Theme">
+        <svg id="theme-icon-sun" style="display:none; width:18px; height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg id="theme-icon-moon" style="width:18px; height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+
+      <!-- Launch Console CTA -->
+      <a href="app.html" class="btn btn-gold btn-shimmer">
+        <span>Launch Console</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<header class="hero-section">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="pill-glow" style="margin-bottom:18px;">
+        <span class="dot"></span>
+        <span>Enterprise Academic Registrar Platform • Pure Java 25 Core</span>
+      </div>
+
+      <h1 class="hero-title">
+        The <span class="text-gradient-gold">$10,000 OS</span> for modern university registrars.
+      </h1>
+
+      <p class="hero-lede">
+        Consolidate student enrolment, biometric attendance, faculty workloads, and dynamic 3D cryptographic ID verification into one lightning-fast, zero-dependency console.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="app.html" class="btn btn-gold btn-lg btn-shimmer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>Launch Live Console</span>
+        </a>
+        <a href="#sandbox" class="btn btn-ghost btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <span>Try Interactive Sandbox</span>
+        </a>
+      </div>
+
+      <div class="hero-trust-row">
+        <div class="hero-trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Zero External Libraries</span>
+        </div>
+        <div class="hero-trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>100% Data Sovereignty</span>
+        </div>
+        <div class="hero-trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Sub-8ms REST Latency</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Interactive Sandbox Preview on Hero -->
+    <div class="sandbox-card" id="sandbox">
+      <div class="sandbox-header">
+        <div class="window-dots">
+          <div class="window-dot red"></div>
+          <div class="window-dot yellow"></div>
+          <div class="window-dot green"></div>
+        </div>
+        <span class="mono" style="font-size:11.5px; color:var(--text-muted);">scholaris-registrar-engine:8080</span>
+        <span class="badge badge-emerald">LIVE CONNECTED</span>
+      </div>
+
+      <div class="sandbox-tab-bar">
+        <button class="sandbox-tab active" data-tab="idcard">3D ID Card</button>
+        <button class="sandbox-tab" data-tab="attendance">Live Attendance</button>
+        <button class="sandbox-tab" data-tab="capacity">Programme Seats</button>
+      </div>
+
+      <div class="sandbox-body" id="sandbox-content">
+        <!-- Sandbox Tab 1: 3D Holographic ID Card -->
+        <div id="tab-idcard" class="sandbox-view">
+          <div class="idcard-perspective-wrap" id="hero-card-perspective">
+            <div class="idcard-3d" id="hero-holo-card">
+              <div class="idcard-holo-sheen"></div>
+              <div class="idcard-top-stripe"></div>
+              <div class="idcard-head">
+                <div class="idcard-inst-brand">
+                  <div class="idcard-seal">S</div>
+                  <div>
+                    <div class="idcard-inst-name">Scholaris Institute</div>
+                    <div class="idcard-inst-sub">Verified Student Identity</div>
+                  </div>
+                </div>
+                <span class="badge badge-gold">ACTIVE</span>
+              </div>
+              <div class="idcard-body">
+                <div class="idcard-profile-row">
+                  <div class="idcard-avatar">AK</div>
+                  <div>
+                    <div class="idcard-name-title">Aadi Kulkarni</div>
+                    <div class="idcard-roll-badge">SIT24CS310</div>
+                  </div>
+                </div>
+                <div class="idcard-grid">
+                  <div>
+                    <div class="k">Programme</div>
+                    <div class="v">B.Tech CSE Core</div>
+                  </div>
+                  <div>
+                    <div class="k">Father's Name</div>
+                    <div class="v">Suresh Kulkarni</div>
+                  </div>
+                  <div>
+                    <div class="k">Phone</div>
+                    <div class="v mono">98765 43210</div>
+                  </div>
+                  <div>
+                    <div class="k">Academic Merit</div>
+                    <div class="v">94.8% (12th)</div>
+                  </div>
+                </div>
+                <div class="idcard-qr-section">
+                  <div class="idcard-qr-box" id="hero-qr-mount"></div>
+                  <div class="idcard-meta-right">
+                    <div style="font-size:10px; color:#94A3B8;">ATTENDANCE STANDING</div>
+                    <div class="idcard-att-badge">91% SAFE</div>
+                    <div class="idcard-sig">Registrar Signature ✍️</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="text-align:center; margin-top:12px; font-size:12px; color:var(--text-dim);">
+            Move your cursor over the card to experience the holographic 3D parallax tilt ✨
+          </div>
+        </div>
+
+        <!-- Sandbox Tab 2: Attendance Simulator -->
+        <div id="tab-attendance" class="sandbox-view" style="display:none;">
+          <div style="background:var(--bg-surface-elevated); padding:16px; border-radius:12px; border:1px solid var(--border-subtle);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <div>
+                <h4 style="font-size:15px;">B.Tech CSE AIML Attendance</h4>
+                <span class="mono" style="font-size:11.5px; color:var(--text-muted);">Session: Today's Roll Call</span>
+              </div>
+              <span class="badge badge-emerald" id="sim-pct-badge">88% Present</span>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:8px;" id="sim-roster-list">
+              <!-- Interactive items injected by JS -->
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:12px; border-top:1px solid var(--border-subtle);">
+              <span style="font-size:12px; color:var(--text-muted);">Click to toggle attendance status</span>
+              <button class="btn btn-sm btn-ghost" id="sim-reset-btn">Reset Roster</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sandbox Tab 3: Programme Seat Capacity -->
+        <div id="tab-capacity" class="sandbox-view" style="display:none;">
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div style="background:var(--bg-surface-elevated); padding:14px 16px; border-radius:10px; border:1px solid var(--border-subtle);">
+              <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                <span style="font-weight:600; font-size:13.5px;">B.Tech CSE Core</span>
+                <span class="mono" style="font-size:12px; color:var(--accent-emerald);">112 / 120 (93%)</span>
+              </div>
+              <div style="height:7px; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden;">
+                <div style="width:93%; height:100%; background:linear-gradient(90deg, #10B981, #059669); border-radius:4px;"></div>
+              </div>
+            </div>
+
+            <div style="background:var(--bg-surface-elevated); padding:14px 16px; border-radius:10px; border:1px solid var(--border-subtle);">
+              <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                <span style="font-weight:600; font-size:13.5px;">B.Tech CSE AIML</span>
+                <span class="mono" style="font-size:12px; color:var(--accent-gold);">78 / 80 (98% High Demand)</span>
+              </div>
+              <div style="height:7px; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden;">
+                <div style="width:98%; height:100%; background:linear-gradient(90deg, #F59E0B, #D97706); border-radius:4px;"></div>
+              </div>
+            </div>
+
+            <div style="background:var(--bg-surface-elevated); padding:14px 16px; border-radius:10px; border:1px solid var(--border-subtle);">
+              <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                <span style="font-weight:600; font-size:13.5px;">B.Tech CSE Data Science</span>
+                <span class="mono" style="font-size:12px; color:var(--accent-cyan);">54 / 60 (90%)</span>
+              </div>
+              <div style="height:7px; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden;">
+                <div style="width:90%; height:100%; background:linear-gradient(90deg, #06B6D4, #0891B2); border-radius:4px;"></div>
+              </div>
+            </div>
+
+            <div style="background:var(--bg-surface-elevated); padding:14px 16px; border-radius:10px; border:1px solid var(--border-subtle);">
+              <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                <span style="font-weight:600; font-size:13.5px;">B.Tech ECE</span>
+                <span class="mono" style="font-size:12px; color:#A78BFA;">74 / 90 (82%)</span>
+              </div>
+              <div style="height:7px; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden;">
+                <div style="width:82%; height:100%; background:linear-gradient(90deg, #8B5CF6, #7C3AED); border-radius:4px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Stats Ribbon -->
+<div class="stats-ribbon">
+  <div class="wrap stats-grid">
+    <div class="stat-ribbon-item">
+      <div class="stat-ribbon-num">0 <span>LIBS</span></div>
+      <div class="stat-ribbon-label">Zero external backend dependencies. Runs strictly on standard JDK.</div>
+    </div>
+    <div class="stat-ribbon-item">
+      <div class="stat-ribbon-num">&lt;8 <span>MS</span></div>
+      <div class="stat-ribbon-label">Ultra-low JSON endpoint latency for instant response.</div>
+    </div>
+    <div class="stat-ribbon-item">
+      <div class="stat-ribbon-num">100% <span>LOCAL</span></div>
+      <div class="stat-ribbon-label">Complete data sovereignty stored directly on your own hardware disk.</div>
+    </div>
+    <div class="stat-ribbon-item">
+      <div class="stat-ribbon-num">4 <span>STREAMS</span></div>
+      <div class="stat-ribbon-label">Out-of-the-box support for active undergraduate & postgraduate programmes.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Product Suite Features -->
+<section id="product">
+  <div class="wrap">
+    <div class="section-header">
+      <span class="section-eyebrow">Enterprise Product Suite</span>
+      <h2 class="section-title">Engineered for institutional speed, precision, and governance.</h2>
+      <p class="section-desc">Eliminate chaotic spreadsheets and disconnected systems. Scholaris synchronizes registration, biometric attendance, faculty allocations, and cryptographic ID generation in real time.</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="card glass-card feature-card card-glow">
+        <div class="feature-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+        </div>
+        <span class="badge badge-emerald feature-badge-corner">ENROLMENT</span>
+        <h3>Smart Student Registrar</h3>
+        <p>Enrol students with real-time roll number validation, phone sanitization, and automated seat quota checks preventing over-admission.</p>
+      </div>
+
+      <div class="card glass-card feature-card card-glow-gold">
+        <div class="feature-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        </div>
+        <span class="badge badge-gold feature-badge-corner">ATTENDANCE</span>
+        <h3>Smart Daily Attendance</h3>
+        <p>1-tap roster check-in by programme and date. Instantly flags defaulters under the mandatory 75% attendance threshold with automated warnings.</p>
+      </div>
+
+      <div class="card glass-card feature-card card-glow">
+        <div class="feature-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M15 8h2M15 12h2M7 16h10"/></svg>
+        </div>
+        <span class="badge badge-cyan feature-badge-corner">3D IDENTITY</span>
+        <h3>Holographic Digital ID Studio</h3>
+        <p>Generate authentic, scannable QR-encoded student ID cards with 3D mouse parallax tilt effects, watermark signatures, and print/export readiness.</p>
+      </div>
+
+      <div class="card glass-card feature-card card-glow-gold">
+        <div class="feature-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <span class="badge badge-purple feature-badge-corner">FACULTY</span>
+        <h3>Faculty Workload & Directory</h3>
+        <p>Manage professorship designations, departmental alignments, subjects taught, and experience metrics across all active college faculties.</p>
+      </div>
+
+      <div class="card glass-card feature-card card-glow">
+        <div class="feature-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 118 2.83"/><path d="M22 12A10 10 0 0012 2v10z"/></svg>
+        </div>
+        <span class="badge badge-emerald feature-badge-corner">ANALYTICS</span>
+        <h3>Executive Analytics Ledger</h3>
+        <p>Live graphical charts, programme capacity rings, and real-time activity ledgers logging every registrar operation with microsecond precision.</p>
+      </div>
+
+      <div class="card glass-card feature-card card-glow-gold">
+        <div class="feature-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <span class="badge badge-rose feature-badge-corner">JAVA 25</span>
+        <h3>Pure Java Micro-Kernel</h3>
+        <p>Standard library <code class="mono">com.sun.net.httpserver</code> with generic thread-safe <code class="mono">FileStore&lt;T&gt;</code> persistence for effortless self-hosting.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Interactive Architecture & API Playground -->
+<section id="architecture" style="background:var(--bg-glass);">
+  <div class="wrap">
+    <div class="section-header">
+      <span class="section-eyebrow">Developer Architecture</span>
+      <h2 class="section-title">Zero dependencies. Total operational freedom.</h2>
+      <p class="section-desc">Designed as a masterclass in clean Java architecture. Compile with just <code class="mono">javac</code> and run anywhere — from on-prem bare metal to Render, Railway, or VPS containers.</p>
+    </div>
+
+    <div class="arch-container" id="api-explorer">
+      <div class="arch-info">
+        <span class="badge badge-gold" style="margin-bottom:14px;">REST API ENGINE</span>
+        <h3 style="font-size:24px; margin-bottom:14px;">Standard REST Endpoints</h3>
+        <p style="color:var(--text-secondary); font-size:14.5px; line-height:1.6; margin-bottom:20px;">
+          Both the Java backend and optional serverless runtime expose identical, RFC-compliant REST endpoints with predictable JSON contracts.
+        </p>
+
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:12px; font-size:13.5px; color:var(--text-secondary);">
+          <li style="display:flex; gap:10px; align-items:center;">
+            <span class="badge badge-emerald mono">GET</span>
+            <span><code class="mono">/api/students</code> — List enrolled student records</span>
+          </li>
+          <li style="display:flex; gap:10px; align-items:center;">
+            <span class="badge badge-gold mono">POST</span>
+            <span><code class="mono">/api/students</code> — Enrol student with seat validation</span>
+          </li>
+          <li style="display:flex; gap:10px; align-items:center;">
+            <span class="badge badge-emerald mono">GET</span>
+            <span><code class="mono">/api/dashboard</code> — Aggregate KPIs and real-time activity</span>
+          </li>
+          <li style="display:flex; gap:10px; align-items:center;">
+            <span class="badge badge-gold mono">POST</span>
+            <span><code class="mono">/api/attendance</code> — Record daily cohort attendance</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="arch-code-side">
+        <div class="api-endpoint-selector">
+          <button class="api-endpoint-btn active" data-ep="students">POST /api/students</button>
+          <button class="api-endpoint-btn" data-ep="dashboard">GET /api/dashboard</button>
+          <button class="api-endpoint-btn" data-ep="attendance">POST /api/attendance</button>
+        </div>
+
+        <div class="code-editor-box" id="code-snippet-box">
+<span style="color:#64748B;">// Enrol a new student into the register</span>
+<span style="color:#F59E0B;">curl</span> -X POST http://localhost:8080/api/students \
+  -H <span style="color:#10B981;">"Content-Type: application/json"</span> \
+  -d '{
+    <span style="color:#38BDF8;">"rollNumber"</span>: <span style="color:#10B981;">"SIT24CS310"</span>,
+    <span style="color:#38BDF8;">"name"</span>: <span style="color:#10B981;">"Aadi Kulkarni"</span>,
+    <span style="color:#38BDF8;">"course"</span>: <span style="color:#10B981;">"CSE-CORE"</span>,
+    <span style="color:#38BDF8;">"phone"</span>: <span style="color:#10B981;">"9876543210"</span>,
+    <span style="color:#38BDF8;">"percentage12"</span>: <span style="color:#F59E0B;">94.8</span>
+  }'
+
+<span style="color:#64748B;">// → 201 Created</span>
+{ <span style="color:#38BDF8;">"id"</span>: <span style="color:#10B981;">"stu-7a12c9"</span>, <span style="color:#38BDF8;">"rollNumber"</span>: <span style="color:#10B981;">"SIT24CS310"</span>, <span style="color:#38BDF8;">"status"</span>: <span style="color:#10B981;">"enrolled"</span> }
+        </div>
+
+        <div class="code-action-bar">
+          <span style="font-size:11.5px; color:var(--text-dim);">Response status: <span style="color:var(--accent-emerald);">201 Created (4ms)</span></span>
+          <button class="btn btn-sm btn-ghost" id="copy-code-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            <span>Copy Snippet</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Institutional Benchmark Matrix -->
+<section id="benchmark">
+  <div class="wrap">
+    <div class="section-header">
+      <span class="section-eyebrow">Enterprise Benchmark</span>
+      <h2 class="section-title">Scholaris vs. Legacy Heavyweight ERPs</h2>
+      <p class="section-desc">Why institutions are replacing bloated, expensive legacy software with high-performance micro-kernels.</p>
+    </div>
+
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Architecture Dimension</th>
+            <th class="highlight-col">Scholaris Pure Java Engine</th>
+            <th>Legacy Academic ERP Software</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>External Runtime Bloat</strong></td>
+            <td class="highlight-col">0 External Libraries (Pure JDK Standard)</td>
+            <td>1,200+ NPM packages & heavy dependencies</td>
+          </tr>
+          <tr>
+            <td><strong>Server Overhead</strong></td>
+            <td class="highlight-col">&lt;35 MB Memory Footprint</td>
+            <td>2 to 4 GB RAM minimum per node</td>
+          </tr>
+          <tr>
+            <td><strong>Average API Latency</strong></td>
+            <td class="highlight-col">~4ms to 8ms response times</td>
+            <td>180ms to 650ms (ORM database queries)</td>
+          </tr>
+          <tr>
+            <td><strong>Data Sovereignty</strong></td>
+            <td class="highlight-col">100% On-Premise JSON FileStore</td>
+            <td>Third-party vendor cloud lock-in</td>
+          </tr>
+          <tr>
+            <td><strong>Time to Production</strong></td>
+            <td class="highlight-col">1 Single Command (<code class="mono">javac + java</code>)</td>
+            <td>Weeks of configuration, migrations & tuning</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Accordion -->
+<section id="faq" style="background:var(--bg-glass);">
+  <div class="wrap">
+    <div class="section-header">
+      <span class="section-eyebrow">Frequently Answered Questions</span>
+      <h2 class="section-title">Everything you need to know</h2>
+    </div>
+
+    <div class="faq-grid">
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>What Java versions are supported?</span>
+          <span class="faq-toggle-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          Scholaris compiles and runs out of the box on JDK 17, 21, and 25 LTS. Because it uses only the standard library (<code class="mono">com.sun.net.httpserver</code> and <code class="mono">java.nio</code>), there is zero setup required.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>How is data stored and persisted?</span>
+          <span class="faq-toggle-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          Data is persistently mirrored after each mutation to JSON data files in <code class="mono">backend/data/*.json</code> via the generic, thread-safe <code class="mono">FileStore&lt;T&gt;</code> engine.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Can I generate printable ID cards?</span>
+          <span class="faq-toggle-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          Yes! The Digital ID Card Studio includes full 3D card preview, real-time dynamic QR code generation, barcode simulation, and a 1-click printable PDF / image export mode.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>How does attendance tracking flag defaulters?</span>
+          <span class="faq-toggle-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          The registrar console automatically computes attendance standing per student. Anyone with less than 75% attendance is visually flagged in red with a 1-click warning notice generator.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action Banner -->
+<section>
+  <div class="wrap">
+    <div class="cta-glow-card">
+      <div>
+        <h2 style="font-size:32px; margin-bottom:8px;">Ready to run your registrar's office?</h2>
+        <p style="color:var(--text-secondary); font-size:16px;">Launch the live demo or clone the repository to run it locally in under 60 seconds.</p>
+      </div>
+      <div style="display:flex; gap:14px; flex-wrap:wrap;">
+        <a href="app.html" class="btn btn-gold btn-lg btn-shimmer">
+          <span>Launch Live Console</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand-logo">
+          <div class="brand-mark">S</div>
+          <span>Scholaris</span>
+        </div>
+        <p>Enterprise Student Information System built end-to-end in pure Java standard library.</p>
+        <div style="margin-top:16px; display:flex; gap:8px;">
+          <span class="badge badge-emerald">v2.4.0 Engine</span>
+          <span class="badge badge-gold">Java 25 LTS</span>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="app.html">Registrar Console</a></li>
+          <li><a href="#product">Student Enrolment</a></li>
+          <li><a href="#product">Attendance Terminal</a></li>
+          <li><a href="#product">Faculty Management</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Architecture</h4>
+        <ul>
+          <li><a href="#architecture">Java Micro-Kernel</a></li>
+          <li><a href="#api-explorer">REST API Contracts</a></li>
+          <li><a href="#benchmark">Performance Benchmarks</a></li>
+          <li><a href="#faq">Documentation & FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Institutional</h4>
+        <ul>
+          <li><a href="https://github.com" target="_blank">GitHub Repository</a></li>
+          <li><a href="app.html">Live Interactive Demo</a></li>
+          <li><a href="#sandbox">Virtual Sandbox</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 Scholaris Academic Engine. Built for world-class academic institutions.</div>
+      <div style="display:flex; gap:18px;">
+        <span class="mono" style="color:var(--accent-emerald);">● SYSTEM OPERATIONAL</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- QR Code & Landing Interactive Script -->
+<script src="assets/qrcode.min.js"></script>
+<script>
+  (function(){
+    "use strict";
+
+    /* Ambient Canvas Particle Animation */
+    var canvas = document.getElementById("ambient-canvas");
+    if (canvas && canvas.getContext) {
+      var ctx = canvas.getContext("2d");
+      var w, h, particles = [];
+      function resize(){
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener("resize", resize);
+
+      for (var i = 0; i < 40; i++) {
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 2 + 1,
+          dx: (Math.random() - 0.5) * 0.4,
+          dy: (Math.random() - 0.5) * 0.4,
+          color: Math.random() > 0.5 ? "rgba(16, 185, 129, 0.4)" : "rgba(245, 158, 11, 0.35)"
+        });
+      }
+
+      function renderParticles(){
+        ctx.clearRect(0, 0, w, h);
+        for (var i = 0; i < particles.length; i++) {
+          var p = particles[i];
+          p.x += p.dx; p.y += p.dy;
+          if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+          if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+        }
+        requestAnimationFrame(renderParticles);
+      }
+      renderParticles();
+    }
+
+    /* Sound FX Synthesizer (Web Audio API) */
+    var audioCtx = null;
+    var soundEnabled = localStorage.getItem("scholaris_sfx") !== "false";
+    function playTone(freq, type, duration){
+      if (!soundEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === "suspended") audioCtx.resume();
+        var osc = audioCtx.createOscillator();
+        var gain = audioCtx.createGain();
+        osc.type = type || "sine";
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e) {}
+    }
+
+    var soundBtn = document.getElementById("sound-btn");
+    if (soundBtn) {
+      function updateSoundBtn(){
+        soundBtn.querySelector(".audio-bars").classList.toggle("playing", soundEnabled);
+        soundBtn.style.opacity = soundEnabled ? "1" : "0.6";
+      }
+      updateSoundBtn();
+      soundBtn.addEventListener("click", function(){
+        soundEnabled = !soundEnabled;
+        localStorage.setItem("scholaris_sfx", soundEnabled ? "true" : "false");
+        updateSoundBtn();
+        if (soundEnabled) playTone(880, "sine", 0.15);
+      });
+    }
+
+    document.querySelectorAll("button, a.btn").forEach(function(el){
+      el.addEventListener("mouseenter", function(){ playTone(440, "sine", 0.05); });
+      el.addEventListener("click", function(){ playTone(660, "sine", 0.08); });
+    });
+
+    /* Theme Switcher */
+    var themeBtn = document.getElementById("theme-btn");
+    var sunIcon = document.getElementById("theme-icon-sun");
+    var moonIcon = document.getElementById("theme-icon-moon");
+    var currentTheme = localStorage.getItem("scholaris_theme") || "dark";
+    document.documentElement.setAttribute("data-theme", currentTheme);
+    function updateThemeIcons(){
+      if (currentTheme === "light") {
+        sunIcon.style.display = "block";
+        moonIcon.style.display = "none";
+      } else {
+        sunIcon.style.display = "none";
+        moonIcon.style.display = "block";
+      }
+    }
+    updateThemeIcons();
+    if (themeBtn) {
+      themeBtn.addEventListener("click", function(){
+        currentTheme = currentTheme === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", currentTheme);
+        localStorage.setItem("scholaris_theme", currentTheme);
+        updateThemeIcons();
+        playTone(520, "triangle", 0.1);
+      });
+    }
+
+    /* 3D Holographic Card Mouse Parallax */
+    var cardWrap = document.getElementById("hero-card-perspective");
+    var holoCard = document.getElementById("hero-holo-card");
+    if (cardWrap && holoCard) {
+      cardWrap.addEventListener("mousemove", function(e){
+        var rect = cardWrap.getBoundingClientRect();
+        var x = e.clientX - rect.left - rect.width / 2;
+        var y = e.clientY - rect.top - rect.height / 2;
+        var rotX = (-y / (rect.height / 2)) * 14;
+        var rotY = (x / (rect.width / 2)) * 14;
+        holoCard.style.transform = "rotateX(" + rotX + "deg) rotateY(" + rotY + "deg) scale3d(1.02, 1.02, 1.02)";
+      });
+      cardWrap.addEventListener("mouseleave", function(){
+        holoCard.style.transform = "rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+      });
+    }
+
+    /* Generate Hero Card QR Code */
+    var qrMount = document.getElementById("hero-qr-mount");
+    if (qrMount && window.QRCode) {
+      new window.QRCode(qrMount, {
+        text: "https://scholaris.edu/verify/SIT24CS310",
+        width: 64,
+        height: 64,
+        colorDark: "#090D14",
+        colorLight: "#FFFFFF"
+      });
+    }
+
+    /* Sandbox Tab Switcher */
+    var sandboxTabs = document.querySelectorAll(".sandbox-tab");
+    sandboxTabs.forEach(function(tab){
+      tab.addEventListener("click", function(){
+        sandboxTabs.forEach(function(t){ t.classList.remove("active"); });
+        tab.classList.add("active");
+        var target = tab.getAttribute("data-tab");
+        document.querySelectorAll(".sandbox-view").forEach(function(view){
+          view.style.display = "none";
+        });
+        var activeView = document.getElementById("tab-" + target);
+        if (activeView) activeView.style.display = "block";
+        playTone(580, "sine", 0.06);
+      });
+    });
+
+    /* Sandbox Attendance Roster Simulation */
+    var simStudents = [
+      { name: "Aadi Kulkarni", roll: "SIT24CS310", present: true },
+      { name: "Sneha Raman", roll: "SIT24AI014", present: true },
+      { name: "Devansh Mehta", roll: "SIT24DS108", present: false },
+      { name: "Priya Sundaram", roll: "SIT24AI042", present: true }
+    ];
+    function paintSimRoster(){
+      var host = document.getElementById("sim-roster-list");
+      if (!host) return;
+      var presentCount = simStudents.filter(function(s){ return s.present; }).length;
+      var pct = Math.round((presentCount / simStudents.length) * 100);
+      var badge = document.getElementById("sim-pct-badge");
+      if (badge) badge.textContent = pct + "% Present";
+
+      host.innerHTML = simStudents.map(function(s, idx){
+        return '<div style="display:flex; justify-content:space-between; align-items:center; padding:9px 12px; background:var(--bg-surface); border-radius:8px; border:1px solid var(--border-subtle);">' +
+          '<div><div style="font-weight:600; font-size:13px;">' + s.name + '</div><div class="mono" style="font-size:11px; color:var(--text-muted);">' + s.roll + '</div></div>' +
+          '<button class="btn btn-sm ' + (s.present ? 'btn-emerald' : 'btn-danger') + '" data-idx="' + idx + '">' + (s.present ? '✓ Present' : '✗ Absent') + '</button>' +
+        '</div>';
+      }).join("");
+
+      host.querySelectorAll("button").forEach(function(b){
+        b.addEventListener("click", function(){
+          var idx = parseInt(b.getAttribute("data-idx"), 10);
+          simStudents[idx].present = !simStudents[idx].present;
+          paintSimRoster();
+          playTone(simStudents[idx].present ? 700 : 350, "sine", 0.08);
+        });
+      });
+    }
+    paintSimRoster();
+    var resetBtn = document.getElementById("sim-reset-btn");
+    if (resetBtn) {
+      resetBtn.addEventListener("click", function(){
+        simStudents.forEach(function(s){ s.present = true; });
+        paintSimRoster();
+      });
+    }
+
+    /* FAQ Accordion */
+    document.querySelectorAll(".faq-item").forEach(function(item){
+      item.addEventListener("click", function(){
+        var isOpen = item.classList.contains("open");
+        document.querySelectorAll(".faq-item").forEach(function(i){ i.classList.remove("open"); });
+        if (!isOpen) item.classList.add("open");
+        playTone(400, "sine", 0.05);
+      });
+    });
+
+    /* Code Snippet Tabs */
+    var snippets = {
+      students: '<span style="color:#64748B;">// Enrol a new student into the register</span>\n<span style="color:#F59E0B;">curl</span> -X POST http://localhost:8080/api/students \\\n  -H <span style="color:#10B981;">"Content-Type: application/json"</span> \\\n  -d \'{\n    <span style="color:#38BDF8;">"rollNumber"</span>: <span style="color:#10B981;">"SIT24CS310"</span>,\n    <span style="color:#38BDF8;">"name"</span>: <span style="color:#10B981;">"Aadi Kulkarni"</span>,\n    <span style="color:#38BDF8;">"course"</span>: <span style="color:#10B981;">"CSE-CORE"</span>,\n    <span style="color:#38BDF8;">"phone"</span>: <span style="color:#10B981;">"9876543210"</span>,\n    <span style="color:#38BDF8;">"percentage12"</span>: <span style="color:#F59E0B;">94.8</span>\n  }\'\n\n<span style="color:#64748B;">// → 201 Created</span>\n{ <span style="color:#38BDF8;">"id"</span>: <span style="color:#10B981;">"stu-7a12c9"</span>, <span style="color:#38BDF8;">"rollNumber"</span>: <span style="color:#10B981;">"SIT24CS310"</span>, <span style="color:#38BDF8;">"status"</span>: <span style="color:#10B981;">"enrolled"</span> }',
+      dashboard: '<span style="color:#64748B;">// Fetch aggregated institutional registrar telemetry</span>\n<span style="color:#F59E0B;">curl</span> http://localhost:8080/api/dashboard\n\n<span style="color:#64748B;">// → 200 OK</span>\n{\n  <span style="color:#38BDF8;">"totalStudents"</span>: <span style="color:#F59E0B;">318</span>,\n  <span style="color:#38BDF8;">"totalFaculty"</span>: <span style="color:#F59E0B;">18</span>,\n  <span style="color:#38BDF8;">"avgAttendance"</span>: <span style="color:#F59E0B;">86.4</span>,\n  <span style="color:#38BDF8;">"distribution"</span>: [\n    { <span style="color:#38BDF8;">"course"</span>: <span style="color:#10B981;">"CSE-CORE"</span>, <span style="color:#38BDF8;">"count"</span>: <span style="color:#F59E0B;">112</span> },\n    { <span style="color:#38BDF8;">"course"</span>: <span style="color:#10B981;">"CSE-AIML"</span>, <span style="color:#38BDF8;">"count"</span>: <span style="color:#F59E0B;">78</span> }\n  ]\n}',
+      attendance: '<span style="color:#64748B;">// Record attendance cohort roll call</span>\n<span style="color:#F59E0B;">curl</span> -X POST http://localhost:8080/api/attendance \\\n  -H <span style="color:#10B981;">"Content-Type: application/json"</span> \\\n  -d \'{\n    <span style="color:#38BDF8;">"course"</span>: <span style="color:#10B981;">"CSE-AIML"</span>,\n    <span style="color:#38BDF8;">"date"</span>: <span style="color:#10B981;">"2026-09-17"</span>,\n    <span style="color:#38BDF8;">"records"</span>: [\n      { <span style="color:#38BDF8;">"rollNumber"</span>: <span style="color:#10B981;">"SIT24AI014"</span>, <span style="color:#38BDF8;">"present"</span>: <span style="color:#10B981;">true</span> },\n      { <span style="color:#38BDF8;">"rollNumber"</span>: <span style="color:#10B981;">"SIT24AI042"</span>, <span style="color:#38BDF8;">"present"</span>: <span style="color:#10B981;">false</span> }\n    ]\n  }\'\n\n<span style="color:#64748B;">// → 200 OK</span>\n{ <span style="color:#38BDF8;">"saved"</span>: <span style="color:#10B981;">true</span>, <span style="color:#38BDF8;">"presentCount"</span>: <span style="color:#F59E0B;">1</span> }'
+    };
+
+    var epButtons = document.querySelectorAll(".api-endpoint-btn");
+    var codeBox = document.getElementById("code-snippet-box");
+    epButtons.forEach(function(btn){
+      btn.addEventListener("click", function(){
+        epButtons.forEach(function(b){ b.classList.remove("active"); });
+        btn.classList.add("active");
+        var ep = btn.getAttribute("data-ep");
+        if (codeBox && snippets[ep]) {
+          codeBox.innerHTML = snippets[ep];
+        }
+        playTone(500, "sine", 0.05);
+      });
+    });
+
+    var copyCodeBtn = document.getElementById("copy-code-btn");
+    if (copyCodeBtn && codeBox) {
+      copyCodeBtn.addEventListener("click", function(){
+        var text = codeBox.innerText;
+        navigator.clipboard.writeText(text).then(function(){
+          copyCodeBtn.querySelector("span").textContent = "Copied!";
+          playTone(800, "sine", 0.1);
+          setTimeout(function(){
+            copyCodeBtn.querySelector("span").textContent = "Copy Snippet";
+          }, 2000);
+        });
+      });
+    }
+  })();
+</script>
+</body>
+</html>
