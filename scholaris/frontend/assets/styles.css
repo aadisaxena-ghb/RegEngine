@@ -1242,3 +1242,252 @@ table.data-table tbody tr:last-child td {
   font-size: 32px;
 }
 
+/* ================= Academic Timetable ================= */
+.tt-day-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.tt-day-btn {
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  background: #F1F5F9;
+  border: 1px solid var(--border-medium);
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.tt-day-btn.active, .tt-day-btn:hover {
+  background: #1E3A8A;
+  color: #FFFFFF;
+  border-color: #1E3A8A;
+}
+.timetable-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.timetable-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-left: 4px solid #1E3A8A;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.timetable-card.lab-card {
+  border-left-color: #10B981;
+  background: #F0FDF4;
+}
+.timetable-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.slot-time-badge {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #1E3A8A;
+  background: #EFF6FF;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+.slot-room-tag {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #64748B;
+  background: #F8FAFC;
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+}
+
+/* ================= Academic Calendar ================= */
+.calendar-timeline-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 18px;
+}
+.calendar-event-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  gap: 16px;
+  transition: all var(--transition-fast);
+}
+.calendar-event-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: #93C5FD;
+}
+.cal-date-badge {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%);
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  text-align: center;
+}
+.cal-date-badge .day {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+}
+.cal-date-badge .month {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #FDE68A;
+}
+
+/* ================= Notices & Circulars ================= */
+.notices-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.notice-item-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.notice-item-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: #93C5FD;
+  background: #FAFAFE;
+}
+.notice-priority-urgent {
+  background: #FEE2E2;
+  color: #991B1B;
+  border: 1px solid #FCA5A5;
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+}
+
+/* Official Circular Modal Sheet */
+.official-circular-modal {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  max-width: 680px;
+  width: 95%;
+  margin: 20px auto;
+  border: 1px solid var(--border-medium);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+.circular-modal-head {
+  background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%);
+  color: #FFFFFF;
+  padding: 24px 28px;
+  position: relative;
+}
+.circular-seal {
+  display: inline-block;
+  padding: 4px 10px;
+  border: 1px dashed rgba(245, 158, 11, 0.6);
+  border-radius: 4px;
+  color: #FDE68A;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.circular-modal-body {
+  padding: 28px;
+  font-size: 14px;
+  color: #334155;
+  line-height: 1.7;
+}
+
+/* ================= Fee Payment & Minted Receipts ================= */
+.fee-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 24px;
+}
+.fee-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.fee-table th {
+  background: #F8FAFC;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 700;
+  color: #0F172A;
+  border-bottom: 2px solid var(--border-medium);
+}
+.fee-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: #334155;
+}
+.official-fee-receipt {
+  background: #FFFFFF;
+  border: 2px solid #0F172A;
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 640px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-lg);
+  font-family: var(--font-sans);
+}
+.receipt-crest {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: #1E3A8A;
+  color: #F59E0B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 22px;
+}
+.receipt-table {
+  width: 100%;
+  margin: 16px 0;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.receipt-table th {
+  background: #F1F5F9;
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid #CBD5E1;
+}
+.receipt-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+

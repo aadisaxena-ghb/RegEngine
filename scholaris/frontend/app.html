@@ -314,17 +314,17 @@
 
     <!-- Student Navigation Group -->
     <nav class="sidebar-nav" id="app-nav-student">
-      <div class="nav-header">Student Self-Service</div>
+      <div class="nav-header">Admissions & ID</div>
       
       <button class="nav-item active" data-view="register">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-        <span>Admission Registration</span>
+        <span>Admission Form</span>
       </button>
 
       <button class="nav-item" data-view="student-idcard">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><line x1="15" y1="8" x2="17" y2="8"/><line x1="15" y1="12" x2="17" y2="12"/><line x1="7" y1="16" x2="17" y2="16"/></svg>
-        <span>My Digital ID Badge</span>
-        <span class="nav-badge" style="background:#FEF3C7; color:#92400E; font-weight:700;">3D</span>
+        <span>Digital ID Badge</span>
+        <span class="nav-badge" style="background:#FEF3C7; color:#92400E; font-weight:700;">QR</span>
       </button>
 
       <button class="nav-item" data-view="student-status">
@@ -332,10 +332,34 @@
         <span>Admission Dossier</span>
       </button>
 
-      <button class="nav-item" data-view="student-courses">
+      <div class="nav-header">Academic Desk</div>
+
+      <button class="nav-item" data-view="timetable">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
+        <span>Class Timetable</span>
+      </button>
+
+      <button class="nav-item" data-view="calendar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>Academic Calendar</span>
+      </button>
+
+      <button class="nav-item" data-view="syllabus">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-        <span>Academic Programmes</span>
-        <span class="nav-badge">16</span>
+        <span>Syllabus & Curriculum</span>
+      </button>
+
+      <div class="nav-header">Circulars & Finance</div>
+
+      <button class="nav-item" data-view="notices">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span>Notices & Circulars</span>
+        <span class="nav-badge" style="background:#FEE2E2; color:#991B1B; font-weight:700;">NEW</span>
+      </button>
+
+      <button class="nav-item" data-view="feepay">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        <span>Online Fee Payment</span>
       </button>
 
       <button class="nav-item" data-view="student-attendance">
@@ -351,7 +375,7 @@
 
     <!-- College Management Navigation Group (Exclusive to Faculty & Management) -->
     <nav class="sidebar-nav" id="app-nav-management" style="display:none;">
-      <div class="nav-header">Faculty & Administration</div>
+      <div class="nav-header">Administration</div>
 
       <button class="nav-item" data-view="dashboard">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
@@ -369,20 +393,32 @@
         <span>Daily Attendance Marker</span>
       </button>
 
+      <div class="nav-header">Governance & Finance</div>
+
+      <button class="nav-item" data-view="notice-mgr">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        <span>Publish Circulars</span>
+      </button>
+
+      <button class="nav-item" data-view="fee-ledger">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        <span>Fee Collection Ledger</span>
+      </button>
+
       <button class="nav-item" data-view="faculty">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6"/></svg>
-        <span>Faculty & Staff Directory</span>
+        <span>Faculty Directory</span>
         <span class="nav-badge" id="nav-badge-faculty">95</span>
       </button>
 
       <button class="nav-item" data-view="courses">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6.5l9-3 9 3-9 3-9-3z"/><path d="M7 9.5v6c0 1.4 2.5 2.5 5 2.5s5-1.1 5-2.5v-6"/></svg>
-        <span>Branch Seat Quotas</span>
+        <span>Branch Quotas</span>
       </button>
 
       <button class="nav-item" data-view="export">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        <span>Data & Audit Exports</span>
+        <span>Audit Exports</span>
       </button>
     </nav>
 
@@ -825,6 +861,286 @@
               <p style="margin-top:10px; font-size:13px; color:#64748B; line-height:1.6;">The College Management section is exclusively restricted to verified SRMIST professors (including Dr. Anjali Sharma, Dean Prof. R.P. Mahapatra, and HODs) and administrative registrar officers with secure authentication credentials.</p>
             </details>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STUDENT VIEW 7: Timetable & Lecture Schedule -->
+    <section id="view-timetable" class="view-pane">
+      <div style="max-width:1100px; margin:0 auto;">
+        <div class="card" style="padding:28px; background:#FFFFFF; margin-bottom:24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:20px;">
+            <div>
+              <h2 style="font-size:20px; font-weight:800; color:#0F172A; margin:0 0 4px;">Weekly Lecture Schedule & Timetable</h2>
+              <div style="font-size:13px; color:#64748B;">Official timetable for Semester 1 (Academic Year 2026–2027)</div>
+            </div>
+
+            <div style="display:flex; gap:10px;">
+              <select id="tt-course-select" style="min-width:240px;"></select>
+              <button class="btn btn-ghost btn-sm" id="print-tt-btn" style="border:1px solid var(--border-medium);">
+                <span>🖨️ Print Timetable</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Day Switcher Tabs -->
+          <div class="tt-day-tabs" id="tt-day-tabs">
+            <button class="tt-day-btn active" data-day="Monday">Monday</button>
+            <button class="tt-day-btn" data-day="Tuesday">Tuesday</button>
+            <button class="tt-day-btn" data-day="Wednesday">Wednesday</button>
+            <button class="tt-day-btn" data-day="Thursday">Thursday</button>
+            <button class="tt-day-btn" data-day="Friday">Friday</button>
+          </div>
+
+          <!-- Timetable Slots Grid -->
+          <div class="timetable-grid" id="tt-slots-mount"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STUDENT VIEW 8: Academic Calendar -->
+    <section id="view-calendar" class="view-pane">
+      <div style="max-width:1100px; margin:0 auto;">
+        <div class="card" style="padding:28px; background:#FFFFFF; margin-bottom:24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:20px;">
+            <div>
+              <h2 style="font-size:20px; font-weight:800; color:#0F172A; margin:0 0 4px;">Academic Calendar & Examination Schedule (2026–2027)</h2>
+              <div style="font-size:13px; color:#64748B;">Official milestones for Odd & Even Semesters · SRMIST Delhi-NCR Campus</div>
+            </div>
+
+            <div style="display:flex; gap:8px;" id="cal-filter-bar">
+              <button class="btn btn-sm btn-ghost active" data-calcat="all" style="font-weight:700;">All Events</button>
+              <button class="btn btn-sm btn-ghost" data-calcat="Examination">Examinations</button>
+              <button class="btn btn-sm btn-ghost" data-calcat="Holiday">Holidays</button>
+              <button class="btn btn-sm btn-ghost" data-calcat="Academic">Academic</button>
+            </div>
+          </div>
+
+          <!-- Calendar Events Grid -->
+          <div class="calendar-timeline-grid" id="cal-events-mount"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STUDENT VIEW 9: Course Syllabus & Curriculum -->
+    <section id="view-syllabus" class="view-pane">
+      <div style="max-width:1100px; margin:0 auto;">
+        <div class="card" style="padding:28px; background:#FFFFFF; margin-bottom:24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:20px;">
+            <div>
+              <h2 style="font-size:20px; font-weight:800; color:#0F172A; margin:0 0 4px;">Curriculum & Course Syllabus Repository</h2>
+              <div style="font-size:13px; color:#64748B;">Complete 5-unit module breakdown, L-T-P-C credits, and reference textbooks</div>
+            </div>
+
+            <select id="syllabus-course-select" style="min-width:260px;"></select>
+          </div>
+
+          <div id="syllabus-content-mount"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STUDENT VIEW 10: Official Campus Notices & Circulars -->
+    <section id="view-notices" class="view-pane">
+      <div style="max-width:1000px; margin:0 auto;">
+        <div class="card" style="padding:28px; background:#FFFFFF; margin-bottom:24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:20px;">
+            <div>
+              <h2 style="font-size:20px; font-weight:800; color:#0F172A; margin:0 0 4px;">Official Campus Circulars & Notice Board</h2>
+              <div style="font-size:13px; color:#64748B;">Authenticated notices issued by the Registrar, Controller of Examinations & Deans</div>
+            </div>
+
+            <div style="display:flex; gap:8px;" id="notice-filter-pills">
+              <button class="btn btn-sm btn-ghost active" data-notcat="all" style="font-weight:700;">All Circulars</button>
+              <button class="btn btn-sm btn-ghost" data-notcat="Examination">Examinations</button>
+              <button class="btn btn-sm btn-ghost" data-notcat="Financial">Fee & Finance</button>
+              <button class="btn btn-sm btn-ghost" data-notcat="Administration">Administration</button>
+              <button class="btn btn-sm btn-ghost" data-notcat="Events">Events</button>
+            </div>
+          </div>
+
+          <div class="notices-feed" id="notices-list-mount"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STUDENT VIEW 11: Online Fee Payment & Receipt Minting -->
+    <section id="view-feepay" class="view-pane">
+      <div style="max-width:1050px; margin:0 auto;">
+        <div style="display:grid; grid-template-columns:1.3fr 1fr; gap:24px;">
+          <!-- Left: Fee Payment Checkout -->
+          <div class="card" style="padding:28px; background:#FFFFFF;">
+            <h2 style="font-size:20px; font-weight:800; color:#0F172A; margin:0 0 4px;">Online Student Fee Payment Desk</h2>
+            <div style="font-size:13px; color:#64748B; margin-bottom:20px;">Instant digital receipt minting with cryptographic university verification</div>
+
+            <form id="fee-pay-form">
+              <div class="field">
+                <label>Student Roll Number or Admission ID *</label>
+                <div style="display:flex; gap:10px;">
+                  <input type="text" id="feepay-roll" placeholder="e.g. 26CS696" required style="flex:1;">
+                  <button type="button" class="btn btn-ghost btn-sm" id="feepay-autofill-btn">Fetch Details</button>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label>Student Full Name *</label>
+                  <input type="text" id="feepay-name" placeholder="Student name" required>
+                </div>
+                <div class="field">
+                  <label>Enrolled Programme *</label>
+                  <input type="text" id="feepay-course" placeholder="e.g. B.Tech Computer Science (Core)" required>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label>Fee Head Category *</label>
+                  <select id="feepay-head">
+                    <option value="Tuition Fee (Semester 1)">Tuition Fee (Semester 1) — ₹1,25,000</option>
+                    <option value="Annual Tuition Fee">Full Year Tuition Fee — ₹2,50,000</option>
+                    <option value="Hostel & Mess Fee">Campus Hostel & Mess (Annual) — ₹1,10,000</option>
+                    <option value="Transport Route Fee">Campus AC Bus Transport — ₹35,000</option>
+                    <option value="Examination & Laboratory Fee">Exam & Lab Fee — ₹15,000</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label>Payment Amount (INR ₹) *</label>
+                  <input type="number" id="feepay-amount" value="125000" required>
+                </div>
+              </div>
+
+              <div class="field">
+                <label>Payment Gateway Method *</label>
+                <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin-top:6px;">
+                  <label style="display:flex; align-items:center; gap:8px; padding:10px; border:1px solid var(--border-medium); border-radius:8px; cursor:pointer; font-size:12.5px; font-weight:600;">
+                    <input type="radio" name="paymethod" value="Online UPI (GPay / PhonePe / Paytm)" checked>
+                    <span>📱 UPI Instant</span>
+                  </label>
+                  <label style="display:flex; align-items:center; gap:8px; padding:10px; border:1px solid var(--border-medium); border-radius:8px; cursor:pointer; font-size:12.5px; font-weight:600;">
+                    <input type="radio" name="paymethod" value="NetBanking (HDFC / SBI / ICICI)">
+                    <span>🏛️ NetBanking</span>
+                  </label>
+                  <label style="display:flex; align-items:center; gap:8px; padding:10px; border:1px solid var(--border-medium); border-radius:8px; cursor:pointer; font-size:12.5px; font-weight:600;">
+                    <input type="radio" name="paymethod" value="Debit / Credit Card (Visa / MC)">
+                    <span>💳 Debit/Credit</span>
+                  </label>
+                </div>
+              </div>
+
+              <div style="margin-top:24px;">
+                <button type="submit" class="btn btn-primary btn-lg" style="width:100%; background:#1E3A8A; border-color:#1E3A8A; font-weight:700;">
+                  <span>🔒 Authorize & Mint Official Receipt (₹<span id="btn-amt-display">1,25,000</span>)</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Right: Fee Structures Reference & Recent Receipts -->
+          <div style="display:flex; flex-direction:column; gap:20px;">
+            <div class="card" style="padding:22px; background:#FFFFFF;">
+              <h3 style="font-size:16px; font-weight:700; color:#0F172A; margin:0 0 10px;">Programme Fee Highlights</h3>
+              <div style="font-size:12.5px; color:#64748B; line-height:1.6; margin-bottom:14px;">
+                All fees are statutory and payable per semester or annually as per SRMIST guidelines.
+              </div>
+              <div id="feepay-structure-summary" style="display:flex; flex-direction:column; gap:8px;"></div>
+            </div>
+
+            <div class="card" style="padding:22px; background:#FFFFFF;">
+              <h3 style="font-size:16px; font-weight:700; color:#0F172A; margin:0 0 10px;">Recent Paid Receipts</h3>
+              <div id="feepay-recent-receipts" style="display:flex; flex-direction:column; gap:8px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MANAGEMENT VIEW: Notice Publisher -->
+    <section id="view-notice-mgr" class="view-pane">
+      <div style="max-width:840px; margin:0 auto;">
+        <div class="card" style="padding:32px; background:#FFFFFF;">
+          <h2 style="font-size:20px; font-weight:800; color:#0F172A; margin:0 0 6px;">Issue Official University Circular</h2>
+          <p style="font-size:13.5px; color:#64748B; margin-bottom:24px;">Published circulars will appear instantly on the Student Portal notice board and mobile feeds.</p>
+
+          <form id="notice-publish-form">
+            <div class="field">
+              <label>Circular Subject / Title *</label>
+              <input type="text" id="notpub-title" placeholder="e.g. Schedule for End-Semester Practical Examinations" required>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label>Category *</label>
+                <select id="notpub-category">
+                  <option value="Academic">Academic Affairs</option>
+                  <option value="Examination">Examination & CIA</option>
+                  <option value="Financial">Fee & Accounts</option>
+                  <option value="Administration">Administration & Proctor</option>
+                  <option value="Events">Campus Events & Fest</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label>Priority Level *</label>
+                <select id="notpub-priority">
+                  <option value="Normal">Normal Notice</option>
+                  <option value="Urgent">🔴 Urgent / High Priority</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label>Issuing Authority / Officer *</label>
+                <input type="text" id="notpub-author" value="Prof. (Dr.) R. P. Mahapatra (Dean)" required>
+              </div>
+              <div class="field">
+                <label>Issuing Department *</label>
+                <input type="text" id="notpub-dept" value="Office of the Dean & Registrar" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Circular Body Content *</label>
+              <textarea id="notpub-content" rows="5" placeholder="Enter full official notification text..." required style="width:100%; padding:12px; border:1px solid var(--border-medium); border-radius:8px; font-size:13.5px; line-height:1.6;"></textarea>
+            </div>
+
+            <div class="field">
+              <label>Attachment URL (Optional PDF Link)</label>
+              <input type="url" id="notpub-attach" placeholder="https://srmist.edu.in/downloads/circular.pdf">
+            </div>
+
+            <div style="margin-top:20px; display:flex; justify-content:flex-end; gap:12px;">
+              <button type="submit" class="btn btn-primary" style="background:#0F172A; border-color:#0F172A; font-weight:700;">
+                <span>📢 Disseminate & Publish Notice</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- MANAGEMENT VIEW: Fee Collection Ledger -->
+    <section id="view-fee-ledger" class="view-pane">
+      <div style="max-width:1100px; margin:0 auto;">
+        <div class="card" style="padding:28px; background:#FFFFFF; margin-bottom:24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:20px;">
+            <div>
+              <h2 style="font-size:20px; font-weight:800; color:#0F172A; margin:0 0 4px;">Institutional Fee Collection Ledger</h2>
+              <div style="font-size:13px; color:#64748B;">Audit trail of all online fee transactions, receipts, and branch collections</div>
+            </div>
+
+            <div style="display:flex; gap:10px;">
+              <button class="btn btn-emerald btn-sm" id="export-fees-csv">
+                <span>📥 Export Fee Ledger (CSV)</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="kpi-grid" id="fee-kpi-row" style="margin-bottom:24px;"></div>
+
+          <div class="table-container" id="fee-transactions-table"></div>
         </div>
       </div>
     </section>

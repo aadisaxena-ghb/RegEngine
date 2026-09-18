@@ -1,11 +1,16 @@
 package com.campus;
 
+import com.campus.http.AcademicCalendarHandler;
 import com.campus.http.AttendanceHandler;
 import com.campus.http.CoursesHandler;
+import com.campus.http.CurriculumHandler;
 import com.campus.http.DashboardHandler;
 import com.campus.http.FacultyHandler;
+import com.campus.http.FeesHandler;
+import com.campus.http.NoticesHandler;
 import com.campus.http.StaticFileHandler;
 import com.campus.http.StudentsHandler;
+import com.campus.http.TimetableHandler;
 import com.campus.store.AppData;
 import com.sun.net.httpserver.HttpServer;
 
@@ -33,6 +38,11 @@ public class Main {
         server.createContext("/api/attendance", new AttendanceHandler(data));
         server.createContext("/api/courses", new CoursesHandler(data));
         server.createContext("/api/dashboard", new DashboardHandler(data));
+        server.createContext("/api/notices", new NoticesHandler(data));
+        server.createContext("/api/calendar", new AcademicCalendarHandler(data));
+        server.createContext("/api/timetable", new TimetableHandler(data));
+        server.createContext("/api/curriculum", new CurriculumHandler());
+        server.createContext("/api/fees", new FeesHandler(data));
         server.createContext("/", new StaticFileHandler(frontendDir));
 
         server.start();
@@ -42,6 +52,8 @@ public class Main {
         System.out.println(" Portal: http://localhost:" + port + "/");
         System.out.println(" App:    http://localhost:" + port + "/app.html");
         System.out.println(" API:    http://localhost:" + port + "/api/dashboard");
+        System.out.println(" Notices: http://localhost:" + port + "/api/notices");
+        System.out.println(" Fees:   http://localhost:" + port + "/api/fees");
         System.out.println(" Data:   " + dataDir.toAbsolutePath());
         System.out.println("========================================================");
     }

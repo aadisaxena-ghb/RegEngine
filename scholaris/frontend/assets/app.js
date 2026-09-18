@@ -42,6 +42,17 @@
     attendance: [],
     courses: [],
     dashboard: null,
+    notices: [],
+    calendar: [],
+    timetable: [],
+    curriculum: [],
+    feeStructures: [],
+    feePayments: [],
+    activeTimetableDay: "Monday",
+    activeTimetableCourse: "CSE-CORE",
+    activeCalendarFilter: "all",
+    activeNoticeFilter: "all",
+    activeSyllabusCourse: "CSE-CORE",
     portalMode: "student", // "student" or "management"
     authFaculty: (function(){
       try {
@@ -145,13 +156,25 @@
       apiGet("/faculty"),
       apiGet("/attendance"),
       apiGet("/courses"),
-      apiGet("/dashboard")
+      apiGet("/dashboard"),
+      apiGet("/notices"),
+      apiGet("/calendar"),
+      apiGet("/timetable"),
+      apiGet("/curriculum"),
+      apiGet("/fees")
     ]).then(function(results){
       state.students = results[0] || [];
       state.faculty = results[1] || [];
       state.attendance = results[2] || [];
       state.courses = results[3] || [];
       state.dashboard = results[4] || null;
+      state.notices = results[5] || [];
+      state.calendar = results[6] || [];
+      state.timetable = results[7] || [];
+      state.curriculum = results[8] || [];
+      var feeData = results[9] || {};
+      state.feeStructures = feeData.feeStructures || [];
+      state.feePayments = feeData.payments || [];
 
       updateBadges();
       return state;
@@ -548,6 +571,11 @@
     "register":           { title: "Student Admission Registration", meta: "Comprehensive multi-page student admission and registration form", portal: "student" },
     "student-idcard":     { title: "Digital Student ID Badge", meta: "Live 3D holographic student identity badge and cryptographic QR verification", portal: "student" },
     "student-status":     { title: "Admission Dossier & Status", meta: "Official registration particulars, parent contacts, and branch allotment", portal: "student" },
+    "timetable":          { title: "Weekly Class Timetable", meta: "Official lecture slots, room allocations, and faculty assignments", portal: "student" },
+    "calendar":           { title: "Academic Calendar (2026–2027)", meta: "Examination dates, semester milestones, continuous assessments, and holidays", portal: "student" },
+    "syllabus":           { title: "Course Curriculum & Syllabus", meta: "5-unit syllabus breakdown, L-T-P-C credits, and reference textbooks", portal: "student" },
+    "notices":            { title: "Campus Notices & Circulars", meta: "Official authenticated notifications issued by the Registrar and Examination Cell", portal: "student" },
+    "feepay":             { title: "Online Student Fee Payment Desk", meta: "Instant digital receipt minting with cryptographic university verification", portal: "student" },
     "student-courses":    { title: "SRMIST Academic Catalog", meta: "All 16 undergraduate and postgraduate programmes, seat caps, and departments", portal: "student" },
     "student-attendance": { title: "Attendance Self-Check", meta: "Check personal attendance percentage against the mandatory 75% university rule", portal: "student" },
     "student-helpdesk":   { title: "Admissions Helpdesk & FAQs", meta: "Registrar contacts, campus helplines, and answers to common queries", portal: "student" },
@@ -556,6 +584,8 @@
     "dashboard":  { title: "Executive Campus Dashboard", meta: "Branch intake capacity, enrolment metrics, and telemetry ledger", portal: "management" },
     "records":    { title: "Master Student Register", meta: "Official university register, search, branch filters, dossier reviews, and ID badges", portal: "management" },
     "attendance": { title: "Daily Attendance Marking", meta: "1-tap class roster check-in and 75% statutory attendance monitor", portal: "management" },
+    "notice-mgr": { title: "Publish Official Circulars", meta: "Disseminate notices to the student portal and campus mobile feeds", portal: "management" },
+    "fee-ledger": { title: "Institutional Fee Ledger", meta: "Real-time fee collection analytics, student dues ledger, and payment audit", portal: "management" },
     "faculty":    { title: "Faculty & Staff Directory", meta: "95 verified professors across 7 departments, subject allocations, and staff records", portal: "management" },
     "courses":    { title: "Branch Seat Quotas & Allocation", meta: "Intake capacity and remaining available seats per engineering stream", portal: "management" },
     "export":     { title: "Institutional Data & Audit Center", meta: "Download CSV rosters, attendance ledgers, and raw JSON database backups", portal: "management" }
@@ -808,11 +838,18 @@
     if (viewName === "register") initRegistrationForm();
     if (viewName === "student-idcard") renderStudentIdCardView();
     if (viewName === "student-status") renderStudentStatusView();
+    if (viewName === "timetable") renderTimetable();
+    if (viewName === "calendar") renderCalendar();
+    if (viewName === "syllabus") renderCurriculum();
+    if (viewName === "notices") renderNotices();
+    if (viewName === "feepay") renderFeePay();
     if (viewName === "student-courses") renderStudentCoursesView();
     if (viewName === "student-attendance") renderStudentAttendanceView();
     if (viewName === "records") renderRecords();
     if (viewName === "dashboard") renderDashboard();
     if (viewName === "attendance") renderAttendance();
+    if (viewName === "notice-mgr") initNoticePublisher();
+    if (viewName === "fee-ledger") renderFeeLedger();
     if (viewName === "faculty") renderFaculty();
     if (viewName === "courses") renderCourses();
   }
@@ -2220,6 +2257,648 @@
         if (selected) selected.click();
       }
     });
+  }
+
+  /* ================= 1. Academic Timetable Controller ================= */
+  function renderTimetable() {
+    var sel = document.getElementById("tt-course-select");
+    if (sel && !sel.children.length) {
+      COURSES.forEach(function(c){
+        var opt = document.createElement("option");
+        opt.value = c.code;
+        opt.textContent = c.name + " (" + c.code + ")";
+        sel.appendChild(opt);
+      });
+      sel.value = state.activeTimetableCourse;
+      sel.addEventListener("change", function(){
+        state.activeTimetableCourse = sel.value;
+        renderTimetableSlots();
+      });
+    }
+
+    var dayTabs = document.getElementById("tt-day-tabs");
+    if (dayTabs && !dayTabs.dataset.bound) {
+      dayTabs.dataset.bound = "true";
+      dayTabs.querySelectorAll(".tt-day-btn").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          dayTabs.querySelectorAll(".tt-day-btn").forEach(function(b){ b.classList.remove("active"); });
+          btn.classList.add("active");
+          state.activeTimetableDay = btn.getAttribute("data-day");
+          renderTimetableSlots();
+        });
+      });
+    }
+
+    var printBtn = document.getElementById("print-tt-btn");
+    if (printBtn && !printBtn.dataset.bound) {
+      printBtn.dataset.bound = "true";
+      printBtn.addEventListener("click", function(){ window.print(); });
+    }
+
+    renderTimetableSlots();
+  }
+
+  function renderTimetableSlots() {
+    var mount = document.getElementById("tt-slots-mount");
+    if (!mount) return;
+
+    var day = state.activeTimetableDay || "Monday";
+    var course = state.activeTimetableCourse || "CSE-CORE";
+
+    var slots = state.timetable.filter(function(t){
+      return t.day === day && (t.courseCode === course || t.courseCode === "CSE-CORE");
+    });
+
+    if (!slots.length) {
+      mount.innerHTML = '<div style="grid-column:1/-1; padding:32px; text-align:center; color:#64748B; background:#F8FAFC; border-radius:12px;">No lectures scheduled for ' + esc(day) + '.</div>';
+      return;
+    }
+
+    mount.innerHTML = slots.map(function(s){
+      var isLab = s.type && s.type.toLowerCase() === "lab";
+      return '<div class="timetable-card ' + (isLab ? 'lab-card' : '') + '">' +
+        '<div>' +
+          '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">' +
+            '<span class="slot-time-badge">⏰ ' + esc(s.timeSlot) + '</span>' +
+            '<span class="slot-room-tag">🏛️ ' + esc(s.roomNo) + '</span>' +
+          '</div>' +
+          '<h3 style="font-size:15px; font-weight:800; color:#0F172A; margin:0 0 4px;">' + esc(s.subjectName) + '</h3>' +
+          '<div style="font-family:var(--font-mono); font-size:11.5px; color:#2563EB; font-weight:600; margin-bottom:8px;">' + esc(s.subjectCode) + ' · ' + esc(s.type) + '</div>' +
+        '</div>' +
+        '<div style="border-top:1px solid rgba(0,0,0,0.06); padding-top:8px; font-size:12px; color:#475569; display:flex; align-items:center; gap:6px;">' +
+          '<span>👨‍🏫</span> <strong>' + esc(s.facultyName) + '</strong>' +
+        '</div>' +
+      '</div>';
+    }).join("");
+  }
+
+  /* ================= 2. Academic Calendar Controller ================= */
+  function renderCalendar() {
+    var filterBar = document.getElementById("cal-filter-bar");
+    if (filterBar && !filterBar.dataset.bound) {
+      filterBar.dataset.bound = "true";
+      filterBar.querySelectorAll("button").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          filterBar.querySelectorAll("button").forEach(function(b){ b.classList.remove("active"); });
+          btn.classList.add("active");
+          state.activeCalendarFilter = btn.getAttribute("data-calcat");
+          renderCalendarEvents();
+        });
+      });
+    }
+    renderCalendarEvents();
+  }
+
+  function renderCalendarEvents() {
+    var mount = document.getElementById("cal-events-mount");
+    if (!mount) return;
+
+    var filter = state.activeCalendarFilter || "all";
+    var events = state.calendar.filter(function(e){
+      return filter === "all" || e.category === filter;
+    });
+
+    if (!events.length) {
+      mount.innerHTML = '<div style="grid-column:1/-1; padding:32px; text-align:center; color:#64748B; background:#F8FAFC; border-radius:12px;">No calendar milestones found for this filter.</div>';
+      return;
+    }
+
+    var monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+
+    mount.innerHTML = events.map(function(ev){
+      var parts = (ev.startDate || "2026-08-01").split("-");
+      var monthIdx = parseInt(parts[1], 10) - 1;
+      var monthStr = monthNames[monthIdx] || "AUG";
+      var dayStr = parts[2] || "01";
+
+      var badgeClass = ev.category === "Examination" ? "badge-danger" : ev.category === "Holiday" ? "badge-gold" : "badge-primary";
+
+      return '<div class="calendar-event-card">' +
+        '<div class="cal-date-badge">' +
+          '<div class="day">' + esc(dayStr) + '</div>' +
+          '<div class="month">' + esc(monthStr) + '</div>' +
+        '</div>' +
+        '<div style="flex:1;">' +
+          '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px; gap:8px;">' +
+            '<span class="badge ' + badgeClass + '" style="font-size:10px; font-weight:700;">' + esc(ev.category.toUpperCase()) + '</span>' +
+            '<span style="font-size:11px; color:#64748B; font-weight:600;">' + esc(ev.semester) + '</span>' +
+          '</div>' +
+          '<h3 style="font-size:15px; font-weight:800; color:#0F172A; margin:0 0 6px;">' + esc(ev.title) + '</h3>' +
+          '<p style="font-size:12.5px; color:#64748B; line-height:1.5; margin:0 0 8px;">' + esc(ev.description) + '</p>' +
+          '<div style="font-size:11.5px; color:#475569;">📍 ' + esc(ev.location) + '</div>' +
+        '</div>' +
+      '</div>';
+    }).join("");
+  }
+
+  /* ================= 3. Course Curriculum & Syllabus ================= */
+  function renderCurriculum() {
+    var sel = document.getElementById("syllabus-course-select");
+    if (sel && !sel.children.length) {
+      state.curriculum.forEach(function(c){
+        var opt = document.createElement("option");
+        opt.value = c.courseCode;
+        opt.textContent = c.courseTitle;
+        sel.appendChild(opt);
+      });
+      sel.value = state.activeSyllabusCourse;
+      sel.addEventListener("change", function(){
+        state.activeSyllabusCourse = sel.value;
+        renderCurriculumContent();
+      });
+    }
+    renderCurriculumContent();
+  }
+
+  function renderCurriculumContent() {
+    var mount = document.getElementById("syllabus-content-mount");
+    if (!mount) return;
+
+    var cur = state.curriculum.find(function(c){ return c.courseCode === state.activeSyllabusCourse; }) || state.curriculum[0];
+    if (!cur) {
+      mount.innerHTML = '<div style="padding:24px; color:#64748B;">Curriculum data loading...</div>';
+      return;
+    }
+
+    var html = '<div style="background:#F8FAFC; border:1px solid var(--border-medium); border-radius:12px; padding:20px; margin-bottom:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">' +
+      '<div>' +
+        '<h3 style="font-size:17px; font-weight:800; color:#0F172A; margin:0 0 4px;">' + esc(cur.courseTitle) + '</h3>' +
+        '<div style="font-size:12.5px; color:#64748B;">Programme Duration: <strong>' + esc(cur.duration) + '</strong> · Total Graduation Credits: <strong>' + esc(cur.totalCredits) + '</strong></div>' +
+      '</div>' +
+      '<span class="badge badge-emerald" style="font-size:12px; font-weight:700;">NAAC A++ ACCREDITED</span>' +
+    '</div>';
+
+    html += '<div style="display:flex; flex-direction:column; gap:16px;">';
+    (cur.subjects || []).forEach(function(sub){
+      html += '<div class="card" style="padding:20px; background:#FFFFFF; border:1px solid var(--border-medium);">' +
+        '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; flex-wrap:wrap; gap:8px;">' +
+          '<div>' +
+            '<span class="badge badge-primary" style="font-family:var(--font-mono); font-size:11px; margin-right:8px;">' + esc(sub.code) + '</span>' +
+            '<strong style="font-size:15px; color:#0F172A;">' + esc(sub.title) + '</strong>' +
+          '</div>' +
+          '<div style="display:flex; gap:8px; align-items:center;">' +
+            '<span style="background:#EFF6FF; color:#1E3A8A; font-family:var(--font-mono); font-size:11.5px; font-weight:700; padding:2px 8px; border-radius:4px;">L-T-P-C: ' + esc(sub.structure) + '</span>' +
+            '<span style="font-size:11.5px; color:#64748B; font-weight:600;">' + esc(sub.semester) + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<p style="font-size:13px; color:#475569; line-height:1.5; margin:0 0 12px;">' + esc(sub.description) + '</p>' +
+        '<details style="background:#F8FAFC; border:1px solid var(--border-subtle); border-radius:8px; padding:10px 14px; margin-bottom:10px;">' +
+          '<summary style="font-weight:700; font-size:12.5px; color:#1E3A8A; cursor:pointer;">📖 View 5-Unit Detailed Module Breakdown</summary>' +
+          '<ul style="margin:10px 0 0; padding-left:20px; font-size:12.5px; color:#334155; line-height:1.7;">' +
+            (sub.units || []).map(function(u){ return '<li>' + esc(u) + '</li>'; }).join("") +
+          '</ul>' +
+        '</details>' +
+        '<div style="font-size:12px; color:#64748B;"><strong>Prescribed Textbooks:</strong> ' + esc(sub.textbooks) + '</div>' +
+      '</div>';
+    });
+    html += '</div>';
+
+    mount.innerHTML = html;
+  }
+
+  /* ================= 4. Campus Notices & Circulars ================= */
+  function renderNotices() {
+    var pills = document.getElementById("notice-filter-pills");
+    if (pills && !pills.dataset.bound) {
+      pills.dataset.bound = "true";
+      pills.querySelectorAll("button").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          pills.querySelectorAll("button").forEach(function(b){ b.classList.remove("active"); });
+          btn.classList.add("active");
+          state.activeNoticeFilter = btn.getAttribute("data-notcat");
+          renderNoticesFeed();
+        });
+      });
+    }
+    renderNoticesFeed();
+  }
+
+  function renderNoticesFeed() {
+    var mount = document.getElementById("notices-list-mount");
+    if (!mount) return;
+
+    var filter = state.activeNoticeFilter || "all";
+    var notices = state.notices.filter(function(n){
+      return filter === "all" || n.category === filter;
+    });
+
+    if (!notices.length) {
+      mount.innerHTML = '<div style="padding:32px; text-align:center; color:#64748B; background:#F8FAFC; border-radius:12px;">No campus circulars found for this category.</div>';
+      return;
+    }
+
+    mount.innerHTML = notices.map(function(n, idx){
+      var isUrgent = n.priority && n.priority.toLowerCase() === "urgent";
+      return '<div class="notice-item-card" data-idx="' + idx + '">' +
+        '<div style="flex:1;">' +
+          '<div style="display:flex; align-items:center; gap:8px; margin-bottom:6px; flex-wrap:wrap;">' +
+            '<span style="font-family:var(--font-mono); font-size:11px; font-weight:700; color:#1E3A8A; background:#DBEAFE; padding:2px 7px; border-radius:4px;">' + esc(n.refNumber) + '</span>' +
+            '<span class="badge ' + (isUrgent ? 'badge-danger' : 'badge-primary') + '" style="font-size:10.5px;">' + esc(n.category) + '</span>' +
+            (isUrgent ? '<span class="notice-priority-urgent">🔴 URGENT</span>' : '') +
+            '<span style="font-size:11.5px; color:#64748B; margin-left:auto;">📅 ' + esc(n.publishDate) + '</span>' +
+          '</div>' +
+          '<h3 style="font-size:15.5px; font-weight:800; color:#0F172A; margin:0 0 6px;">' + esc(n.title) + '</h3>' +
+          '<p style="font-size:13px; color:#64748B; line-height:1.5; margin:0 0 8px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">' + esc(n.content) + '</p>' +
+          '<div style="font-size:11.5px; color:#475569;">🏛️ <strong>' + esc(n.author) + '</strong> (' + esc(n.department) + ')</div>' +
+        '</div>' +
+        '<div style="font-size:18px; color:#1E3A8A;">→</div>' +
+      '</div>';
+    }).join("");
+
+    mount.querySelectorAll(".notice-item-card").forEach(function(card){
+      card.addEventListener("click", function(){
+        var idx = parseInt(card.getAttribute("data-idx"), 10);
+        openNoticeModal(notices[idx]);
+      });
+    });
+  }
+
+  function openNoticeModal(notice) {
+    if (!notice) return;
+    var root = document.getElementById("modal-root");
+    root.innerHTML =
+      '<div class="modal-overlay" id="notice-view-overlay">' +
+        '<div class="official-circular-modal">' +
+          '<div class="circular-modal-head">' +
+            '<div class="circular-seal">SRMIST OFFICIAL NOTICE · NCR CAMPUS</div>' +
+            '<h2 style="font-size:18px; font-weight:800; margin:0 0 6px;">' + esc(notice.title) + '</h2>' +
+            '<div style="font-size:12px; color:#DBEAFE; font-family:var(--font-mono);">Ref: ' + esc(notice.refNumber) + ' · Date: ' + esc(notice.publishDate) + '</div>' +
+            '<button class="modal-close" id="notice-modal-close" style="position:absolute; top:18px; right:18px; color:#FFF;">✕</button>' +
+          '</div>' +
+          '<div class="circular-modal-body">' +
+            '<div style="font-size:12.5px; color:#1E3A8A; font-weight:700; margin-bottom:14px; text-transform:uppercase;">Issuing Authority: ' + esc(notice.author) + ' (' + esc(notice.department) + ')</div>' +
+            '<div style="white-space:pre-wrap; line-height:1.7; color:#334155; margin-bottom:24px;">' + esc(notice.content) + '</div>' +
+            (notice.attachmentUrl ? '<a href="' + esc(notice.attachmentUrl) + '" target="_blank" class="btn btn-sm btn-primary" style="margin-bottom:20px; background:#1E3A8A; border-color:#1E3A8A;">📥 Open Official Circular Attachment</a>' : '') +
+            '<div style="border-top:1px solid #E2E8F0; padding-top:16px; display:flex; justify-content:space-between; align-items:center; font-size:12px; color:#64748B;">' +
+              '<div>Authenticated by SRMIST Registrar Secretariat</div>' +
+              '<button class="btn btn-ghost btn-sm" onclick="window.print()">🖨️ Print Notice</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+    root.querySelector("#notice-modal-close").addEventListener("click", closeModal);
+    root.querySelector("#notice-view-overlay").addEventListener("click", function(e){
+      if (e.target.id === "notice-view-overlay") closeModal();
+    });
+  }
+
+  function initNoticePublisher() {
+    var form = document.getElementById("notice-publish-form");
+    if (!form || form.dataset.bound) return;
+    form.dataset.bound = "true";
+
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+      var title = document.getElementById("notpub-title").value.trim();
+      var category = document.getElementById("notpub-category").value;
+      var priority = document.getElementById("notpub-priority").value;
+      var author = document.getElementById("notpub-author").value.trim();
+      var dept = document.getElementById("notpub-dept").value.trim();
+      var content = document.getElementById("notpub-content").value.trim();
+      var attach = document.getElementById("notpub-attach").value.trim();
+
+      if (!title || !content) {
+        showToast("Please fill in circular title and body content", "error");
+        return;
+      }
+
+      apiPost("/notices", {
+        title: title,
+        category: category,
+        priority: priority,
+        author: author,
+        department: dept,
+        content: content,
+        attachmentUrl: attach
+      }).then(function(newNotice){
+        state.notices.unshift(newNotice);
+        showToast("Official Circular Published Successfully!");
+        triggerConfetti();
+        form.reset();
+        switchView("notices");
+      }).catch(function(err){
+        showToast("Publishing Failed: " + err.message, "error");
+      });
+    });
+  }
+
+  /* ================= 5. Online Student Fee Payment & Minted Receipts ================= */
+  function renderFeePay() {
+    var form = document.getElementById("fee-pay-form");
+    var headSelect = document.getElementById("feepay-head");
+    var amtInput = document.getElementById("feepay-amount");
+    var amtDisplay = document.getElementById("btn-amt-display");
+    var autofillBtn = document.getElementById("feepay-autofill-btn");
+
+    if (headSelect && !headSelect.dataset.bound) {
+      headSelect.dataset.bound = "true";
+      headSelect.addEventListener("change", function(){
+        var h = headSelect.value;
+        var amt = 125000;
+        if (h.indexOf("2,50,000") > -1) amt = 250000;
+        else if (h.indexOf("1,10,000") > -1) amt = 110000;
+        else if (h.indexOf("35,000") > -1) amt = 35000;
+        else if (h.indexOf("15,000") > -1) amt = 15000;
+        amtInput.value = amt;
+        if (amtDisplay) amtDisplay.textContent = Number(amt).toLocaleString("en-IN");
+      });
+    }
+
+    if (amtInput && !amtInput.dataset.bound) {
+      amtInput.dataset.bound = "true";
+      amtInput.addEventListener("input", function(){
+        if (amtDisplay) amtDisplay.textContent = Number(amtInput.value || 0).toLocaleString("en-IN");
+      });
+    }
+
+    if (autofillBtn && !autofillBtn.dataset.bound) {
+      autofillBtn.dataset.bound = "true";
+      autofillBtn.addEventListener("click", function(){
+        var stu = state.students[0];
+        if (stu) {
+          document.getElementById("feepay-roll").value = stu.rollNumber;
+          document.getElementById("feepay-name").value = stu.name;
+          document.getElementById("feepay-course").value = stu.course || "B.Tech CSE";
+          showToast("Loaded student: " + stu.name + " (" + stu.rollNumber + ")");
+        } else {
+          showToast("No enrolled students found. Register a student first.", "error");
+        }
+      });
+    }
+
+    if (form && !form.dataset.bound) {
+      form.dataset.bound = "true";
+      form.addEventListener("submit", function(e){
+        e.preventDefault();
+        var roll = document.getElementById("feepay-roll").value.trim();
+        var name = document.getElementById("feepay-name").value.trim();
+        var course = document.getElementById("feepay-course").value.trim();
+        var head = document.getElementById("feepay-head").value;
+        var amount = document.getElementById("feepay-amount").value.trim();
+        var payMode = (form.querySelector("input[name='paymethod']:checked") || {}).value || "Online UPI";
+
+        if (!roll || !name) {
+          showToast("Roll number and student name are required", "error");
+          return;
+        }
+
+        apiPost("/fees", {
+          studentRoll: roll,
+          studentName: name,
+          course: course,
+          feeHead: head,
+          amount: amount,
+          paymentMode: payMode
+        }).then(function(receiptData){
+          state.feePayments.unshift(receiptData);
+          showToast("Payment Successful! Official Receipt Minted.");
+          triggerConfetti();
+          openFeeReceiptModal(receiptData);
+          renderRecentFeeReceipts();
+        }).catch(function(err){
+          showToast("Payment Failed: " + err.message, "error");
+        });
+      });
+    }
+
+    renderFeeStructureSummary();
+    renderRecentFeeReceipts();
+  }
+
+  function renderFeeStructureSummary() {
+    var mount = document.getElementById("feepay-structure-summary");
+    if (!mount) return;
+
+    mount.innerHTML = state.feeStructures.slice(0, 4).map(function(f){
+      return '<div style="background:#F8FAFC; border:1px solid var(--border-subtle); border-radius:8px; padding:10px 12px; display:flex; justify-content:space-between; align-items:center;">' +
+        '<div>' +
+          '<strong style="font-size:12.5px; color:#0F172A;">' + esc(f.courseCode) + '</strong>' +
+          '<div style="font-size:11px; color:#64748B;">Per Sem: ' + esc(f.semesterTuition) + '</div>' +
+        '</div>' +
+        '<span style="font-family:var(--font-mono); font-size:12px; font-weight:700; color:#1E3A8A;">' + esc(f.annualTuition) + '/yr</span>' +
+      '</div>';
+    }).join("");
+  }
+
+  function renderRecentFeeReceipts() {
+    var mount = document.getElementById("feepay-recent-receipts");
+    if (!mount) return;
+
+    if (!state.feePayments.length) {
+      mount.innerHTML = '<div style="font-size:12px; color:#64748B;">No recent payments recorded.</div>';
+      return;
+    }
+
+    mount.innerHTML = state.feePayments.slice(0, 5).map(function(p, idx){
+      return '<div class="card" style="padding:10px 12px; background:#F8FAFC; border:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center; cursor:pointer;" data-payidx="' + idx + '">' +
+        '<div>' +
+          '<div style="font-weight:700; font-size:12px; color:#0F172A;">' + esc(p.studentName) + ' (' + esc(p.studentRoll) + ')</div>' +
+          '<div style="font-size:11px; color:#10B981; font-weight:600;">₹' + Number(p.amount).toLocaleString("en-IN") + ' · ' + esc(p.feeHead) + '</div>' +
+        '</div>' +
+        '<span class="badge badge-emerald" style="font-size:10px;">RECEIPT 🖨️</span>' +
+      '</div>';
+    }).join("");
+
+    mount.querySelectorAll("[data-payidx]").forEach(function(el){
+      el.addEventListener("click", function(){
+        var idx = parseInt(el.getAttribute("data-payidx"), 10);
+        openFeeReceiptModal(state.feePayments[idx]);
+      });
+    });
+  }
+
+  function openFeeReceiptModal(p) {
+    if (!p) return;
+    var root = document.getElementById("modal-root");
+    var qrId = "receipt-qr-" + Math.floor(Math.random() * 10000);
+
+    root.innerHTML =
+      '<div class="modal-overlay" id="receipt-modal-overlay">' +
+        '<div class="modal-window" style="max-width:640px; background:#FFFFFF; padding:0; overflow:hidden;">' +
+          '<div style="padding:16px 20px; background:#0F172A; color:#FFF; display:flex; justify-content:space-between; align-items:center;">' +
+            '<strong style="font-size:14px;">Official Student Fee Payment Receipt</strong>' +
+            '<button class="modal-close" id="receipt-modal-close" style="color:#FFF;">✕</button>' +
+          '</div>' +
+          '<div style="padding:28px;">' +
+            '<div class="official-fee-receipt" id="printable-fee-receipt">' +
+              '<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #0F172A; padding-bottom:14px; margin-bottom:16px;">' +
+                '<div style="display:flex; align-items:center; gap:12px;">' +
+                  '<div class="receipt-crest">R</div>' +
+                  '<div>' +
+                    '<h2 style="font-size:17px; font-weight:800; color:#0F172A; margin:0;">SRM Institute of Science & Technology</h2>' +
+                    '<div style="font-size:11px; color:#64748B;">Delhi-NCR Campus, Modinagar, Ghaziabad (UP) – 201204</div>' +
+                  '</div>' +
+                '</div>' +
+                '<div style="text-align:right;">' +
+                  '<div style="font-weight:800; font-size:13px; color:#1E3A8A;">FEE RECEIPT</div>' +
+                  '<div style="font-family:var(--font-mono); font-size:11px; color:#64748B;">' + esc(p.receiptNumber) + '</div>' +
+                '</div>' +
+              '</div>' +
+
+              '<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:12.5px; margin-bottom:16px;">' +
+                '<div><strong>Student Name:</strong> ' + esc(p.studentName) + '</div>' +
+                '<div><strong>Roll Number:</strong> ' + esc(p.studentRoll) + '</div>' +
+                '<div><strong>Course:</strong> ' + esc(p.course) + '</div>' +
+                '<div><strong>Transaction ID:</strong> <span style="font-family:var(--font-mono);">' + esc(p.transactionId) + '</span></div>' +
+                '<div><strong>Payment Date:</strong> ' + esc(p.paymentDate) + '</div>' +
+                '<div><strong>Payment Mode:</strong> ' + esc(p.paymentMode) + '</div>' +
+              '</div>' +
+
+              '<table class="receipt-table">' +
+                '<thead><tr><th>Description / Particulars</th><th style="text-align:right;">Amount (INR ₹)</th></tr></thead>' +
+                '<tbody>' +
+                  '<tr><td>' + esc(p.feeHead) + '</td><td style="text-align:right; font-weight:700;">₹' + Number(p.amount).toLocaleString("en-IN") + '</td></tr>' +
+                  '<tr><td>Transaction Processing & GST</td><td style="text-align:right; color:#10B981;">₹0.00 (Waived)</td></tr>' +
+                  '<tr style="background:#F8FAFC; font-weight:800;"><td>TOTAL AMOUNT RECEIVED</td><td style="text-align:right; font-size:15px; color:#1E3A8A;">₹' + Number(p.amount).toLocaleString("en-IN") + '</td></tr>' +
+                '</tbody>' +
+              '</table>' +
+
+              '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; border-top:1px solid #E2E8F0; padding-top:16px;">' +
+                '<div style="display:flex; align-items:center; gap:12px;">' +
+                  '<div id="' + qrId + '" style="width:58px; height:58px;"></div>' +
+                  '<div style="font-size:10.5px; color:#64748B; line-height:1.4;">' +
+                    'Verified Institutional Receipt<br>' +
+                    'Status: <strong style="color:#10B981;">PAID & CLEARED</strong>' +
+                  '</div>' +
+                '</div>' +
+                '<div style="text-align:center; font-size:11px; color:#64748B;">' +
+                  '<div style="font-weight:700; color:#0F172A;">Finance & Accounts Officer</div>' +
+                  'SRMIST Delhi-NCR Campus' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+
+            '<div style="margin-top:20px; display:flex; justify-content:flex-end; gap:10px;">' +
+              '<button class="btn btn-ghost" id="receipt-close-btn2">Close</button>' +
+              '<button class="btn btn-primary" onclick="window.print()" style="background:#1E3A8A; border-color:#1E3A8A; font-weight:700;">🖨️ Print Official Receipt</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+    // Generate QR Code
+    setTimeout(function(){
+      var qrMount = document.getElementById(qrId);
+      if (qrMount && window.QRCode) {
+        new window.QRCode(qrMount, {
+          text: p.qrPayload || ("SRMIST-FEE|" + p.receiptNumber + "|" + p.studentRoll + "|INR" + p.amount),
+          width: 58,
+          height: 58,
+          colorDark: "#0F172A",
+          colorLight: "#FFFFFF"
+        });
+      }
+    }, 50);
+
+    root.querySelector("#receipt-modal-close").addEventListener("click", closeModal);
+    root.querySelector("#receipt-close-btn2").addEventListener("click", closeModal);
+    root.querySelector("#receipt-modal-overlay").addEventListener("click", function(e){
+      if (e.target.id === "receipt-modal-overlay") closeModal();
+    });
+  }
+
+  /* ================= 6. Management Fee Ledger Controller ================= */
+  function renderFeeLedger() {
+    var kpiMount = document.getElementById("fee-kpi-row");
+    var tableMount = document.getElementById("fee-transactions-table");
+    var exportBtn = document.getElementById("export-fees-csv");
+
+    var totalRevenue = 0;
+    state.feePayments.forEach(function(p){ totalRevenue += Number(p.amount || 0); });
+
+    if (kpiMount) {
+      kpiMount.innerHTML =
+        '<div class="kpi-card">' +
+          '<div class="kpi-label">Total Fee Revenue Collected</div>' +
+          '<div class="kpi-value">₹' + totalRevenue.toLocaleString("en-IN") + '</div>' +
+          '<div class="kpi-sub">Across ' + state.feePayments.length + ' verified transactions</div>' +
+        '</div>' +
+        '<div class="kpi-card">' +
+          '<div class="kpi-label">Total Receipts Minted</div>' +
+          '<div class="kpi-value">' + state.feePayments.length + '</div>' +
+          '<div class="kpi-sub">100% Cryptographic QR Verified</div>' +
+        '</div>' +
+        '<div class="kpi-card">' +
+          '<div class="kpi-label">Average Payment Value</div>' +
+          '<div class="kpi-value">₹' + (state.feePayments.length ? Math.round(totalRevenue / state.feePayments.length).toLocaleString("en-IN") : "0") + '</div>' +
+          '<div class="kpi-sub">Per transaction average</div>' +
+        '</div>' +
+        '<div class="kpi-card">' +
+          '<div class="kpi-label">Payment Gateway Status</div>' +
+          '<div class="kpi-value" style="color:#10B981;">HEALTHY</div>' +
+          '<div class="kpi-sub">UPI / NetBanking / Cards Active</div>' +
+        '</div>';
+    }
+
+    if (tableMount) {
+      if (!state.feePayments.length) {
+        tableMount.innerHTML = '<div style="padding:32px; text-align:center; color:#64748B;">No fee transactions recorded yet.</div>';
+      } else {
+        tableMount.innerHTML =
+          '<table class="data-table">' +
+            '<thead>' +
+              '<tr>' +
+                '<th>Receipt No.</th>' +
+                '<th>Student Name</th>' +
+                '<th>Roll No.</th>' +
+                '<th>Fee Head</th>' +
+                '<th>Amount (₹)</th>' +
+                '<th>Payment Mode</th>' +
+                '<th>Date & Time</th>' +
+                '<th>Action</th>' +
+              '</tr>' +
+            '</thead>' +
+            '<tbody>' +
+              state.feePayments.map(function(p, idx){
+                return '<tr>' +
+                  '<td class="mono" style="font-weight:700; color:#1E3A8A;">' + esc(p.receiptNumber) + '</td>' +
+                  '<td><strong>' + esc(p.studentName) + '</strong></td>' +
+                  '<td class="mono">' + esc(p.studentRoll) + '</td>' +
+                  '<td>' + esc(p.feeHead) + '</td>' +
+                  '<td style="font-weight:700; color:#10B981;">₹' + Number(p.amount).toLocaleString("en-IN") + '</td>' +
+                  '<td>' + esc(p.paymentMode) + '</td>' +
+                  '<td style="font-size:12px; color:#64748B;">' + esc(p.paymentDate) + '</td>' +
+                  '<td><button class="btn btn-ghost btn-sm" data-ledger-idx="' + idx + '">🖨️ View Receipt</button></td>' +
+                '</tr>';
+              }).join("") +
+            '</tbody>' +
+          '</table>';
+
+        tableMount.querySelectorAll("[data-ledger-idx]").forEach(function(b){
+          b.addEventListener("click", function(){
+            var idx = parseInt(b.getAttribute("data-ledger-idx"), 10);
+            openFeeReceiptModal(state.feePayments[idx]);
+          });
+        });
+      }
+    }
+
+    if (exportBtn && !exportBtn.dataset.bound) {
+      exportBtn.dataset.bound = "true";
+      exportBtn.addEventListener("click", function(){
+        if (!state.feePayments.length) {
+          showToast("No transactions to export", "error");
+          return;
+        }
+        var headers = ["Receipt Number", "Transaction ID", "Student Roll", "Student Name", "Course", "Fee Head", "Amount", "Payment Mode", "Payment Date", "Status"];
+        var rows = state.feePayments.map(function(p){
+          return [p.receiptNumber, p.transactionId, p.studentRoll, p.studentName, p.course, p.feeHead, p.amount, p.paymentMode, p.paymentDate, p.status];
+        });
+        var csv = [headers.join(",")].concat(rows.map(function(r){
+          return r.map(function(v){ return '"' + String(v || "").replace(/"/g, '""') + '"'; }).join(",");
+        })).join("\n");
+
+        var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url;
+        a.download = "SRMIST_Fee_Ledger_" + new Date().toISOString().slice(0,10) + ".csv";
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast("Fee Ledger CSV Downloaded");
+      });
+    }
   }
 
   /* ================= Initialization Boot ================= */
