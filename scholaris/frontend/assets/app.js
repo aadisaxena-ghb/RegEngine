@@ -8,19 +8,31 @@
 
   var API = window.SCHOLARIS_API_BASE || "/api";
 
-  /* ================= Academic Disciplines Catalog ================= */
+  /* ================= Academic Disciplines Catalog (SRMIST Delhi-NCR Ghaziabad) ================= */
   var COURSES = [
-    { code: "CSE-CORE", name: "B.Tech Computer Science & Engineering (Core)", capacity: 120 },
-    { code: "CSE-AIML", name: "B.Tech CSE (AI & Machine Learning)", capacity: 80 },
-    { code: "CSE-DS",   name: "B.Tech CSE (Data Science & Analytics)", capacity: 60 },
-    { code: "ECE",      name: "B.Tech Electronics & Communication Engineering", capacity: 90 }
+    { code: "CSE-CORE",  name: "B.Tech Computer Science & Engineering (Core)", capacity: 180, dept: "Computer Science & Engineering" },
+    { code: "CSE-AIML",  name: "B.Tech CSE (AI & Machine Learning)", capacity: 120, dept: "Computer Science & Engineering" },
+    { code: "CSE-DS",    name: "B.Tech CSE (Data Science)", capacity: 60, dept: "Computer Science & Engineering" },
+    { code: "CSE-CYBER", name: "B.Tech CSE (Cyber Security)", capacity: 60, dept: "Computer Science & Engineering" },
+    { code: "CSE-CLOUD", name: "B.Tech CSE (Cloud Computing)", capacity: 60, dept: "Computer Science & Engineering" },
+    { code: "ECE",       name: "B.Tech Electronics & Communication Engineering", capacity: 60, dept: "Electronics & Communication" },
+    { code: "ECE-VLSI",  name: "B.Tech Electronics (VLSI Design & Technology)", capacity: 60, dept: "Electronics & Communication" },
+    { code: "MECH",      name: "B.Tech Mechanical Engineering", capacity: 60, dept: "Mechanical & Automobile Engineering" },
+    { code: "AUTO",      name: "B.Tech Automobile Engineering", capacity: 60, dept: "Mechanical & Automobile Engineering" },
+    { code: "BCA",       name: "Bachelor of Computer Applications (BCA)", capacity: 60, dept: "Computer Applications" },
+    { code: "BCA-DS",    name: "BCA (Data Science)", capacity: 60, dept: "Computer Applications" },
+    { code: "MCA",       name: "Master of Computer Applications (MCA)", capacity: 60, dept: "Computer Applications" },
+    { code: "MCA-AI",    name: "MCA (Generative AI)", capacity: 60, dept: "Computer Applications" },
+    { code: "BBA",       name: "Bachelor of Business Administration (BBA)", capacity: 60, dept: "Management Studies" },
+    { code: "MBA",       name: "Master of Business Administration (MBA)", capacity: 60, dept: "Management Studies" },
+    { code: "BPHARM",    name: "Bachelor of Pharmacy (B.Pharm)", capacity: 60, dept: "Pharmaceutical Sciences" }
   ];
 
   function courseByCode(c) {
     for (var i = 0; i < COURSES.length; i++) {
       if (COURSES[i].code === c) return COURSES[i];
     }
-    return { code: c, name: c, capacity: 100 };
+    return { code: c, name: c, capacity: 60, dept: "Academic Department" };
   }
 
   /* ================= Application State ================= */
@@ -341,10 +353,10 @@
                     '</div>' +
                   '</div>' +
                   '<div class="idcard-grid">' +
-                    '<div><div class="k">Branch</div><div class="v">' + esc(course.name) + '</div></div>' +
+                    '<div class="idcard-grid-full"><div class="k">Branch</div><div class="v">' + esc(course.name) + '</div></div>' +
                     '<div><div class="k">Batch / Year</div><div class="v">' + esc(student.batchYear || "2026–2030") + '</div></div>' +
                     '<div><div class="k">Blood Group</div><div class="v">' + esc(student.bloodGroup || "O+") + '</div></div>' +
-                    '<div><div class="k">Emergency Phone</div><div class="v mono">' + esc(student.emergencyContact || student.phone || "—") + '</div></div>' +
+                    '<div class="idcard-grid-full"><div class="k">Emergency Contact</div><div class="v mono">' + esc(student.emergencyContact || student.phone || "—") + '</div></div>' +
                   '</div>' +
                   '<div class="idcard-qr-section">' +
                     '<div class="idcard-qr-box" id="modal-qr-mount"></div>' +
@@ -614,22 +626,22 @@
     autofillBtn.addEventListener("click", function(){
       var demoStudents = [
         {
-          name: "Aadi Kulkarni", gender: "Male", dob: "2006-04-14", blood: "O+", cat: "General",
-          aadhar: "5482 9102 3841", roll: "26CS101", batch: "2026–2030", c: "CSE-CORE",
-          admtype: "State Merit (KCET/MHT-CET)", p10: "94.2", p12: "96.5", school: "National Public School, Bengaluru",
-          father: "Suresh Kulkarni", fathocc: "Lead Solutions Architect", mother: "Meera Kulkarni", mothocc: "Professor of Chemistry",
-          gphone: "98450 12345", gemail: "suresh.k@gmail.com", phone: "98765 43210", email: "aadi.kulkarni@regengine.edu",
-          emerg: "Suresh Kulkarni (Father) - 98450 12345", address: "Flat 402, Oakwood Enclave, Outer Ring Road",
-          city: "Bengaluru, Karnataka - 560064", accom: "Day Scholar", bus: "College Bus Route 1 (City Center)"
+          name: "Aadi Saxena", gender: "Male", dob: "2006-10-11", blood: "O+", cat: "General",
+          aadhar: "5482 9102 3841", roll: "RA2611003010001", batch: "2026–2030", c: "CSE-CORE",
+          admtype: "National Entrance (JEE Main)", p10: "95.4", p12: "96.8", school: "Delhi Public School, Ghaziabad",
+          father: "Anupam Saxena", fathocc: "Senior Director of Technology", mother: "Meera Saxena", mothocc: "Professor & Academician",
+          gphone: "+91 98450 12345", gemail: "anupam.saxena@gmail.com", phone: "+91 98765 43210", email: "aadi.saxena@regengine.edu",
+          emerg: "Anupam Saxena (Father) - +91 98450 12345", address: "Tower 4, Flat 702, Raj Nagar Extension",
+          city: "Ghaziabad, Uttar Pradesh - 201017", accom: "Day Scholar", bus: "College Bus Route 1 (City Center)"
         },
         {
-          name: "Sneha Sundaram", gender: "Female", dob: "2006-08-22", blood: "A+", cat: "OBC",
-          aadhar: "8721 3491 8023", roll: "26AI204", batch: "2026–2030", c: "CSE-AIML",
-          admtype: "National Entrance (JEE Main)", p10: "96.0", p12: "97.8", school: "Delhi Public School, R.K. Puram",
-          father: "Venkatesh Sundaram", fathocc: "Senior VP Engineering", mother: "Geetha Sundaram", mothocc: "Chartered Accountant",
-          gphone: "99880 54321", gemail: "venkat.s@gmail.com", phone: "99123 45678", email: "sneha.s@regengine.edu",
-          emerg: "Venkatesh S (Father) - 99880 54321", address: "Plot 18, 5th Main, Indiranagar",
-          city: "Bengaluru, Karnataka - 560038", accom: "Campus Hostel (AC Room)", bus: "None / Own Vehicle"
+          name: "Riya Verma", gender: "Female", dob: "2006-08-22", blood: "A+", cat: "General",
+          aadhar: "8721 3491 8023", roll: "RA2611003010042", batch: "2026–2030", c: "CSE-AIML",
+          admtype: "State Merit Entrance", p10: "96.0", p12: "97.5", school: "St. Thomas School, Indirapuram",
+          father: "Rajesh Verma", fathocc: "Executive Director", mother: "Sunita Verma", mothocc: "Chartered Accountant",
+          gphone: "+91 99880 54321", gemail: "rajesh.verma@gmail.com", phone: "+91 99123 45678", email: "riya.verma@regengine.edu",
+          emerg: "Rajesh Verma (Father) - +91 99880 54321", address: "B-12, Sector 14, Vasundhara",
+          city: "Ghaziabad, Uttar Pradesh - 201012", accom: "Campus Hostel (AC Room)", bus: "None / Own Vehicle"
         }
       ];
 

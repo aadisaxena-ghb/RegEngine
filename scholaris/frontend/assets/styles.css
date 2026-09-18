@@ -624,9 +624,12 @@ table.data-table tbody tr:last-child td {
   display: flex;
   justify-content: center;
   padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
 .idcard-3d {
-  width: 360px;
+  width: 390px;
+  max-width: 100%;
   background: linear-gradient(135deg, #131D2D 0%, #0C121D 100%);
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.16);
@@ -636,6 +639,7 @@ table.data-table tbody tr:last-child td {
   color: #FFFFFF;
   transform-style: preserve-3d;
   transition: transform 0.1s ease-out, box-shadow 0.2s ease;
+  box-sizing: border-box;
 }
 
 .idcard-holo-sheen {
@@ -661,7 +665,7 @@ table.data-table tbody tr:last-child td {
 }
 
 .idcard-head {
-  padding: 18px 20px 14px;
+  padding: 16px 18px 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -682,6 +686,7 @@ table.data-table tbody tr:last-child td {
   display: flex; align-items: center; justify-content: center;
   font-size: 16px;
   box-shadow: 0 4px 12px var(--accent-gold-glow);
+  flex-shrink: 0;
 }
 .idcard-inst-name {
   font-family: var(--font-display);
@@ -697,17 +702,17 @@ table.data-table tbody tr:last-child td {
 }
 
 .idcard-body {
-  padding: 20px 20px 16px;
+  padding: 16px 18px;
 }
 .idcard-profile-row {
   display: flex;
-  gap: 16px;
+  gap: 14px;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 .idcard-avatar {
-  width: 68px;
-  height: 68px;
+  width: 60px;
+  height: 60px;
   border-radius: 12px;
   background: linear-gradient(135deg, #1E293B, #0F172A);
   border: 2px solid var(--accent-gold);
@@ -716,21 +721,22 @@ table.data-table tbody tr:last-child td {
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 700;
   box-shadow: 0 8px 20px -4px rgba(0,0,0,0.5);
   flex-shrink: 0;
 }
 .idcard-name-title {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   color: #FFFFFF;
-  margin-bottom: 2px;
+  margin-bottom: 3px;
+  line-height: 1.25;
 }
 .idcard-roll-badge {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11.5px;
   color: var(--accent-gold-soft);
   background: rgba(245, 158, 11, 0.12);
   border: 1px solid rgba(245, 158, 11, 0.3);
@@ -740,17 +746,21 @@ table.data-table tbody tr:last-child td {
 
 .idcard-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
   font-size: 12px;
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.28);
   padding: 12px 14px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-sizing: border-box;
+}
+.idcard-grid-full {
+  grid-column: 1 / -1;
 }
 .idcard-grid .k {
   color: #94A3B8;
-  font-size: 10px;
+  font-size: 9.5px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   margin-bottom: 2px;
@@ -758,26 +768,28 @@ table.data-table tbody tr:last-child td {
 .idcard-grid .v {
   color: #E2E8F0;
   font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 12px;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.35;
 }
 
 .idcard-qr-section {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 14px;
-  padding-top: 12px;
+  margin-top: 12px;
+  padding-top: 10px;
   border-top: 1px dashed rgba(255, 255, 255, 0.15);
 }
 .idcard-qr-box {
   background: #FFFFFF;
-  padding: 6px;
+  padding: 5px;
   border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
-  width: 76px; height: 76px;
+  width: 68px; height: 68px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  flex-shrink: 0;
 }
 .idcard-qr-box canvas {
   width: 100% !important;
@@ -790,7 +802,7 @@ table.data-table tbody tr:last-child td {
 }
 .idcard-att-badge {
   font-family: var(--font-display);
-  font-size: 19px;
+  font-size: 17px;
   font-weight: 700;
   color: var(--accent-emerald-soft);
 }

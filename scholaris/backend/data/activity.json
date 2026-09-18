@@ -1,7 +1,1 @@
-[
-  {
-    "id": "log-001",
-    "text": "RegEngine Campus Registration System initialized and ready for new admissions.",
-    "time": "2026-09-18T00:00:00Z"
-  }
-]
+[{"id":"log-4a9854ff","text":"Attendance recorded for B.Tech CSE Core on 2026-09-17 (1/1 present).","time":"2026-09-17T18:38:59.041454500Z"},{"id":"log-8d322c9d","text":"Aadi Kulkarni (26CS637) registered in B.Tech CSE Core.","time":"2026-09-17T18:37:42.019272900Z"},{"id":"log-fabd46ff","text":"dgfvf (33424234234324234) enrolled in B.Tech CSE Core.","time":"2026-09-17T18:22:54.230575700Z"},{"id":"log-d624fce3","text":"Attendance recorded for B.Tech CSE Core on 2026-09-17 (1/1 present).","time":"2026-09-17T18:20:11.407655800Z"},{"id":"log-86bc718f","text":"Aadi Kulkarni (SIT26CS999) enrolled in B.Tech CSE Core.","time":"2026-09-17T18:20:11.373739200Z"},{"id":"log-65f722b6","text":"Registrar server initialised with sample records.","time":"2026-09-17T18:12:50.572482Z"}]
