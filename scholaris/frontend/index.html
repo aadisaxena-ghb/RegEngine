@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RegEngine — SRMIST Delhi-NCR Ghaziabad Central Campus Portal</title>
-  <meta name="description" content="RegEngine: Official Centralized Academic Registration Management System for SRM Institute of Science and Technology, Delhi-NCR Campus, Ghaziabad. Student Admissions, 3D Holographic ID Badges, Faculty Directory, and College Management.">
+  <title>SRM Institute of Science and Technology — Delhi-NCR Campus, Ghaziabad</title>
+  <meta name="description" content="Official Central Campus Portal for SRMIST Delhi-NCR Campus, Ghaziabad. Explore academic programmes, student admissions, digital ID badges, faculty directory, and campus management.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,66 +12,63 @@
   <script src="assets/qrcode.min.js"></script>
 
   <style>
-    /* ================= Modern Collegiate Design System ================= */
     :root {
-      --primary: #4F46E5;
-      --primary-dark: #3730A3;
-      --primary-hover: #4338CA;
-      --primary-light: #EEF2FF;
-      --navy-deep: #0A192F;
-      --navy-surface: #0F172A;
-      --secondary: #06B6D4;
-      --secondary-light: #ECFEFF;
+      --primary: #1E3A8A;
+      --primary-accent: #2563EB;
+      --primary-light: #EFF6FF;
+      --navy-dark: #0F172A;
+      --navy-deeper: #0A0F1D;
       --accent-gold: #F59E0B;
       --accent-gold-dark: #D97706;
       --accent-emerald: #10B981;
-      --accent-rose: #EF4444;
-      --bg-base: #FAFBFF;
-      --bg-surface: #FFFFFF;
-      --text-dark: #0F172A;
+      --text-main: #0F172A;
       --text-body: #334155;
       --text-muted: #64748B;
+      --bg-page: #F8FAFC;
+      --bg-white: #FFFFFF;
       --border-color: #E2E8F0;
-      --border-focus: #818CF8;
+      --border-subtle: #EDF2F7;
       --radius-sm: 8px;
       --radius-md: 14px;
       --radius-lg: 20px;
-      --radius-xl: 28px;
       --radius-full: 9999px;
-      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
-      --shadow-md: 0 10px 30px -5px rgba(15, 23, 42, 0.08);
-      --shadow-lg: 0 20px 40px -10px rgba(15, 23, 42, 0.12);
-      --shadow-glow: 0 0 40px -10px rgba(79, 70, 229, 0.28);
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 6px 20px -3px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 16px 36px -6px rgba(15, 23, 42, 0.12);
     }
 
     body {
-      background-color: var(--bg-base);
-      color: var(--text-dark);
+      background-color: var(--bg-page);
+      color: var(--text-main);
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       margin: 0;
       padding: 0;
-      overflow-x: hidden;
       line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    /* ================= Top Announcement Marquee ================= */
-    .top-announcement {
-      background: linear-gradient(90deg, #0A192F 0%, #1E1B4B 50%, #0A192F 100%);
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ================= Top Announcement Bar ================= */
+    .topbar-ticker {
+      background: linear-gradient(90deg, #0A0F1D 0%, #1E1B4B 50%, #0A0F1D 100%);
       color: #F8FAFC;
-      padding: 9px 0;
+      padding: 8px 0;
       font-size: 12.5px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      position: relative;
-      z-index: 110;
     }
-    .top-announcement-wrap {
+    .topbar-ticker-inner {
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 12px;
     }
-    .announcement-badge {
+    .ticker-tag {
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -80,40 +77,39 @@
       color: #FDE68A;
       font-size: 11px;
       font-weight: 700;
-      padding: 2px 9px;
+      padding: 2px 8px;
       border-radius: var(--radius-full);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
     }
 
-    /* ================= Navigation Bar ================= */
-    .main-nav {
-      background: rgba(255, 255, 255, 0.94);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+    /* ================= Collegiate Header ================= */
+    .site-header {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border-color);
       position: sticky;
       top: 0;
       z-index: 100;
-      transition: all 0.25s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
     }
-    .nav-container {
+    .nav-wrap {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 14px 0;
     }
-    .brand-group {
+    .brand-link {
       display: flex;
       align-items: center;
       gap: 14px;
       text-decoration: none;
     }
-    .brand-crest {
-      width: 46px;
-      height: 46px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #1E3A8A 0%, #4F46E5 100%);
+    .brand-logo-crest {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%);
       color: #F59E0B;
       display: flex;
       align-items: center;
@@ -121,28 +117,23 @@
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 800;
       font-size: 22px;
-      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 3px 10px rgba(30, 58, 138, 0.3);
     }
-    .brand-group:hover .brand-crest {
-      transform: rotate(-5deg) scale(1.06);
-    }
-    .brand-text h1 {
-      font-size: 20px;
+    .brand-titles h1 {
+      font-size: 19px;
       font-weight: 800;
-      color: var(--text-dark);
+      color: #0F172A;
       margin: 0;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
+      line-height: 1.15;
     }
-    .brand-text span {
+    .brand-titles span {
       font-size: 11.5px;
       color: var(--text-muted);
       font-weight: 500;
       display: block;
     }
 
-    .nav-menu {
+    .main-nav-links {
       display: flex;
       align-items: center;
       gap: 26px;
@@ -150,405 +141,315 @@
       margin: 0;
       padding: 0;
     }
-    .nav-menu a {
+    .main-nav-links a {
       color: var(--text-body);
       text-decoration: none;
       font-size: 13.5px;
       font-weight: 600;
       transition: color 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
-    .nav-menu a:hover {
-      color: var(--primary);
+    .main-nav-links a:hover {
+      color: var(--primary-accent);
     }
-    .nav-actions {
+
+    .header-actions {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    /* ================= Hero Section with Ambient Glow ================= */
-    .hero-section {
+    /* ================= Hero Banner Section ================= */
+    .hero-banner {
       position: relative;
-      background: linear-gradient(180deg, #F0F4FF 0%, #FAF5FF 45%, #FFFFFF 100%);
-      padding: 76px 0 110px;
-      overflow: hidden;
+      background: linear-gradient(180deg, #F0F4FF 0%, #FAF5FF 40%, #F8FAFC 100%);
+      padding: 64px 0 80px;
+      border-bottom: 1px solid var(--border-color);
     }
-    .hero-glow-1 {
-      position: absolute;
-      top: -10%;
-      left: -5%;
-      width: 550px;
-      height: 550px;
-      background: radial-gradient(circle, rgba(79, 70, 229, 0.16) 0%, transparent 70%);
-      pointer-events: none;
-      border-radius: 50%;
-      filter: blur(50px);
-    }
-    .hero-glow-2 {
-      position: absolute;
-      bottom: 5%;
-      right: -5%;
-      width: 520px;
-      height: 520px;
-      background: radial-gradient(circle, rgba(6, 182, 212, 0.16) 0%, transparent 70%);
-      pointer-events: none;
-      border-radius: 50%;
-      filter: blur(50px);
-    }
-    .hero-grid {
+    .hero-layout {
       display: grid;
-      grid-template-columns: 1.18fr 0.82fr;
-      gap: 48px;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
       align-items: center;
-      position: relative;
-      z-index: 2;
     }
-    .hero-badge-tag {
+    .hero-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 6px 14px;
       border-radius: var(--radius-full);
       background: #FFFFFF;
-      border: 1px solid #C7D2FE;
-      box-shadow: 0 2px 10px rgba(79, 70, 229, 0.08);
-      color: #3730A3;
-      font-size: 13px;
+      border: 1px solid #CBD5E1;
+      box-shadow: var(--shadow-sm);
+      color: #1E3A8A;
+      font-size: 12.5px;
       font-weight: 700;
-      margin-bottom: 20px;
-      animation: floatBadge 3s ease-in-out infinite alternate;
+      margin-bottom: 18px;
     }
-    @keyframes floatBadge {
-      from { transform: translateY(0); }
-      to { transform: translateY(-4px); }
-    }
-
-    .hero-heading {
-      font-size: 46px;
+    .hero-title {
+      font-size: 42px;
       font-weight: 800;
       color: #0F172A;
-      line-height: 1.15;
-      letter-spacing: -0.03em;
-      margin: 0 0 20px;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      margin: 0 0 18px;
     }
-    .hero-gradient-text {
-      background: linear-gradient(135deg, #1E3A8A 0%, #4F46E5 50%, #06B6D4 100%);
+    .hero-gradient {
+      background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 50%, #06B6D4 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .hero-description {
-      font-size: 16.5px;
+    .hero-sub {
+      font-size: 16px;
       color: var(--text-body);
       line-height: 1.65;
-      margin: 0 0 32px;
+      margin: 0 0 28px;
       max-width: 580px;
     }
-    .hero-btn-group {
+    .hero-actions {
       display: flex;
       align-items: center;
       gap: 14px;
       flex-wrap: wrap;
     }
 
-    .hero-stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 36px;
-      padding-top: 24px;
-      border-top: 1px solid rgba(226, 232, 240, 0.8);
-    }
-    .stat-mini-card {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 14px 18px;
-    }
-    .stat-mini-card .val {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 24px;
-      font-weight: 800;
-      color: #1E3A8A;
-      line-height: 1.1;
-    }
-    .stat-mini-card .lbl {
-      font-size: 12px;
-      color: var(--text-muted);
-      font-weight: 600;
-      margin-top: 4px;
-    }
-
-    /* Hero Interactive 3D Simulator Card */
-    .hero-interactive-card {
+    .hero-card-box {
       background: #FFFFFF;
       border: 1px solid var(--border-color);
       border-radius: var(--radius-lg);
+      padding: 28px;
       box-shadow: var(--shadow-lg);
-      padding: 24px;
-      position: relative;
-    }
-    .hero-sim-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border-color);
     }
 
-    /* Haikei Wave SVG Divider */
-    .haikei-wave-divider {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      line-height: 0;
-      margin-top: -60px;
-      z-index: 10;
+    /* Key Numbers Grid */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-top: 48px;
     }
-    .haikei-wave-divider svg {
-      position: relative;
-      display: block;
-      width: calc(100% + 1.3px);
-      height: 70px;
+    .kpi-strip-item {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
     }
-    .haikei-wave-divider .shape-fill {
-      fill: #FFFFFF;
+    .kpi-strip-item .num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #1E3A8A;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .kpi-strip-item .lbl {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
     }
 
-    /* ================= Section Header Commons ================= */
-    .section-title-wrap {
+    /* ================= Section Headers ================= */
+    .section-head {
       text-align: center;
       max-width: 680px;
-      margin: 0 auto 48px;
+      margin: 0 auto 40px;
     }
-    .section-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
+    .section-tag {
+      display: inline-block;
+      font-size: 11.5px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--primary);
-      background: var(--primary-light);
+      color: #1E3A8A;
+      background: #EFF6FF;
       padding: 4px 12px;
       border-radius: var(--radius-full);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
-    .section-title {
-      font-size: 34px;
+    .section-heading {
+      font-size: 30px;
       font-weight: 800;
-      color: var(--text-dark);
-      letter-spacing: -0.02em;
-      margin: 0 0 12px;
+      color: #0F172A;
+      margin: 0 0 10px;
+      letter-spacing: -0.01em;
     }
-    .section-subtitle {
-      font-size: 16px;
+    .section-desc {
+      font-size: 15px;
       color: var(--text-muted);
       margin: 0;
     }
 
-    /* ================= Dual Portal Feature Tabs ================= */
-    .portals-section {
-      padding: 60px 0 80px;
+    /* ================= Portals Section ================= */
+    .portals-wrap {
+      padding: 70px 0;
       background: #FFFFFF;
+      border-bottom: 1px solid var(--border-color);
     }
-    .portal-tab-bar {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 36px;
-    }
-    .portal-tab-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      font-size: 14.5px;
-      font-weight: 700;
-      border-radius: var(--radius-full);
-      border: 1px solid var(--border-color);
-      background: #F8FAFC;
-      color: var(--text-body);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .portal-tab-btn.active {
-      background: #1E3A8A;
-      color: #FFFFFF;
-      border-color: #1E3A8A;
-      box-shadow: 0 4px 14px rgba(30, 58, 138, 0.25);
-    }
-    .portal-tab-btn.active.mgmt-tab {
-      background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 100%);
-      color: #F59E0B;
-      border-color: #0F172A;
-    }
-
-    .portal-cards-grid {
+    .portal-dual-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
     }
-    .portal-feature-card {
-      background: #FFFFFF;
+    .portal-column-card {
+      background: #F8FAFC;
       border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 24px;
+      border-radius: var(--radius-lg);
+      padding: 32px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      box-shadow: var(--shadow-sm);
-      text-decoration: none;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.2s ease;
     }
-    .portal-feature-card:hover {
-      transform: translateY(-5px);
+    .portal-column-card:hover {
       box-shadow: var(--shadow-md);
-      border-color: #818CF8;
+      border-color: #93C5FD;
     }
-    .feature-icon-box {
-      width: 48px;
-      height: 48px;
+    .portal-column-card.mgmt-card {
+      background: linear-gradient(180deg, #FAF5FF 0%, #F8FAFC 100%);
+      border-top: 4px solid #1E3A8A;
+    }
+    .portal-col-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .portal-col-icon {
+      width: 44px;
+      height: 44px;
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 22px;
-      margin-bottom: 18px;
+      background: #EFF6FF;
+      color: #1E3A8A;
     }
-    .portal-feature-card h3 {
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--text-dark);
-      margin: 0 0 8px;
+    .mgmt-card .portal-col-icon {
+      background: #0F172A;
+      color: #F59E0B;
     }
-    .portal-feature-card p {
+
+    .portal-feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .portal-feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
       font-size: 13.5px;
-      color: var(--text-muted);
-      line-height: 1.55;
-      margin: 0 0 18px;
+      color: var(--text-body);
+      line-height: 1.45;
     }
-    .card-action-link {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--primary);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+    .portal-feature-list li span.bullet {
+      color: #10B981;
+      font-weight: 800;
     }
 
     /* ================= 5-Step Admission Roadmap ================= */
-    .roadmap-section {
-      padding: 80px 0;
-      background: linear-gradient(180deg, #F8FAFC 0%, #EEF2FF 100%);
-      border-top: 1px solid var(--border-color);
+    .steps-section {
+      padding: 70px 0;
+      background: #F8FAFC;
       border-bottom: 1px solid var(--border-color);
     }
-    .roadmap-grid {
+    .steps-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 16px;
     }
-    .roadmap-card {
+    .step-box {
       background: #FFFFFF;
       border: 1px solid var(--border-color);
       border-radius: var(--radius-md);
       padding: 20px;
       box-shadow: var(--shadow-sm);
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .roadmap-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-      border-color: #818CF8;
-    }
-    .roadmap-step-badge {
-      width: 32px;
-      height: 32px;
+    .step-num {
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #1E3A8A, #4F46E5);
+      background: #1E3A8A;
       color: #FFFFFF;
+      font-size: 13px;
       font-weight: 800;
-      font-size: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
-    .roadmap-card h4 {
+    .step-box h4 {
       font-size: 15px;
       font-weight: 700;
-      color: var(--text-dark);
+      color: #0F172A;
       margin: 0 0 6px;
     }
-    .roadmap-card p {
+    .step-box p {
       font-size: 12.5px;
       color: var(--text-muted);
-      line-height: 1.5;
       margin: 0;
+      line-height: 1.5;
     }
 
     /* ================= Academic Programmes Catalog ================= */
-    .catalog-section {
-      padding: 80px 0;
+    .programmes-section {
+      padding: 70px 0;
       background: #FFFFFF;
+      border-bottom: 1px solid var(--border-color);
     }
-    .filter-pills-bar {
+    .prog-filter-bar {
       display: flex;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 36px;
+      margin-bottom: 32px;
     }
-    .filter-pill {
+    .prog-pill {
       background: #F1F5F9;
       border: 1px solid var(--border-color);
       color: var(--text-body);
-      padding: 8px 18px;
+      padding: 8px 16px;
       border-radius: var(--radius-full);
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
     }
-    .filter-pill.active, .filter-pill:hover {
+    .prog-pill.active, .prog-pill:hover {
       background: #1E3A8A;
       color: #FFFFFF;
       border-color: #1E3A8A;
     }
 
-    .catalog-grid {
+    .prog-cards-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      gap: 20px;
     }
-    .catalog-card {
+    .prog-card {
       background: #FFFFFF;
       border: 1px solid var(--border-color);
       border-radius: var(--radius-md);
-      padding: 24px;
+      padding: 22px;
       box-shadow: var(--shadow-sm);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: all 0.25s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .catalog-card:hover {
-      transform: translateY(-4px);
+    .prog-card:hover {
+      transform: translateY(-3px);
       box-shadow: var(--shadow-md);
-      border-color: #3B82F6;
+      border-color: #93C5FD;
     }
-    .catalog-code-badge {
+    .prog-code {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 700;
       color: #1E3A8A;
       background: #DBEAFE;
@@ -556,140 +457,134 @@
       border-radius: 4px;
     }
 
-    /* ================= Faculty Showcase Section (95 Professors) ================= */
+    /* ================= Faculty Directory Spotlight ================= */
     .faculty-section {
-      padding: 80px 0;
+      padding: 70px 0;
       background: #F8FAFC;
-      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
     }
-    .fac-search-bar {
-      max-width: 480px;
-      margin: 0 auto 36px;
+    .fac-search-box {
+      max-width: 440px;
+      margin: 0 auto 32px;
     }
-    .faculty-grid {
+    .fac-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      gap: 18px;
     }
-    .fac-mini-card {
+    .fac-card {
       background: #FFFFFF;
       border: 1px solid var(--border-color);
       border-radius: var(--radius-md);
-      padding: 20px;
+      padding: 18px;
       box-shadow: var(--shadow-sm);
       transition: all 0.2s ease;
     }
-    .fac-mini-card:hover {
-      transform: translateY(-3px);
+    .fac-card:hover {
       box-shadow: var(--shadow-md);
       border-color: #93C5FD;
     }
-    .fac-mini-avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+    .fac-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
       background: linear-gradient(135deg, #1E3A8A, #0F172A);
       color: #F59E0B;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 15px;
-      margin-bottom: 12px;
+      font-size: 14px;
+      margin-bottom: 10px;
     }
-    .fac-mini-card h4 {
-      font-size: 15.5px;
-      font-weight: 800;
-      color: var(--text-dark);
-      margin: 0 0 4px;
+    .fac-card h4 {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #0F172A;
+      margin: 0 0 3px;
     }
-    .fac-mini-card .role {
-      font-size: 12px;
-      color: #4F46E5;
+    .fac-card .dept {
+      font-size: 11.5px;
+      color: #2563EB;
       font-weight: 600;
       margin-bottom: 4px;
     }
-    .fac-mini-card .subj {
-      font-size: 11.5px;
+    .fac-card .subj {
+      font-size: 11px;
       color: var(--text-muted);
     }
 
     /* ================= FAQ Accordion ================= */
-    .faq-section {
-      padding: 80px 0;
+    .faq-wrap {
+      padding: 70px 0;
       background: #FFFFFF;
+      border-bottom: 1px solid var(--border-color);
     }
-    .faq-accordion {
+    .faq-list {
       max-width: 760px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
     .faq-item {
       background: #F8FAFC;
       border: 1px solid var(--border-color);
       border-radius: var(--radius-md);
       overflow: hidden;
-      transition: border-color 0.2s ease;
     }
-    .faq-item.open {
-      border-color: #818CF8;
-    }
-    .faq-question {
-      padding: 18px 22px;
+    .faq-q {
+      padding: 16px 20px;
       font-weight: 700;
-      font-size: 15px;
-      color: var(--text-dark);
+      font-size: 14.5px;
+      color: #0F172A;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
       user-select: none;
     }
-    .faq-answer {
-      padding: 0 22px 18px;
-      font-size: 13.5px;
+    .faq-a {
+      padding: 0 20px 16px;
+      font-size: 13px;
       color: var(--text-muted);
       line-height: 1.6;
       display: none;
     }
-    .faq-item.open .faq-answer {
+    .faq-item.open .faq-a {
       display: block;
     }
 
-    /* ================= Helpdesk Banner & Footer ================= */
-    .helpdesk-banner {
+    /* ================= Secretariat Banner & Footer ================= */
+    .contact-banner {
       background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%);
-      border-radius: var(--radius-xl);
-      padding: 44px 48px;
       color: #FFFFFF;
+      border-radius: var(--radius-lg);
+      padding: 36px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 28px;
-      box-shadow: 0 20px 50px -10px rgba(30, 58, 138, 0.4);
-      margin: 60px auto;
+      gap: 24px;
+      margin: 60px 0;
     }
 
-    .site-footer {
+    .footer {
       background: #090D14;
       color: #94A3B8;
-      padding: 64px 0 32px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 56px 0 28px;
     }
     .footer-grid {
       display: grid;
       grid-template-columns: 1.4fr 1fr 1fr 1fr;
-      gap: 40px;
-      margin-bottom: 48px;
+      gap: 36px;
+      margin-bottom: 40px;
     }
     .footer-col h4 {
       color: #FFFFFF;
-      font-size: 14.5px;
+      font-size: 14px;
       font-weight: 700;
-      margin: 0 0 16px;
+      margin: 0 0 14px;
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
@@ -699,7 +594,7 @@
       margin: 0;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 9px;
       font-size: 13px;
     }
     .footer-col a {
@@ -712,682 +607,601 @@
     }
     .footer-bottom {
       border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-top: 24px;
+      padding-top: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 12px;
       color: #64748B;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
     }
 
     @media (max-width: 900px) {
-      .hero-grid { grid-template-columns: 1fr; }
-      .portal-cards-grid { grid-template-columns: 1fr 1fr; }
-      .roadmap-grid { grid-template-columns: 1fr; }
-      .catalog-grid { grid-template-columns: 1fr; }
-      .faculty-grid { grid-template-columns: 1fr 1fr; }
+      .hero-layout { grid-template-columns: 1fr; }
+      .portal-dual-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .prog-cards-grid { grid-template-columns: 1fr; }
+      .fac-grid { grid-template-columns: 1fr 1fr; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
-      .hero-heading { font-size: 34px; }
-      .nav-menu { display: none; }
+      .hero-title { font-size: 32px; }
+      .main-nav-links { display: none; }
+      .kpi-strip { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
 <body>
 
-<!-- Top Announcement Marquee -->
-<div class="top-announcement">
-  <div class="wrap top-announcement-wrap">
+<!-- Top Announcement Bar -->
+<div class="topbar-ticker">
+  <div class="container topbar-ticker-inner">
     <div style="display:flex; align-items:center; gap:10px;">
-      <span class="announcement-badge">ADMISSIONS 2026</span>
-      <span>Official Intake Open for 16 Programmes at SRMIST Delhi-NCR Campus, Ghaziabad.</span>
+      <span class="ticker-tag">ADMISSIONS 2026</span>
+      <span>Official Registration Open for 16 Undergraduate & Postgraduate Programmes.</span>
     </div>
     <div style="display:flex; align-items:center; gap:16px;">
       <span>📍 Modinagar, Ghaziabad</span>
-      <span style="opacity:0.6;">|</span>
+      <span style="opacity:0.4;">|</span>
       <span>NAAC A++ Accredited</span>
-      <span style="opacity:0.6;">|</span>
+      <span style="opacity:0.4;">|</span>
       <span>📞 1800 200 4776</span>
     </div>
   </div>
 </div>
 
-<!-- Main Collegiate Header -->
-<header class="main-nav">
-  <div class="wrap nav-container">
-    <a href="index.html" class="brand-group">
-      <div class="brand-crest">R</div>
-      <div class="brand-text">
+<!-- Collegiate Header -->
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a href="index.html" class="brand-link">
+      <div class="brand-logo-crest">R</div>
+      <div class="brand-titles">
         <h1>RegEngine</h1>
         <span>SRMIST Delhi-NCR Ghaziabad</span>
       </div>
     </a>
 
     <nav>
-      <ul class="nav-menu">
+      <ul class="main-nav-links">
         <li><a href="app.html?mode=student&view=register" style="color:#1E3A8A; font-weight:700;">🎓 Student Portal</a></li>
-        <li><a href="#programmes">Programmes & Seats</a></li>
+        <li><a href="#portals">Campus Portals</a></li>
+        <li><a href="#programmes">Academic Catalog</a></li>
         <li><a href="#faculty">Faculty Directory (95 Staff)</a></li>
-        <li><a href="#portals">System Overview</a></li>
         <li><a href="#faq">Admissions FAQ</a></li>
       </ul>
     </nav>
 
-    <div class="nav-actions">
+    <div class="header-actions">
       <a href="app.html?mode=student&view=register" class="btn btn-ghost" style="padding:8px 14px; font-size:13px; font-weight:700;">
         <span>🎓 Student Section</span>
       </a>
-      <a href="app.html?mode=management" class="btn btn-primary" style="background:linear-gradient(135deg, #1E3A8A, #0F172A); border-color:#1E3A8A; padding:9px 18px; font-weight:700;">
+      <a href="app.html?mode=management" class="btn btn-primary" style="background:#0F172A; border-color:#0F172A; padding:8px 16px; font-size:13px; font-weight:700;">
         <span>🔒 College Management</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
       </a>
     </div>
   </div>
 </header>
 
-<!-- Hero Section with Motion & Haikei Wave -->
-<section class="hero-section">
-  <div class="hero-glow-1"></div>
-  <div class="hero-glow-2"></div>
-
-  <div class="wrap hero-grid">
+<!-- Hero Section -->
+<section class="hero-banner">
+  <div class="container hero-layout">
     <div>
-      <div class="hero-badge-tag">
-        <span>✨ SRMIST Delhi-NCR Ghaziabad Intake 2026</span>
-        <span style="color:#6366F1;">•</span>
-        <span>Delhi-Meerut Road, Modinagar</span>
+      <div class="hero-badge">
+        <span>🏛️ SRM Institute of Science & Technology · Delhi-NCR Campus</span>
       </div>
 
-      <h2 class="hero-heading">
-        Centralized Campus Portal: <br>
-        <span class="hero-gradient-text">Student & Faculty Portals</span>
+      <h2 class="hero-title">
+        Centralized Academic Portal & <br>
+        <span class="hero-gradient">Campus Registration System</span>
       </h2>
 
-      <p class="hero-description">
-        Welcome to <strong>RegEngine</strong>, the official academic platform for <strong>SRM Institute of Science and Technology (Delhi-NCR Campus, Ghaziabad)</strong>. Access the public <strong>Student Section</strong> for online admissions, 3D holographic ID badges, and attendance lookup, or log into the secured <strong>College Management Section</strong> for verified professors and registrar administration.
+      <p class="hero-sub">
+        Welcome to the official digital portal for <strong>SRMIST Delhi-NCR Ghaziabad</strong>. Students and applicants can complete admissions, generate digital ID badges, and track attendance. Verified professors and administrators can access the college management console.
       </p>
 
-      <div class="hero-btn-group">
-        <a href="app.html?mode=student&view=register" class="btn btn-gold btn-lg btn-shimmer" style="font-weight:800; padding:12px 26px;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      <div class="hero-actions">
+        <a href="app.html?mode=student&view=register" class="btn btn-primary btn-lg" style="background:#1E3A8A; border-color:#1E3A8A; font-weight:700; padding:12px 24px;">
           <span>🎓 Enter Student Portal</span>
         </a>
-        <a href="app.html?mode=management" class="btn btn-primary btn-lg" style="background:#0F172A; border-color:#0F172A; font-weight:700; padding:12px 26px;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          <span>🔒 College Management (Professors Only)</span>
+        <a href="app.html?mode=management" class="btn btn-ghost btn-lg" style="border:1px solid #CBD5E1; font-weight:700; padding:12px 24px;">
+          <span>🔒 College Management Login</span>
         </a>
-      </div>
-
-      <div class="hero-stats-row">
-        <div class="stat-mini-card">
-          <div class="val">95+</div>
-          <div class="lbl">Ph.D. & Senior Professors</div>
-        </div>
-        <div class="stat-mini-card">
-          <div class="val">16</div>
-          <div class="lbl">Academic Programmes</div>
-        </div>
-        <div class="stat-mini-card">
-          <div class="val">100%</div>
-          <div class="lbl">Digital 3D ID Minting</div>
-        </div>
       </div>
     </div>
 
-    <!-- Interactive Live ID Card Simulator -->
-    <div class="hero-interactive-card">
-      <div class="hero-sim-header">
-        <div style="display:flex; align-items:center; gap:8px;">
-          <div style="width:10px; height:10px; border-radius:50%; background:#10B981; box-shadow:0 0 8px #10B981;"></div>
-          <strong style="font-size:13px; color:#0F172A;">Interactive 3D Badge Preview</strong>
-        </div>
-        <span class="badge badge-gold">LIVE SIMULATOR</span>
+    <!-- Quick Overview Card -->
+    <div class="hero-card-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border-color);">
+        <strong style="font-size:14px; color:#0F172A;">Campus Portals Overview</strong>
+        <span class="badge badge-gold">ACTIVE INTAKE 2026</span>
       </div>
 
-      <!-- Live Simulator Inputs -->
-      <div style="margin-bottom:16px; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-        <div>
-          <label style="font-size:11px; font-weight:700; color:#64748B; text-transform:uppercase;">Student Name</label>
-          <input type="text" id="sim-name-input" value="Aadi Saxena" style="width:100%; padding:7px 10px; font-size:12.5px; border-radius:6px; border:1px solid #CBD5E1; box-sizing:border-box;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:10px; padding:12px 14px;">
+          <div style="font-weight:700; font-size:13px; color:#1E40AF; margin-bottom:2px;">🎓 Student Self-Service</div>
+          <div style="font-size:12px; color:#475569;">Online Admission Registration, Digital ID Badges, Academic Dossier, and Attendance Check.</div>
         </div>
-        <div>
-          <label style="font-size:11px; font-weight:700; color:#64748B; text-transform:uppercase;">Select Branch</label>
-          <select id="sim-branch-select" style="width:100%; padding:7px 10px; font-size:12px; border-radius:6px; border:1px solid #CBD5E1; box-sizing:border-box;">
-            <option value="B.Tech Computer Science & Engineering (Core)">B.Tech CSE Core</option>
-            <option value="B.Tech CSE (AI & Machine Learning)">B.Tech CSE AI/ML</option>
-            <option value="B.Tech CSE (Data Science)">B.Tech CSE Data Science</option>
-            <option value="B.Tech CSE (Cyber Security)">B.Tech CSE Cyber Security</option>
-            <option value="B.Tech Electronics & Communication">B.Tech ECE</option>
-            <option value="Bachelor of Computer Applications (BCA)">BCA (Data Science)</option>
-            <option value="Master of Computer Applications (MCA)">MCA (Generative AI)</option>
-            <option value="Master of Business Administration (MBA)">MBA</option>
-            <option value="Bachelor of Pharmacy (B.Pharm)">B.Pharm</option>
-          </select>
+
+        <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px; padding:12px 14px;">
+          <div style="font-weight:700; font-size:13px; color:#0F172A; margin-bottom:2px;">🔒 Faculty & College Management</div>
+          <div style="font-size:12px; color:#64748B;">Executive Dashboard, Master Student Register, Attendance Marker, and 95-Staff Directory.</div>
         </div>
       </div>
 
-      <!-- 3D Card Mount -->
-      <div class="idcard-perspective-wrap" id="sim-card-wrap">
-        <div class="idcard-3d" id="sim-holo-card" style="background:linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%);">
-          <div class="idcard-holo-sheen"></div>
-          <div class="idcard-top-stripe"></div>
-          <div class="idcard-head">
-            <div class="idcard-inst-brand">
-              <div class="idcard-seal">R</div>
-              <div>
-                <div class="idcard-inst-name">SRMIST Ghaziabad</div>
-                <div class="idcard-inst-sub">Student Identity Badge</div>
-              </div>
-            </div>
-            <span class="badge badge-gold">VERIFIED</span>
-          </div>
-          <div class="idcard-body">
-            <div class="idcard-profile-row">
-              <div class="idcard-avatar" id="sim-avatar" style="border-color:#F59E0B;">AS</div>
-              <div>
-                <div class="idcard-name-title" id="sim-name-display">Aadi Saxena</div>
-                <div class="idcard-roll-badge">RA2611003010001</div>
-              </div>
-            </div>
-            <div class="idcard-grid">
-              <div class="idcard-grid-full"><div class="k">Branch</div><div class="v" id="sim-branch-display">B.Tech Computer Science & Engineering (Core)</div></div>
-              <div><div class="k">Batch / Year</div><div class="v">2026–2030</div></div>
-              <div><div class="k">Blood Group</div><div class="v">O+</div></div>
-              <div class="idcard-grid-full"><div class="k">Emergency Contact</div><div class="v mono" style="font-size:11px;">Anupam Saxena (Father) - +91 98450 12345</div></div>
-            </div>
-            <div class="idcard-qr-section">
-              <div class="idcard-qr-box" id="sim-qr-mount"></div>
-              <div class="idcard-meta-right">
-                <div style="font-size:9.5px; color:#94A3B8;">ACADEMIC STANDING</div>
-                <div class="idcard-att-badge">NEW ADMIT</div>
-                <div class="idcard-sig">Registrar Office ✍️</div>
-              </div>
+      <div style="margin-top:16px; padding-top:12px; border-top:1px solid var(--border-color); font-size:12px; color:#64748B; text-align:center;">
+        Campus Location: Delhi-Meerut Road, Modinagar, Ghaziabad (UP)
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI Strip -->
+  <div class="container">
+    <div class="kpi-strip">
+      <div class="kpi-strip-item">
+        <div class="num">95+</div>
+        <div class="lbl">Ph.D. & Senior Professors</div>
+      </div>
+      <div class="kpi-strip-item">
+        <div class="num">16</div>
+        <div class="lbl">Academic Programmes</div>
+      </div>
+      <div class="kpi-strip-item">
+        <div class="num">NAAC A++</div>
+        <div class="lbl">University Accreditation</div>
+      </div>
+      <div class="kpi-strip-item">
+        <div class="num">100%</div>
+        <div class="lbl">Digital Campus Management</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Dedicated Campus Portals Section -->
+<section class="portals-wrap" id="portals">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">Campus Portals</span>
+      <h2 class="section-heading">Student Section vs College Management</h2>
+      <p class="section-desc">Choose your portal to access student self-service tools or the secured faculty management console.</p>
+    </div>
+
+    <div class="portal-dual-grid">
+      <!-- Card 1: Student Section -->
+      <div class="portal-column-card">
+        <div>
+          <div class="portal-col-head">
+            <div class="portal-col-icon">🎓</div>
+            <div>
+              <h3 style="font-size:19px; font-weight:800; color:#0F172A; margin:0;">Student Self-Service Suite</h3>
+              <div style="font-size:12px; color:#64748B;">Open public access for prospective & enrolled students</div>
             </div>
           </div>
+
+          <ul class="portal-feature-list">
+            <li>
+              <span class="bullet">✓</span>
+              <div><strong>Online Admission Registration:</strong> 5-step structured registration wizard for branch allotment and personal particulars.</div>
+            </li>
+            <li>
+              <span class="bullet">✓</span>
+              <div><strong>Digital ID Badge:</strong> View and print your official student identity card with cryptographic QR code verification.</div>
+            </li>
+            <li>
+              <span class="bullet">✓</span>
+              <div><strong>Admission Dossier:</strong> Verify enrollment status, parent contacts, hostel, and download confirmation slip.</div>
+            </li>
+            <li>
+              <span class="bullet">✓</span>
+              <div><strong>Attendance Self-Check:</strong> Check aggregate attendance percentage and compliance with the 75% examination rule.</div>
+            </li>
+          </ul>
         </div>
+
+        <a href="app.html?mode=student&view=register" class="btn btn-primary" style="background:#1E3A8A; border-color:#1E3A8A; text-align:center; justify-content:center; font-weight:700;">
+          <span>Enter Student Portal →</span>
+        </a>
       </div>
 
-      <div style="margin-top:14px; text-align:center;">
-        <a href="app.html?mode=student&view=register" class="btn btn-primary btn-sm" style="background:#1E3A8A; border-color:#1E3A8A; width:100%; justify-content:center;">
-          <span>Register Aadi Saxena on Live Portal →</span>
+      <!-- Card 2: College Management Section -->
+      <div class="portal-column-card mgmt-card">
+        <div>
+          <div class="portal-col-head">
+            <div class="portal-col-icon">🔒</div>
+            <div>
+              <h3 style="font-size:19px; font-weight:800; color:#0F172A; margin:0;">College Management Section</h3>
+              <div style="font-size:12px; color:#64748B;">Exclusive access for SRMIST professors and administration</div>
+            </div>
+          </div>
+
+          <ul class="portal-feature-list">
+            <li>
+              <span class="bullet">✓</span>
+              <div><strong>Executive Campus Dashboard:</strong> Real-time intake metrics, branch distribution charts, and registration telemetry.</div>
+            </li>
+            <li>
+              <span class="bullet">✓</span>
+              <div><strong>Master Student Register:</strong> Central searchable registry to review, edit, approve, and manage student enrollments.</div>
+            </li>
+            <li>
+              <span class="bullet">✓</span>
+              <div><strong>Daily Attendance System:</strong> Record 1-tap cohort attendance by date and branch, tracking statutory defaulters.</div>
+            </li>
+            <li>
+              <span class="bullet">✓</span>
+              <div><strong>Faculty Roster (95 Staff):</strong> Comprehensive directory of 95 official SRMIST Ghaziabad professors with "Dr." titles.</div>
+            </li>
+          </ul>
+        </div>
+
+        <a href="app.html?mode=management" class="btn btn-primary" style="background:#0F172A; border-color:#0F172A; text-align:center; justify-content:center; font-weight:700;">
+          <span>Faculty & Staff Login 🔒 →</span>
         </a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Haikei Layered Wave SVG Transition -->
-<div class="haikei-wave-divider">
-  <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
-  </svg>
-</div>
-
-<!-- Portals Showcase: Student Section vs College Management -->
-<section class="portals-section" id="portals">
-  <div class="wrap">
-    <div class="section-title-wrap">
-      <span class="section-eyebrow">Dual Institutional Ecosystem</span>
-      <h2 class="section-title">Student Section vs College Management</h2>
-      <p class="section-subtitle">A clear separation of concerns: open self-service utilities for students and applicants, paired with an authenticated command center exclusively for SRMIST professors and administrators.</p>
+<!-- 5-Step Admission Journey -->
+<section class="steps-section" id="steps">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">Admissions Roadmap</span>
+      <h2 class="section-heading">5-Stage Structured Enrollment Flow</h2>
+      <p class="section-desc">Designed to ensure complete demographic, academic merit, and guardian verification for every registered student.</p>
     </div>
 
-    <!-- Interactive Tab Selector -->
-    <div class="portal-tab-bar">
-      <button class="portal-tab-btn active" id="tab-btn-student" data-target="group-student">
-        <span>🎓 Student Self-Service Suite</span>
-      </button>
-      <button class="portal-tab-btn mgmt-tab" id="tab-btn-mgmt" data-target="group-mgmt">
-        <span>🔒 College Management & Faculty Portal</span>
-      </button>
-    </div>
-
-    <!-- Group 1: Student Section -->
-    <div id="group-student" class="portal-group-pane">
-      <div class="portal-cards-grid">
-        <a href="app.html?mode=student&view=register" class="portal-feature-card">
-          <div>
-            <div class="feature-icon-box" style="background:#EFF6FF; color:#1E3A8A;">📝</div>
-            <h3>Online Admission Form</h3>
-            <p>5-step structured registration wizard with autofill support for reference student Aadi Saxena (Son of Anupam Saxena).</p>
-          </div>
-          <div class="card-action-link">Open Admission Form →</div>
-        </a>
-
-        <a href="app.html?mode=student&view=student-idcard" class="portal-feature-card">
-          <div>
-            <div class="feature-icon-box" style="background:#FEF3C7; color:#D97706;">🪪</div>
-            <h3>3D Hologram ID Badge</h3>
-            <p>Search your roll number, inspect your 3D tilting badge with cryptographic QR verification, and print your physical badge.</p>
-          </div>
-          <div class="card-action-link">View My Digital Badge →</div>
-        </a>
-
-        <a href="app.html?mode=student&view=student-status" class="portal-feature-card">
-          <div>
-            <div class="feature-icon-box" style="background:#ECFDF5; color:#059669;">📄</div>
-            <h3>Admission Dossier & Status</h3>
-            <p>Verify your enrollment particulars, allotted branch, parent contact records, hostel room, and download your confirmation slip.</p>
-          </div>
-          <div class="card-action-link">Check Admission Status →</div>
-        </a>
-
-        <a href="app.html?mode=student&view=student-attendance" class="portal-feature-card">
-          <div>
-            <div class="feature-icon-box" style="background:#F3E8FF; color:#7C3AED;">📊</div>
-            <h3>Attendance Self-Check</h3>
-            <p>Check your aggregate attendance percentage in real time and ensure compliance with the mandatory university 75% examination rule.</p>
-          </div>
-          <div class="card-action-link">Check My Attendance →</div>
-        </a>
-      </div>
-    </div>
-
-    <!-- Group 2: College Management Section -->
-    <div id="group-mgmt" class="portal-group-pane" style="display:none;">
-      <div class="portal-cards-grid">
-        <a href="app.html?mode=management&view=dashboard" class="portal-feature-card" style="border-top:3px solid #1E3A8A;">
-          <div>
-            <div class="feature-icon-box" style="background:#F1F5F9; color:#0F172A;">📊</div>
-            <h3>Executive Dashboard</h3>
-            <p>Live campus KPI counters, branch intake capacity breakdown, and real-time registration audit logs.</p>
-          </div>
-          <div class="card-action-link" style="color:#0F172A;">Enter Dashboard 🔒 →</div>
-        </a>
-
-        <a href="app.html?mode=management&view=records" class="portal-feature-card" style="border-top:3px solid #1E3A8A;">
-          <div>
-            <div class="feature-icon-box" style="background:#F1F5F9; color:#0F172A;">🗂️</div>
-            <h3>Master Student Registry</h3>
-            <p>Search, filter by branch, inspect student academic dossiers, modify details, and manage student enrollments.</p>
-          </div>
-          <div class="card-action-link" style="color:#0F172A;">Manage Student Register 🔒 →</div>
-        </a>
-
-        <a href="app.html?mode=management&view=attendance" class="portal-feature-card" style="border-top:3px solid #1E3A8A;">
-          <div>
-            <div class="feature-icon-box" style="background:#F1F5F9; color:#0F172A;">📋</div>
-            <h3>Daily Attendance Marker</h3>
-            <p>Select engineering branch and date to mark 1-tap cohort attendance and automatically monitor statutory defaulters (<75%).</p>
-          </div>
-          <div class="card-action-link" style="color:#0F172A;">Mark Class Attendance 🔒 →</div>
-        </a>
-
-        <a href="app.html?mode=management&view=faculty" class="portal-feature-card" style="border-top:3px solid #1E3A8A;">
-          <div>
-            <div class="feature-icon-box" style="background:#F1F5F9; color:#0F172A;">👨‍🏫</div>
-            <h3>Faculty Roster (95 Staff)</h3>
-            <p>Full directory of 95 official SRMIST Ghaziabad professors with "Dr." titles across 7 departments, with add staff tools.</p>
-          </div>
-          <div class="card-action-link" style="color:#0F172A;">View Staff Directory 🔒 →</div>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 5-Step Admission Journey Roadmap -->
-<section class="roadmap-section" id="roadmap">
-  <div class="wrap">
-    <div class="section-title-wrap">
-      <span class="section-eyebrow">Student Admissions Journey</span>
-      <h2 class="section-title">5-Stage Structured Enrollment Flow</h2>
-      <p class="section-subtitle">Designed to ensure complete demographic, academic merit, and guardian verification for every registered student.</p>
-    </div>
-
-    <div class="roadmap-grid">
-      <div class="roadmap-card">
-        <div class="roadmap-step-badge">1</div>
+    <div class="steps-grid">
+      <div class="step-box">
+        <div class="step-num">1</div>
         <h4>Personal Profile</h4>
-        <p>Full Legal Name, Date of Birth, Gender, Blood Group, Social Category, and Aadhar/Govt ID verification.</p>
+        <p>Full legal name, date of birth, gender, blood group, social category, and Aadhar/national ID details.</p>
       </div>
 
-      <div class="roadmap-card">
-        <div class="roadmap-step-badge">2</div>
+      <div class="step-box">
+        <div class="step-num">2</div>
         <h4>Academic & Branch</h4>
-        <p>10th & 12th Board scores, Entrance Exam Rank, Target Engineering Branch, and Batch allocation.</p>
+        <p>10th & 12th board percentages, qualifying entrance ranks, target engineering branch, and batch allotment.</p>
       </div>
 
-      <div class="roadmap-card">
-        <div class="roadmap-step-badge">3</div>
+      <div class="step-box">
+        <div class="step-num">3</div>
         <h4>Parent Particulars</h4>
-        <p>Father's & Mother's names, occupations, emergency contact phone, and official guardian email.</p>
+        <p>Father's & mother's full names, occupations, emergency contact numbers, and parent email addresses.</p>
       </div>
 
-      <div class="roadmap-card">
-        <div class="roadmap-step-badge">4</div>
+      <div class="step-box">
+        <div class="step-num">4</div>
         <h4>Contact & Address</h4>
-        <p>Student mobile, institutional email, permanent residential address, city, state, and postal PIN code.</p>
+        <p>Student phone number, institutional email address, permanent residential address, and postal PIN code.</p>
       </div>
 
-      <div class="roadmap-card">
-        <div class="roadmap-step-badge">5</div>
-        <h4>Services & ID Card</h4>
-        <p>Hostel accommodation, college bus transportation route selection, and instant 3D holographic ID card generation.</p>
+      <div class="step-box">
+        <div class="step-num">5</div>
+        <h4>Services & ID Badge</h4>
+        <p>Hostel preference, campus bus route selection, declaration, and instant digital ID badge generation.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SRMIST Academic Programmes Catalog (All 16 Courses) -->
-<section class="catalog-section" id="programmes">
-  <div class="wrap">
-    <div class="section-title-wrap">
-      <span class="section-eyebrow">SRMIST Ghaziabad Offerings</span>
-      <h2 class="section-title">Undergraduate & Postgraduate Programmes</h2>
-      <p class="section-subtitle">Explore accredited academic courses available at SRM Institute of Science and Technology, Delhi-NCR Campus.</p>
+<!-- Academic Catalog (All 16 Programmes) -->
+<section class="programmes-section" id="programmes">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">Academic Disciplines</span>
+      <h2 class="section-heading">Undergraduate & Postgraduate Programmes</h2>
+      <p class="section-desc">Explore all 16 accredited academic courses available at SRMIST Delhi-NCR Campus, Ghaziabad.</p>
     </div>
 
     <!-- Filter Pills -->
-    <div class="filter-pills-bar">
-      <button class="filter-pill active" data-filter="all">🌟 All Programmes (16)</button>
-      <button class="filter-pill" data-filter="btech">💻 B.Tech Engineering (9)</button>
-      <button class="filter-pill" data-filter="ca">📱 Computer Applications (4)</button>
-      <button class="filter-pill" data-filter="mgmt">📈 Management Studies (2)</button>
-      <button class="filter-pill" data-filter="pharm">💊 Pharmacy (1)</button>
+    <div class="prog-filter-bar">
+      <button class="prog-pill active" data-filter="all">All Programmes (16)</button>
+      <button class="prog-pill" data-filter="btech">B.Tech Engineering (9)</button>
+      <button class="prog-pill" data-filter="ca">Computer Applications (4)</button>
+      <button class="prog-pill" data-filter="mgmt">Management Studies (2)</button>
+      <button class="prog-pill" data-filter="pharm">Pharmacy (1)</button>
     </div>
 
-    <div class="catalog-grid" id="catalog-mount">
-      <div class="catalog-card" data-cat="btech">
+    <div class="prog-cards-grid" id="prog-cards-mount">
+      <div class="prog-card" data-cat="btech">
         <div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <span class="catalog-code-badge">CSE-CORE</span>
+            <span class="prog-code">CSE-CORE</span>
             <span class="badge badge-emerald">180 SEATS</span>
           </div>
-          <h3 style="font-size:17px; font-weight:800; color:#0F172A; margin:0 0 8px;">B.Tech Computer Science & Engineering (Core)</h3>
-          <p style="font-size:13px; color:#64748B; margin:0 0 14px;">Comprehensive curriculum spanning Data Structures, Operating Systems, Computer Architecture, and Full-Stack Engineering.</p>
+          <h3 style="font-size:16px; font-weight:800; color:#0F172A; margin:0 0 6px;">B.Tech Computer Science & Engineering (Core)</h3>
+          <p style="font-size:12.5px; color:#64748B; margin:0 0 12px;">Core curriculum in Algorithms, Operating Systems, Computer Architecture, and Software Engineering.</p>
         </div>
-        <div style="border-top:1px solid #F1F5F9; padding-top:12px; font-size:12px; color:#475569;">
+        <div style="border-top:1px solid #F1F5F9; padding-top:10px; font-size:12px; color:#475569;">
           <strong>Eligibility:</strong> 10+2 with PCM (&ge; 60%) · 4 Years
         </div>
       </div>
 
-      <div class="catalog-card" data-cat="btech">
+      <div class="prog-card" data-cat="btech">
         <div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <span class="catalog-code-badge">CSE-AIML</span>
+            <span class="prog-code">CSE-AIML</span>
             <span class="badge badge-emerald">120 SEATS</span>
           </div>
-          <h3 style="font-size:17px; font-weight:800; color:#0F172A; margin:0 0 8px;">B.Tech CSE (Artificial Intelligence & ML)</h3>
-          <p style="font-size:13px; color:#64748B; margin:0 0 14px;">Specialized track focusing on Deep Learning, Neural Networks, Computer Vision, and Natural Language Processing.</p>
+          <h3 style="font-size:16px; font-weight:800; color:#0F172A; margin:0 0 6px;">B.Tech CSE (Artificial Intelligence & ML)</h3>
+          <p style="font-size:12.5px; color:#64748B; margin:0 0 12px;">Specialized studies in Deep Learning, Neural Networks, Computer Vision, and Generative AI.</p>
         </div>
-        <div style="border-top:1px solid #F1F5F9; padding-top:12px; font-size:12px; color:#475569;">
+        <div style="border-top:1px solid #F1F5F9; padding-top:10px; font-size:12px; color:#475569;">
           <strong>Eligibility:</strong> 10+2 with PCM (&ge; 60%) · 4 Years
         </div>
       </div>
 
-      <div class="catalog-card" data-cat="btech">
+      <div class="prog-card" data-cat="btech">
         <div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <span class="catalog-code-badge">CSE-DS</span>
+            <span class="prog-code">CSE-DS</span>
             <span class="badge badge-emerald">60 SEATS</span>
           </div>
-          <h3 style="font-size:17px; font-weight:800; color:#0F172A; margin:0 0 8px;">B.Tech CSE (Data Science)</h3>
-          <p style="font-size:13px; color:#64748B; margin:0 0 14px;">High-demand specialization in Big Data Analytics, Statistical Modeling, Machine Learning Pipelines, and Data Engineering.</p>
+          <h3 style="font-size:16px; font-weight:800; color:#0F172A; margin:0 0 6px;">B.Tech CSE (Data Science)</h3>
+          <p style="font-size:12.5px; color:#64748B; margin:0 0 12px;">Big Data Analytics, Predictive Modeling, Machine Learning Pipelines, and Statistical Analysis.</p>
         </div>
-        <div style="border-top:1px solid #F1F5F9; padding-top:12px; font-size:12px; color:#475569;">
+        <div style="border-top:1px solid #F1F5F9; padding-top:10px; font-size:12px; color:#475569;">
           <strong>Eligibility:</strong> 10+2 with PCM (&ge; 60%) · 4 Years
         </div>
       </div>
 
-      <div class="catalog-card" data-cat="btech">
+      <div class="prog-card" data-cat="btech">
         <div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <span class="catalog-code-badge">CSE-CYBER</span>
+            <span class="prog-code">CSE-CYBER</span>
             <span class="badge badge-emerald">60 SEATS</span>
           </div>
-          <h3 style="font-size:17px; font-weight:800; color:#0F172A; margin:0 0 8px;">B.Tech CSE (Cyber Security)</h3>
-          <p style="font-size:13px; color:#64748B; margin:0 0 14px;">Network Defense, Cryptography, Penetration Testing, Cloud Security, and Ethical Hacking frameworks.</p>
+          <h3 style="font-size:16px; font-weight:800; color:#0F172A; margin:0 0 6px;">B.Tech CSE (Cyber Security)</h3>
+          <p style="font-size:12.5px; color:#64748B; margin:0 0 12px;">Network Defense, Cryptographic Protocols, Penetration Testing, and Cloud Security.</p>
         </div>
-        <div style="border-top:1px solid #F1F5F9; padding-top:12px; font-size:12px; color:#475569;">
+        <div style="border-top:1px solid #F1F5F9; padding-top:10px; font-size:12px; color:#475569;">
           <strong>Eligibility:</strong> 10+2 with PCM (&ge; 60%) · 4 Years
         </div>
       </div>
 
-      <div class="catalog-card" data-cat="btech">
+      <div class="prog-card" data-cat="btech">
         <div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <span class="catalog-code-badge">CSE-CLOUD</span>
+            <span class="prog-code">CSE-CLOUD</span>
             <span class="badge badge-emerald">60 SEATS</span>
           </div>
-          <h3 style="font-size:17px; font-weight:800; color:#0F172A; margin:0 0 8px;">B.Tech CSE (Cloud Computing)</h3>
-          <p style="font-size:13px; color:#64748B; margin:0 0 14px;">Distributed Systems, Microservices, Kubernetes, Virtualization, and Hybrid Cloud Architectures.</p>
+          <h3 style="font-size:16px; font-weight:800; color:#0F172A; margin:0 0 6px;">B.Tech CSE (Cloud Computing)</h3>
+          <p style="font-size:12.5px; color:#64748B; margin:0 0 12px;">Distributed Systems, Microservices Architecture, Kubernetes, and Cloud Infrastructure.</p>
         </div>
-        <div style="border-top:1px solid #F1F5F9; padding-top:12px; font-size:12px; color:#475569;">
+        <div style="border-top:1px solid #F1F5F9; padding-top:10px; font-size:12px; color:#475569;">
           <strong>Eligibility:</strong> 10+2 with PCM (&ge; 60%) · 4 Years
         </div>
       </div>
 
-      <div class="catalog-card" data-cat="btech">
+      <div class="prog-card" data-cat="btech">
         <div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <span class="catalog-code-badge">ECE</span>
+            <span class="prog-code">ECE</span>
             <span class="badge badge-emerald">60 SEATS</span>
           </div>
-          <h3 style="font-size:17px; font-weight:800; color:#0F172A; margin:0 0 8px;">B.Tech Electronics & Communication</h3>
-          <p style="font-size:13px; color:#64748B; margin:0 0 14px;">Modern Signal Processing, Embedded Systems, IoT, Microwave Communication, and Wireless Networks.</p>
+          <h3 style="font-size:16px; font-weight:800; color:#0F172A; margin:0 0 6px;">B.Tech Electronics & Communication</h3>
+          <p style="font-size:12.5px; color:#64748B; margin:0 0 12px;">Digital Signal Processing, Embedded Systems, IoT, and Modern Wireless Telecommunications.</p>
         </div>
-        <div style="border-top:1px solid #F1F5F9; padding-top:12px; font-size:12px; color:#475569;">
+        <div style="border-top:1px solid #F1F5F9; padding-top:10px; font-size:12px; color:#475569;">
           <strong>Eligibility:</strong> 10+2 with PCM (&ge; 55%) · 4 Years
         </div>
       </div>
 
-      <div class="catalog-card" data-cat="ca">
+      <div class="prog-card" data-cat="ca">
         <div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <span class="catalog-code-badge">BCA</span>
+            <span class="prog-code">BCA</span>
             <span class="badge badge-emerald">60 SEATS</span>
           </div>
-          <h3 style="font-size:17px; font-weight:800; color:#0F172A; margin:0 0 8px;">Bachelor of Computer Applications (BCA)</h3>
-          <p style="font-size:13px; color:#64748B; margin:0 0 14px;">Application development, Object-Oriented Programming, Database Management, and Web Technologies.</p>
+          <h3 style="font-size:16px; font-weight:800; color:#0F172A; margin:0 0 6px;">Bachelor of Computer Applications (BCA)</h3>
+          <p style="font-size:12.5px; color:#64748B; margin:0 0 12px;">Full-Stack Web Development, Database Management, and Object-Oriented Software Design.</p>
         </div>
-        <div style="border-top:1px solid #F1F5F9; padding-top:12px; font-size:12px; color:#475569;">
+        <div style="border-top:1px solid #F1F5F9; padding-top:10px; font-size:12px; color:#475569;">
           <strong>Eligibility:</strong> 10+2 with Mathematics/CS (&ge; 50%) · 3 Years
         </div>
       </div>
 
-      <div class="catalog-card" data-cat="ca">
+      <div class="prog-card" data-cat="ca">
         <div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <span class="catalog-code-badge">MCA-AI</span>
+            <span class="prog-code">MCA-AI</span>
             <span class="badge badge-emerald">60 SEATS</span>
           </div>
-          <h3 style="font-size:17px; font-weight:800; color:#0F172A; margin:0 0 8px;">Master of Computer Applications (MCA - Generative AI)</h3>
-          <p style="font-size:13px; color:#64748B; margin:0 0 14px;">Advanced postgraduate engineering in Large Language Models, AI Systems Architecture, and Enterprise Cloud Solutions.</p>
+          <h3 style="font-size:16px; font-weight:800; color:#0F172A; margin:0 0 6px;">Master of Computer Applications (MCA - Gen AI)</h3>
+          <p style="font-size:12.5px; color:#64748B; margin:0 0 12px;">Postgraduate curriculum in Large Language Models, AI Architecture, and Cloud Systems.</p>
         </div>
-        <div style="border-top:1px solid #F1F5F9; padding-top:12px; font-size:12px; color:#475569;">
+        <div style="border-top:1px solid #F1F5F9; padding-top:10px; font-size:12px; color:#475569;">
           <strong>Eligibility:</strong> BCA / B.Sc / B.Tech (&ge; 50%) · 2 Years
         </div>
       </div>
 
-      <div class="catalog-card" data-cat="mgmt">
+      <div class="prog-card" data-cat="mgmt">
         <div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <span class="catalog-code-badge">MBA</span>
+            <span class="prog-code">MBA</span>
             <span class="badge badge-emerald">60 SEATS</span>
           </div>
-          <h3 style="font-size:17px; font-weight:800; color:#0F172A; margin:0 0 8px;">Master of Business Administration (MBA)</h3>
-          <p style="font-size:13px; color:#64748B; margin:0 0 14px;">Leadership, Strategic Marketing, Financial Analytics, Supply Chain Operations, and Business Intelligence.</p>
+          <h3 style="font-size:16px; font-weight:800; color:#0F172A; margin:0 0 6px;">Master of Business Administration (MBA)</h3>
+          <p style="font-size:12.5px; color:#64748B; margin:0 0 12px;">Corporate Leadership, Financial Strategy, Marketing Analytics, and Operations Management.</p>
         </div>
-        <div style="border-top:1px solid #F1F5F9; padding-top:12px; font-size:12px; color:#475569;">
+        <div style="border-top:1px solid #F1F5F9; padding-top:10px; font-size:12px; color:#475569;">
           <strong>Eligibility:</strong> Graduation in any discipline (&ge; 50%) · 2 Years
         </div>
       </div>
 
-      <div class="catalog-card" data-cat="pharm">
+      <div class="prog-card" data-cat="pharm">
         <div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <span class="catalog-code-badge">BPHARM</span>
+            <span class="prog-code">BPHARM</span>
             <span class="badge badge-emerald">60 SEATS</span>
           </div>
-          <h3 style="font-size:17px; font-weight:800; color:#0F172A; margin:0 0 8px;">Bachelor of Pharmacy (B.Pharm)</h3>
-          <p style="font-size:13px; color:#64748B; margin:0 0 14px;">Pharmaceutical Chemistry, Pharmacology, Drug Formulations, and Clinical Pharmacy Practice.</p>
+          <h3 style="font-size:16px; font-weight:800; color:#0F172A; margin:0 0 6px;">Bachelor of Pharmacy (B.Pharm)</h3>
+          <p style="font-size:12.5px; color:#64748B; margin:0 0 12px;">Pharmaceutical Chemistry, Pharmacology, Drug Development, and Clinical Practice.</p>
         </div>
-        <div style="border-top:1px solid #F1F5F9; padding-top:12px; font-size:12px; color:#475569;">
-          <strong>Eligibility:</strong> 10+2 with Physics, Chemistry & Biology/Math · 4 Years
+        <div style="border-top:1px solid #F1F5F9; padding-top:10px; font-size:12px; color:#475569;">
+          <strong>Eligibility:</strong> 10+2 with PCB/PCM · 4 Years
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SRMIST Ghaziabad Faculty Leadership Spotlight (95 Professors with Dr. Prefix) -->
+<!-- Faculty Directory Spotlight (95 Professors with Dr. Prefix) -->
 <section class="faculty-section" id="faculty">
-  <div class="wrap">
-    <div class="section-title-wrap">
-      <span class="section-eyebrow">Academic Excellence</span>
-      <h2 class="section-title">Distinguished SRMIST Professors (95 Staff)</h2>
-      <p class="section-subtitle">Meet our esteemed research guides and professors across 7 departments at SRMIST Delhi-NCR Ghaziabad.</p>
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">Academic Leadership</span>
+      <h2 class="section-heading">Distinguished SRMIST Professors (95 Staff)</h2>
+      <p class="section-desc">Meet our faculty members across 7 departments at SRMIST Delhi-NCR Ghaziabad.</p>
     </div>
 
-    <div class="fac-search-bar">
-      <input type="text" id="fac-filter-input" placeholder="Search 95 professors by name, department, or subject..." style="width:100%; padding:11px 16px; border-radius:30px; border:1px solid var(--border-color); font-size:13.5px; box-shadow:var(--shadow-sm); outline:none;">
+    <div class="fac-search-box">
+      <input type="text" id="fac-filter-input" placeholder="Search 95 professors by name, department, or subject..." style="width:100%; padding:10px 16px; border-radius:30px; border:1px solid var(--border-color); font-size:13px; outline:none; box-sizing:border-box;">
     </div>
 
-    <div class="faculty-grid" id="fac-mount">
-      <div class="fac-mini-card" data-fac-dept="cse">
-        <div class="fac-mini-avatar">AS</div>
+    <div class="fac-grid" id="fac-grid-mount">
+      <div class="fac-card">
+        <div class="fac-avatar">AS</div>
         <h4>Dr. Anjali Sharma</h4>
-        <div class="role">Associate Professor · CSE</div>
+        <div class="dept">Associate Professor · CSE</div>
         <div class="subj">Advanced Programming Practice</div>
       </div>
 
-      <div class="fac-mini-card" data-fac-dept="cse">
-        <div class="fac-mini-avatar">RM</div>
+      <div class="fac-card">
+        <div class="fac-avatar">RM</div>
         <h4>Prof. (Dr.) R. P. Mahapatra</h4>
-        <div class="role">Professor & Dean · CSE</div>
+        <div class="dept">Professor & Dean · CSE</div>
         <div class="subj">Cloud & Distributed Systems</div>
       </div>
 
-      <div class="fac-mini-card" data-fac-dept="cse">
-        <div class="fac-mini-avatar">DB</div>
+      <div class="fac-card">
+        <div class="fac-avatar">DB</div>
         <h4>Dr. Dhowmya Bhatt</h4>
-        <div class="role">Professor & Dean IQAC</div>
+        <div class="dept">Professor & Dean IQAC</div>
         <div class="subj">Software Engg & Data Analytics</div>
       </div>
 
-      <div class="fac-mini-card" data-fac-dept="cse">
-        <div class="fac-mini-avatar">AV</div>
+      <div class="fac-card">
+        <div class="fac-avatar">AV</div>
         <h4>Dr. Avneesh Vashistha</h4>
-        <div class="role">Associate Professor & HOD</div>
+        <div class="dept">Associate Professor & HOD</div>
         <div class="subj">Machine Learning & AI</div>
       </div>
 
-      <div class="fac-mini-card" data-fac-dept="cse">
-        <div class="fac-mini-avatar">NL</div>
+      <div class="fac-card">
+        <div class="fac-avatar">NL</div>
         <h4>Dr. Niranjan Lal</h4>
-        <div class="role">Associate Professor & Deputy HOD</div>
+        <div class="dept">Associate Professor & Deputy HOD</div>
         <div class="subj">Cyber Security & Cryptography</div>
       </div>
 
-      <div class="fac-mini-card" data-fac-dept="ece">
-        <div class="fac-mini-avatar">RS</div>
+      <div class="fac-card">
+        <div class="fac-avatar">RS</div>
         <h4>Dr. Rupali Singh</h4>
-        <div class="role">Associate Professor & HOD · ECE</div>
+        <div class="dept">Associate Professor & HOD · ECE</div>
         <div class="subj">Digital Signal Processing & VLSI</div>
       </div>
 
-      <div class="fac-mini-card" data-fac-dept="ca">
-        <div class="fac-mini-avatar">LA</div>
+      <div class="fac-card">
+        <div class="fac-avatar">LA</div>
         <h4>Dr. Lalit Kishore Arora</h4>
-        <div class="role">Associate Professor & HOD · CA</div>
+        <div class="dept">Associate Professor & HOD · CA</div>
         <div class="subj">OOP & Python Applications</div>
       </div>
 
-      <div class="fac-mini-card" data-fac-dept="mech">
-        <div class="fac-mini-avatar">GB</div>
+      <div class="fac-card">
+        <div class="fac-avatar">GB</div>
         <h4>Dr. Gyanendra Prasad Bagri</h4>
-        <div class="role">Professor & HOD · Mechanical</div>
+        <div class="dept">Professor & HOD · Mechanical</div>
         <div class="subj">Thermodynamics & Fluid Dynamics</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Admissions FAQ Accordion -->
-<section class="faq-section" id="faq">
-  <div class="wrap">
-    <div class="section-title-wrap">
-      <span class="section-eyebrow">Got Questions?</span>
-      <h2 class="section-title">Frequently Asked Questions</h2>
-      <p class="section-subtitle">Clear answers to common questions about admissions, document verification, hostel facilities, and fee payments.</p>
+<!-- FAQ Accordion -->
+<section class="faq-wrap" id="faq">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">Common Queries</span>
+      <h2 class="section-heading">Frequently Asked Questions</h2>
+      <p class="section-desc">Find answers to common admissions, documentation, ID badge, and campus life questions.</p>
     </div>
 
-    <div class="faq-accordion">
+    <div class="faq-list">
       <div class="faq-item open">
-        <div class="faq-question">
-          <span>What documents are required during online registration?</span>
-          <span class="faq-toggle">▼</span>
+        <div class="faq-q">
+          <span>What documents are required during online admission registration?</span>
+          <span>▼</span>
         </div>
-        <div class="faq-answer">
-          You will need your 10th Standard Marks Card, 12th/Qualifying Examination Certificate, Entrance Examination (JEE Main/SRMJEEE/State Merit) Scorecard, Transfer/Migration Certificate, Social Category Certificate (if applicable), and Govt ID (Aadhar Card).
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question">
-          <span>How is the Student Digital ID Badge generated?</span>
-          <span class="faq-toggle">▼</span>
-        </div>
-        <div class="faq-answer">
-          Upon submitting the 5-step registration form in RegEngine, the server assigns your verified Roll Number and instantly mints a 3D Holographic ID Badge with an encrypted QR verification code and academic watermark.
+        <div class="faq-a">
+          You will need your 10th Standard Certificate, 12th/Qualifying Board Examination Marks Sheet, Entrance Examination Scorecard (if applicable), Social Category Certificate, and Aadhar/National Govt ID.
         </div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-question">
-          <span>Are hostel accommodations and bus transportation available?</span>
-          <span class="faq-toggle">▼</span>
+        <div class="faq-q">
+          <span>How is the student digital ID badge generated?</span>
+          <span>▼</span>
         </div>
-        <div class="faq-answer">
-          Yes! SRMIST Delhi-NCR Ghaziabad provides separate AC and Non-AC hostel residences for boys and girls on campus, as well as dedicated college bus routes covering Delhi, Noida, Greater Noida, and Ghaziabad metro stations.
+        <div class="faq-a">
+          Upon submitting the online registration form through the Student Portal, your official Roll Number is assigned and a digital ID badge with QR code verification is minted instantly. You can view or print it anytime.
         </div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-question">
-          <span>What is the minimum attendance requirement?</span>
-          <span class="faq-toggle">▼</span>
+        <div class="faq-q">
+          <span>What is the university minimum attendance requirement?</span>
+          <span>▼</span>
         </div>
-        <div class="faq-answer">
-          As per university academic regulations, students must maintain a minimum of 75% attendance in each registered theory and laboratory course to be eligible for end-semester examinations. RegEngine automatically flags attendance defaulters.
+        <div class="faq-a">
+          As per statutory SRMIST university academic guidelines, students must maintain at least 75% aggregate attendance in all registered theory and laboratory courses to remain eligible for end-semester examinations.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>Who can access the College Management section?</span>
+          <span>▼</span>
+        </div>
+        <div class="faq-a">
+          The College Management section is exclusively restricted to verified SRMIST professors (including Dr. Anjali Sharma, Dean Prof. R.P. Mahapatra, and HODs) and administrative registrar officers with secure single sign-on credentials.
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Campus Secretariat Banner -->
-<div class="wrap">
-  <div class="helpdesk-banner">
+<!-- Secretariat Contact Banner -->
+<div class="container">
+  <div class="contact-banner">
     <div>
-      <h3 style="font-size:26px; font-weight:800; margin:0 0 8px;">Admissions & Registrar Secretariat</h3>
-      <p style="font-size:14.5px; color:#DBEAFE; margin:0; max-width:560px; line-height:1.6;">
+      <h3 style="font-size:22px; font-weight:800; margin:0 0 6px;">Admissions & Registrar Secretariat</h3>
+      <p style="font-size:13.5px; color:#DBEAFE; margin:0; line-height:1.5;">
         SRM Institute of Science and Technology, Delhi-NCR Campus<br>
-        Delhi-Meerut Road, Modinagar, Ghaziabad (Uttar Pradesh) – 201204<br>
-        Toll-Free Helpline: <strong>1800 200 4776</strong> · Email: <strong>admissions.ncr@srmist.edu.in</strong>
+        Delhi-Meerut Road, Modinagar, Ghaziabad (UP) – 201204<br>
+        Helpline: <strong>1800 200 4776</strong> · Email: <strong>admissions.ncr@srmist.edu.in</strong>
       </p>
     </div>
 
     <div>
-      <a href="app.html?mode=student&view=register" class="btn btn-gold btn-lg" style="font-weight:800; padding:12px 28px;">
+      <a href="app.html?mode=student&view=register" class="btn btn-gold btn-lg" style="font-weight:700; padding:12px 24px;">
         <span>🎓 Launch Student Registration</span>
       </a>
     </div>
   </div>
 </div>
 
-<!-- Footer -->
-<footer class="site-footer">
-  <div class="wrap">
+<!-- University Footer -->
+<footer class="footer">
+  <div class="container">
     <div class="footer-grid">
       <div>
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
-          <div class="brand-crest" style="width:36px; height:36px; font-size:16px;">R</div>
-          <strong style="font-size:18px; color:#FFFFFF;">RegEngine</strong>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div class="brand-logo-crest" style="width:34px; height:34px; font-size:16px;">R</div>
+          <strong style="font-size:17px; color:#FFFFFF;">RegEngine</strong>
         </div>
-        <p style="font-size:13px; color:#94A3B8; line-height:1.6; max-width:280px; margin:0;">
+        <p style="font-size:12.5px; color:#94A3B8; line-height:1.6; margin:0;">
           Campus Registration & Student Lifecycle Management System for SRM Institute of Science and Technology, Delhi-NCR Campus, Ghaziabad.
         </p>
       </div>
@@ -1396,9 +1210,9 @@
         <h4>Student Portals</h4>
         <ul>
           <li><a href="app.html?mode=student&view=register">Online Admission</a></li>
-          <li><a href="app.html?mode=student&view=student-idcard">3D ID Badge Studio</a></li>
+          <li><a href="app.html?mode=student&view=student-idcard">Digital ID Badge</a></li>
           <li><a href="app.html?mode=student&view=student-status">Admission Dossier</a></li>
-          <li><a href="app.html?mode=student&view=student-attendance">Attendance Self-Check</a></li>
+          <li><a href="app.html?mode=student&view=student-attendance">Attendance Check</a></li>
         </ul>
       </div>
 
@@ -1413,11 +1227,11 @@
       </div>
 
       <div class="footer-col">
-        <h4>Faculty & Admin</h4>
+        <h4>College Management</h4>
         <ul>
           <li><a href="app.html?mode=management">Faculty SSO Login 🔒</a></li>
           <li><a href="app.html?mode=management&view=dashboard">Executive Dashboard</a></li>
-          <li><a href="app.html?mode=management&view=records">Master Student Registry</a></li>
+          <li><a href="app.html?mode=management&view=records">Master Student Register</a></li>
           <li><a href="app.html?mode=management&view=attendance">Attendance Marker</a></li>
         </ul>
       </div>
@@ -1431,89 +1245,10 @@
 </footer>
 
 <script>
-  // 1. Interactive Live ID Card Simulator Logic
+  // 1. Programme Filter Pills
   (function(){
-    var nameInput = document.getElementById("sim-name-input");
-    var branchSelect = document.getElementById("sim-branch-select");
-    var nameDisplay = document.getElementById("sim-name-display");
-    var branchDisplay = document.getElementById("sim-branch-display");
-    var avatar = document.getElementById("sim-avatar");
-    var qrMount = document.getElementById("sim-qr-mount");
-    var cardWrap = document.getElementById("sim-card-wrap");
-    var holoCard = document.getElementById("sim-holo-card");
-
-    function getInitials(name) {
-      var parts = (name || "").trim().split(/\s+/);
-      return ((parts[0] || "")[0] + (parts[1] ? parts[1][0] : "")).toUpperCase() || "ST";
-    }
-
-    function updateCard() {
-      var n = nameInput.value.trim() || "Aadi Saxena";
-      var b = branchSelect.value;
-      nameDisplay.textContent = n;
-      branchDisplay.textContent = b;
-      avatar.textContent = getInitials(n);
-
-      if (qrMount && window.QRCode) {
-        qrMount.innerHTML = "";
-        new window.QRCode(qrMount, {
-          text: "https://regengine.srmup.in/verify/RA2611003010001",
-          width: 58,
-          height: 58,
-          colorDark: "#090D14",
-          colorLight: "#FFFFFF"
-        });
-      }
-    }
-
-    if (nameInput) nameInput.addEventListener("input", updateCard);
-    if (branchSelect) branchSelect.addEventListener("change", updateCard);
-    updateCard();
-
-    // 3D Parallax Mouse Tilt
-    if (cardWrap && holoCard) {
-      cardWrap.addEventListener("mousemove", function(e){
-        var rect = cardWrap.getBoundingClientRect();
-        var x = e.clientX - rect.left - rect.width / 2;
-        var y = e.clientY - rect.top - rect.height / 2;
-        var rotX = (-y / (rect.height / 2)) * 14;
-        var rotY = (x / (rect.width / 2)) * 14;
-        holoCard.style.transform = "rotateX(" + rotX + "deg) rotateY(" + rotY + "deg) scale3d(1.02, 1.02, 1.02)";
-      });
-      cardWrap.addEventListener("mouseleave", function(){
-        holoCard.style.transform = "rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
-      });
-    }
-  })();
-
-  // 2. Portal Group Tab Switching
-  (function(){
-    var tabStu = document.getElementById("tab-btn-student");
-    var tabMgmt = document.getElementById("tab-btn-mgmt");
-    var grpStu = document.getElementById("group-student");
-    var grpMgmt = document.getElementById("group-mgmt");
-
-    if (tabStu && tabMgmt && grpStu && grpMgmt) {
-      tabStu.addEventListener("click", function(){
-        tabStu.classList.add("active");
-        tabMgmt.classList.remove("active");
-        grpStu.style.display = "block";
-        grpMgmt.style.display = "none";
-      });
-
-      tabMgmt.addEventListener("click", function(){
-        tabMgmt.classList.add("active");
-        tabStu.classList.remove("active");
-        grpMgmt.style.display = "block";
-        grpStu.style.display = "none";
-      });
-    }
-  })();
-
-  // 3. Programme Catalog Filtering
-  (function(){
-    var pills = document.querySelectorAll(".filter-pill");
-    var cards = document.querySelectorAll(".catalog-card");
+    var pills = document.querySelectorAll(".prog-pill");
+    var cards = document.querySelectorAll(".prog-card");
 
     pills.forEach(function(pill){
       pill.addEventListener("click", function(){
@@ -1533,10 +1268,10 @@
     });
   })();
 
-  // 4. Live Faculty Search Filter
+  // 2. Faculty Live Search Filter
   (function(){
     var facInput = document.getElementById("fac-filter-input");
-    var facCards = document.querySelectorAll(".fac-mini-card");
+    var facCards = document.querySelectorAll(".fac-card");
 
     if (facInput) {
       facInput.addEventListener("input", function(e){
@@ -1549,9 +1284,9 @@
     }
   })();
 
-  // 5. FAQ Accordion Toggle
+  // 3. FAQ Accordion
   (function(){
-    var faqQuestions = document.querySelectorAll(".faq-question");
+    var faqQuestions = document.querySelectorAll(".faq-q");
     faqQuestions.forEach(function(q){
       q.addEventListener("click", function(){
         var item = q.parentElement;
