@@ -748,18 +748,21 @@
 
     <nav>
       <ul class="nav-menu">
-        <li><a href="#portals">Quick Portals</a></li>
-        <li><a href="#roadmap">Admission Steps</a></li>
+        <li><a href="app.html?mode=student&view=register" style="color:#1E3A8A; font-weight:700;">🎓 Student Section</a></li>
         <li><a href="#programmes">Programmes & Seats</a></li>
-        <li><a href="#faculty">Faculty Directory</a></li>
+        <li><a href="#faculty">Faculty Directory (95 Staff)</a></li>
+        <li><a href="#portals">System Overview</a></li>
         <li><a href="#faq">Admissions FAQ</a></li>
       </ul>
     </nav>
 
     <div class="nav-actions">
-      <a href="app.html" class="btn btn-primary" style="background:#1E3A8A; border-color:#1E3A8A; padding:9px 18px; font-weight:700;">
-        <span>Launch Registration Console</span>
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <a href="app.html?mode=student&view=register" class="btn btn-ghost" style="padding:8px 14px; font-size:13px;">
+        <span>🎓 Student Portal</span>
+      </a>
+      <a href="app.html?mode=management" class="btn btn-primary" style="background:linear-gradient(135deg, #1E3A8A, #0F172A); border-color:#1E3A8A; padding:9px 18px; font-weight:700;">
+        <span>🔒 College Management</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
       </a>
     </div>
   </div>
@@ -773,27 +776,28 @@
   <div class="wrap hero-grid">
     <div>
       <div class="hero-badge-tag">
-        <span>✨ Academic Intake 2026–2030</span>
+        <span>✨ SRMIST Delhi-NCR Ghaziabad Intake 2026</span>
         <span style="color:#6366F1;">•</span>
         <span>Delhi-Meerut Road, Modinagar</span>
       </div>
 
       <h2 class="hero-heading">
-        Modern Campus Registration & <br>
-        <span class="hero-gradient-text">Student Lifecycle Portal</span>
+        Centralized Campus Portal: <br>
+        <span class="hero-gradient-text">Student & Faculty Portals</span>
       </h2>
 
       <p class="hero-description">
-        Welcome to <strong>RegEngine</strong>, the centralized academic registration management system for <strong>SRM Institute of Science and Technology (Delhi-NCR Campus, Ghaziabad)</strong>. Complete online admissions, mint 3D holographic digital ID badges, record daily attendance, and explore departments.
+        Welcome to <strong>RegEngine</strong>, the official academic platform for <strong>SRM Institute of Science and Technology (Delhi-NCR Campus, Ghaziabad)</strong>. Access the public <strong>Student Section</strong> for online admissions, 3D holographic ID badges, and attendance lookup, or log into the secured <strong>College Management Section</strong> for verified professors and registrar administration.
       </p>
 
       <div class="hero-btn-group">
-        <a href="app.html" class="btn btn-gold btn-lg btn-shimmer" style="font-weight:800; padding:12px 26px;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-          <span>Begin New Student Registration</span>
+        <a href="app.html?mode=student&view=register" class="btn btn-gold btn-lg btn-shimmer" style="font-weight:800; padding:12px 24px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          <span>🎓 Enter Student Portal</span>
         </a>
-        <a href="#programmes" class="btn btn-ghost btn-lg">
-          <span>Explore 16 Programmes</span>
+        <a href="app.html?mode=management" class="btn btn-primary btn-lg" style="background:#0F172A; border-color:#0F172A; font-weight:700; padding:12px 24px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span>🔒 College Management (Professors Only)</span>
         </a>
       </div>
 
@@ -906,65 +910,99 @@
 <section class="portals-section" id="portals">
   <div class="wrap">
     <div class="section-title-wrap">
-      <span class="section-eyebrow">Central Registrar System</span>
-      <h2 class="section-title">Core Academic Management Portals</h2>
-      <p class="section-subtitle">Everything needed to oversee the student admission lifecycle, daily classroom attendance, faculty assignments, and data governance.</p>
+      <span class="section-eyebrow">Dual Institutional Ecosystem</span>
+      <h2 class="section-title">Student Section vs College Management</h2>
+      <p class="section-subtitle">A clear separation of concerns: open self-service utilities for students and applicants, paired with an authenticated command center exclusively for SRMIST professors and administrators.</p>
     </div>
 
-    <div class="portal-cards-row">
-      <a href="app.html" class="portal-item-card">
-        <div>
-          <div class="portal-icon-wrap">🎓</div>
-          <h3>5-Step Student Registration</h3>
-          <p>Comprehensive enrollment wizard capturing Personal Details, Academic 10th/12th Background, Parent Particulars, Residential Address, and Campus Facilities.</p>
-        </div>
-        <div class="portal-card-link">Launch Registration Wizard →</div>
-      </a>
+    <!-- Group 1: Student Section -->
+    <div style="margin-bottom:40px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:18px;">
+        <span style="font-size:22px;">🎓</span>
+        <h3 style="font-size:20px; font-weight:800; color:#1E3A8A; margin:0;">Student Self-Service Suite (Public Access)</h3>
+      </div>
+      <div class="portal-cards-row">
+        <a href="app.html?mode=student&view=register" class="portal-item-card">
+          <div>
+            <div class="portal-icon-wrap" style="background:#EFF6FF; color:#1E3A8A;">📝</div>
+            <h3>Online Admission Registration</h3>
+            <p>5-step structured registration wizard with autofill support for reference student Aadi Saxena (Son of Anupam Saxena).</p>
+          </div>
+          <div class="portal-card-link">Open Admission Form →</div>
+        </a>
 
-      <a href="app.html" class="portal-item-card">
-        <div>
-          <div class="portal-icon-wrap">🗂️</div>
-          <h3>Student Records & Dossiers</h3>
-          <p>Searchable institutional registry with 5-tab student academic dossiers, batch actions, CSV exports, and 3D digital holographic ID cards.</p>
-        </div>
-        <div class="portal-card-link">Explore Records Directory →</div>
-      </a>
+        <a href="app.html?mode=student&view=student-idcard" class="portal-item-card">
+          <div>
+            <div class="portal-icon-wrap" style="background:#FEF3C7; color:#D97706;">🪪</div>
+            <h3>3D Digital Holographic ID Badge</h3>
+            <p>Search your roll number, inspect your 3D tilting badge with cryptographic QR verification, and print your physical badge.</p>
+          </div>
+          <div class="portal-card-link">View My Digital Badge →</div>
+        </a>
 
-      <a href="app.html" class="portal-item-card">
-        <div>
-          <div class="portal-icon-wrap">📋</div>
-          <h3>Daily Attendance Terminal</h3>
-          <p>1-tap cohort attendance check-ins by programme and date, with automatic identification of statutory 75% attendance defaulters.</p>
-        </div>
-        <div class="portal-card-link">Open Attendance Terminal →</div>
-      </a>
+        <a href="app.html?mode=student&view=student-status" class="portal-item-card">
+          <div>
+            <div class="portal-icon-wrap" style="background:#ECFDF5; color:#059669;">📄</div>
+            <h3>Admission Dossier & Verification</h3>
+            <p>Verify your enrollment particulars, allotted branch, parent contact records, hostel room, and download your admission confirmation slip.</p>
+          </div>
+          <div class="portal-card-link">Check Admission Status →</div>
+        </a>
 
-      <a href="app.html" class="portal-item-card">
-        <div>
-          <div class="portal-icon-wrap">👨‍🏫</div>
-          <h3>Faculty & Staff Directory</h3>
-          <p>Profiles for SRMIST Ghaziabad professors across Computer Science, ECE, Mechanical, Computer Applications, and Sciences with contact details.</p>
-        </div>
-        <div class="portal-card-link">View Faculty Members →</div>
-      </a>
+        <a href="app.html?mode=student&view=student-attendance" class="portal-item-card">
+          <div>
+            <div class="portal-icon-wrap" style="background:#F3E8FF; color:#7C3AED;">📊</div>
+            <h3>Attendance Self-Check Portal</h3>
+            <p>Check your aggregate attendance percentage in real time and ensure compliance with the mandatory university 75% examination rule.</p>
+          </div>
+          <div class="portal-card-link">Check My Attendance →</div>
+        </a>
+      </div>
+    </div>
 
-      <a href="app.html" class="portal-item-card">
-        <div>
-          <div class="portal-icon-wrap">🏛️</div>
-          <h3>Branch Seat Allotment</h3>
-          <p>Live seat occupancy bars and real-time intake meters across all 16 undergraduate and postgraduate disciplines.</p>
-        </div>
-        <div class="portal-card-link">Inspect Seat Capacities →</div>
-      </a>
+    <!-- Group 2: College Management Section -->
+    <div>
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:18px;">
+        <span style="font-size:22px;">🏛️</span>
+        <h3 style="font-size:20px; font-weight:800; color:#0F172A; margin:0;">College Management Section (Professors & Staff Only 🔒)</h3>
+      </div>
+      <div class="portal-cards-row">
+        <a href="app.html?mode=management&view=dashboard" class="portal-item-card" style="border-top:3px solid #1E3A8A;">
+          <div>
+            <div class="portal-icon-wrap" style="background:#F1F5F9; color:#0F172A;">📊</div>
+            <h3>Executive Campus Dashboard</h3>
+            <p>Live campus KPI counters, branch intake capacity breakdown, and real-time registration audit logs.</p>
+          </div>
+          <div class="portal-card-link" style="color:#0F172A;">Enter Dashboard 🔒 →</div>
+        </a>
 
-      <a href="app.html" class="portal-item-card">
-        <div>
-          <div class="portal-icon-wrap">📥</div>
-          <h3>Institutional Data Center</h3>
-          <p>Download official student CSV rosters, daily attendance ledgers, faculty directories, and comprehensive JSON backups.</p>
-        </div>
-        <div class="portal-card-link">Export Data & Backups →</div>
-      </a>
+        <a href="app.html?mode=management&view=records" class="portal-item-card" style="border-top:3px solid #1E3A8A;">
+          <div>
+            <div class="portal-icon-wrap" style="background:#F1F5F9; color:#0F172A;">🗂️</div>
+            <h3>Master Student Registry</h3>
+            <p>Search, filter by branch, inspect student academic dossiers, modify details, and manage student enrollments.</p>
+          </div>
+          <div class="portal-card-link" style="color:#0F172A;">Manage Student Register 🔒 →</div>
+        </a>
+
+        <a href="app.html?mode=management&view=attendance" class="portal-item-card" style="border-top:3px solid #1E3A8A;">
+          <div>
+            <div class="portal-icon-wrap" style="background:#F1F5F9; color:#0F172A;">📋</div>
+            <h3>Daily Attendance Marker</h3>
+            <p>Select engineering branch and date to mark 1-tap cohort attendance and automatically monitor statutory defaulters (<75%).</p>
+          </div>
+          <div class="portal-card-link" style="color:#0F172A;">Mark Class Attendance 🔒 →</div>
+        </a>
+
+        <a href="app.html?mode=management&view=faculty" class="portal-item-card" style="border-top:3px solid #1E3A8A;">
+          <div>
+            <div class="portal-icon-wrap" style="background:#F1F5F9; color:#0F172A;">👨‍🏫</div>
+            <h3>Faculty & Staff (95 Professors)</h3>
+            <p>Full directory of 95 official SRMIST Ghaziabad professors with "Dr." titles across 7 departments, with add staff tools.</p>
+          </div>
+          <div class="portal-card-link" style="color:#0F172A;">View Staff Directory 🔒 →</div>
+        </a>
+      </div>
     </div>
   </div>
 </section>

@@ -294,38 +294,85 @@
       <div class="sidebar-crest">R</div>
       <div>
         <h2>RegEngine</h2>
-        <div class="sub">Campus Registration Portal</div>
+        <div class="sub">SRMIST Delhi-NCR Ghaziabad</div>
       </div>
     </div>
 
-    <nav class="sidebar-nav" id="app-nav">
-      <div class="nav-header">Admissions & Records</div>
+    <!-- Dual Mode Switcher -->
+    <div class="portal-switch-container">
+      <div class="portal-segmented-control">
+        <button type="button" class="portal-segment-btn active" id="seg-btn-student" data-portal="student">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          <span>Student</span>
+        </button>
+        <button type="button" class="portal-segment-btn" id="seg-btn-management" data-portal="management">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span>Faculty 🔒</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Student Navigation Group -->
+    <nav class="sidebar-nav" id="app-nav-student">
+      <div class="nav-header">Student Self-Service</div>
+      
       <button class="nav-item active" data-view="register">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-        <span>Student Registration</span>
+        <span>Admission Registration</span>
       </button>
 
-      <button class="nav-item" data-view="records">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M3.5 9h17M8.5 9v11.5"/></svg>
-        <span>Student Records</span>
-        <span class="nav-badge" id="nav-badge-students">0</span>
+      <button class="nav-item" data-view="student-idcard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><line x1="15" y1="8" x2="17" y2="8"/><line x1="15" y1="12" x2="17" y2="12"/><line x1="7" y1="16" x2="17" y2="16"/></svg>
+        <span>My Digital ID Badge</span>
+        <span class="nav-badge" style="background:#FEF3C7; color:#92400E; font-weight:700;">3D</span>
       </button>
+
+      <button class="nav-item" data-view="student-status">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <span>Admission Dossier</span>
+      </button>
+
+      <button class="nav-item" data-view="student-courses">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <span>Academic Programmes</span>
+        <span class="nav-badge">16</span>
+      </button>
+
+      <button class="nav-item" data-view="student-attendance">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>Attendance Status</span>
+      </button>
+
+      <button class="nav-item" data-view="student-helpdesk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span>Admissions Helpdesk</span>
+      </button>
+    </nav>
+
+    <!-- College Management Navigation Group (Exclusive to Faculty & Management) -->
+    <nav class="sidebar-nav" id="app-nav-management" style="display:none;">
+      <div class="nav-header">Faculty & Administration</div>
 
       <button class="nav-item" data-view="dashboard">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
         <span>Executive Dashboard</span>
       </button>
 
-      <div class="nav-header">Campus Management</div>
+      <button class="nav-item" data-view="records">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M3.5 9h17M8.5 9v11.5"/></svg>
+        <span>Master Student Register</span>
+        <span class="nav-badge" id="nav-badge-students">0</span>
+      </button>
+
       <button class="nav-item" data-view="attendance">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-        <span>Daily Attendance</span>
+        <span>Daily Attendance Marker</span>
       </button>
 
       <button class="nav-item" data-view="faculty">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6"/></svg>
-        <span>Faculty & Staff</span>
-        <span class="nav-badge" id="nav-badge-faculty">0</span>
+        <span>Faculty & Staff Directory</span>
+        <span class="nav-badge" id="nav-badge-faculty">95</span>
       </button>
 
       <button class="nav-item" data-view="courses">
@@ -335,7 +382,7 @@
 
       <button class="nav-item" data-view="export">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        <span>Data & Reports</span>
+        <span>Data & Audit Exports</span>
       </button>
     </nav>
 
@@ -373,13 +420,16 @@
           <span>SFX</span>
         </button>
 
-        <div style="display:flex; align-items:center; gap:10px; padding-left:10px; border-left:1px solid var(--border-subtle);">
-          <div style="width:34px; height:34px; border-radius:50%; background:#1E3A8A; color:#FFF; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px;">
-            REG
-          </div>
-          <div style="font-size:12px; line-height:1.2;">
-            <div style="font-weight:700;">Registrar Office</div>
-            <div style="color:var(--text-dim); font-size:10.5px;">Admissions Desk</div>
+        <!-- Dynamic Portal Status & User Tag -->
+        <div id="auth-status-container" style="display:flex; align-items:center; gap:10px; padding-left:10px; border-left:1px solid var(--border-subtle);">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:34px; height:34px; border-radius:50%; background:#1E3A8A; color:#FFF; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px;" id="topbar-avatar">
+              STU
+            </div>
+            <div style="font-size:12px; line-height:1.2;">
+              <div style="font-weight:700;" id="topbar-user-title">Student Portal</div>
+              <div style="color:var(--text-dim); font-size:10.5px;" id="topbar-user-sub">Public Admissions Desk</div>
+            </div>
           </div>
         </div>
       </div>
@@ -653,6 +703,133 @@
         </form>
       </div>
     </section>
+
+    <!-- STUDENT VIEW 2: My Digital ID Badge & Hologram Generator -->
+    <section id="view-student-idcard" class="view-pane">
+      <div style="max-width:860px; margin:0 auto;">
+        <div class="card" style="padding:28px; background:#FFFFFF; margin-bottom:24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+            <div>
+              <h2 style="font-size:20px; font-weight:800; color:#0F172A;">Digital Holographic Student ID Badge</h2>
+              <div style="font-size:13px; color:#64748B;">Enter your roll number or select an enrolled student to view and download your 3D verified badge</div>
+            </div>
+            <div style="display:flex; gap:10px;">
+              <button class="btn btn-sm btn-ghost" id="quick-aadi-idcard-btn">
+                <span>✨ Load Reference Badge (Aadi Saxena)</span>
+              </button>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+            <input type="text" id="idcard-search-input" placeholder="Enter Roll Number (e.g. RA2611003010001) or Name..." style="flex:1; min-width:260px;">
+            <button class="btn btn-primary" id="idcard-find-btn" style="background:#1E3A8A; border-color:#1E3A8A;">
+              <span>Search Badge</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3D Card Mount Area -->
+        <div id="student-idcard-mount"></div>
+      </div>
+    </section>
+
+    <!-- STUDENT VIEW 3: Admission Status & Official Dossier -->
+    <section id="view-student-status" class="view-pane">
+      <div style="max-width:860px; margin:0 auto;">
+        <div class="card" style="padding:28px; background:#FFFFFF; margin-bottom:24px;">
+          <h2 style="font-size:20px; font-weight:800; color:#0F172A;">Student Admission Dossier Lookup</h2>
+          <div style="font-size:13px; color:#64748B; margin-bottom:16px;">Verify your official registration particulars, parent contacts, and enrolled branch allotment</div>
+          
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <input type="text" id="status-search-input" placeholder="Enter Roll Number (e.g. RA2611003010001) or Student Name..." style="flex:1; min-width:260px;">
+            <button class="btn btn-primary" id="status-find-btn" style="background:#1E3A8A; border-color:#1E3A8A;">
+              <span>Check Admission Status</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dossier Verification Container -->
+        <div id="student-status-mount"></div>
+      </div>
+    </section>
+
+    <!-- STUDENT VIEW 4: SRMIST Academic Programmes -->
+    <section id="view-student-courses" class="view-pane">
+      <div style="max-width:1100px; margin:0 auto;">
+        <div style="margin-bottom:24px;">
+          <h2 style="font-size:22px; font-weight:800; color:#0F172A;">SRMIST Delhi-NCR Ghaziabad Academic Catalog</h2>
+          <div style="font-size:13px; color:#64748B;">Explore all 16 undergraduate and postgraduate programmes, seat caps, and department allocations</div>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:20px;" id="student-courses-grid-mount"></div>
+      </div>
+    </section>
+
+    <!-- STUDENT VIEW 5: Attendance Self-Check -->
+    <section id="view-student-attendance" class="view-pane">
+      <div style="max-width:860px; margin:0 auto;">
+        <div class="card" style="padding:28px; background:#FFFFFF; margin-bottom:24px;">
+          <h2 style="font-size:20px; font-weight:800; color:#0F172A;">Attendance & Academic Standing Portal</h2>
+          <div style="font-size:13px; color:#64748B; margin-bottom:16px;">Check your statutory attendance percentage against the mandatory university 75% threshold</div>
+          
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <input type="text" id="att-check-input" placeholder="Enter Roll Number (e.g. RA2611003010001)..." style="flex:1; min-width:260px;">
+            <button class="btn btn-primary" id="att-check-btn" style="background:#1E3A8A; border-color:#1E3A8A;">
+              <span>Check Attendance</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="student-att-result-mount"></div>
+      </div>
+    </section>
+
+    <!-- STUDENT VIEW 6: Admissions Helpdesk & FAQ -->
+    <section id="view-student-helpdesk" class="view-pane">
+      <div style="max-width:860px; margin:0 auto;">
+        <div class="card" style="padding:32px; background:#FFFFFF; margin-bottom:24px;">
+          <h2 style="font-size:22px; font-weight:800; color:#0F172A; margin-bottom:6px;">Registrar Helpdesk & Admissions Support</h2>
+          <p style="font-size:14px; color:#64748B; margin-bottom:24px;">Official inquiry points and campus assistance for prospective and enrolled students.</p>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:18px; margin-bottom:28px;">
+            <div style="background:#F8FAFC; padding:18px; border-radius:12px; border:1px solid var(--border-subtle);">
+              <div style="font-size:24px; margin-bottom:8px;">📍</div>
+              <h4 style="font-size:15px; font-weight:700; color:#0F172A; margin-bottom:4px;">Campus Address</h4>
+              <p style="font-size:12.5px; color:#64748B; line-height:1.5;">SRMIST Delhi-NCR Campus, Delhi-Meerut Road, Modinagar, Ghaziabad, UP - 201204</p>
+            </div>
+
+            <div style="background:#F8FAFC; padding:18px; border-radius:12px; border:1px solid var(--border-subtle);">
+              <div style="font-size:24px; margin-bottom:8px;">📞</div>
+              <h4 style="font-size:15px; font-weight:700; color:#0F172A; margin-bottom:4px;">Admissions Helpline</h4>
+              <p style="font-size:12.5px; color:#64748B; line-height:1.5;">+91 120 2555 700 / +91 120 2555 701<br>Toll Free: 1800 200 4776</p>
+            </div>
+
+            <div style="background:#F8FAFC; padding:18px; border-radius:12px; border:1px solid var(--border-subtle);">
+              <div style="font-size:24px; margin-bottom:8px;">✉️</div>
+              <h4 style="font-size:15px; font-weight:700; color:#0F172A; margin-bottom:4px;">Official Email</h4>
+              <p style="font-size:12.5px; color:#64748B; line-height:1.5;">admissions.ncr@srmist.edu.in<br>registrar.ncr@srmist.edu.in</p>
+            </div>
+          </div>
+
+          <h3 style="font-size:17px; font-weight:800; color:#0F172A; margin-bottom:14px;">Frequently Asked Questions</h3>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <details style="background:#F8FAFC; padding:14px 18px; border-radius:10px; border:1px solid var(--border-subtle);">
+              <summary style="font-weight:700; font-size:13.5px; cursor:pointer; color:#1E3A8A;">How do I generate my digital student ID card?</summary>
+              <p style="margin-top:10px; font-size:13px; color:#64748B; line-height:1.6;">Once your registration form is submitted through the Student Section, your holographic 3D ID badge is minted automatically. You can also view, print, or download it anytime under the "My Digital ID Badge" tab by searching your Roll Number.</p>
+            </details>
+            <details style="background:#F8FAFC; padding:14px 18px; border-radius:10px; border:1px solid var(--border-subtle);">
+              <summary style="font-weight:700; font-size:13.5px; cursor:pointer; color:#1E3A8A;">What is the minimum attendance requirement?</summary>
+              <p style="margin-top:10px; font-size:13px; color:#64748B; line-height:1.6;">As per SRMIST university statutory academic regulations, all students must maintain at least 75% aggregate attendance in each registered course to be eligible for end-semester university examinations.</p>
+            </details>
+            <details style="background:#F8FAFC; padding:14px 18px; border-radius:10px; border:1px solid var(--border-subtle);">
+              <summary style="font-weight:700; font-size:13.5px; cursor:pointer; color:#1E3A8A;">Who can access the College Management section?</summary>
+              <p style="margin-top:10px; font-size:13px; color:#64748B; line-height:1.6;">The College Management section is exclusively restricted to verified SRMIST professors (including Dr. Anjali Sharma, Dean Prof. R.P. Mahapatra, and HODs) and administrative registrar officers with secure authentication credentials.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLLEGE MANAGEMENT VIEWS (Exclusive to Faculty & Management) -->
 
     <!-- VIEW 2: Student Records & Paginated Dossiers -->
     <section id="view-records" class="view-pane">

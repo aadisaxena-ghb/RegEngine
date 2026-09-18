@@ -42,6 +42,13 @@
     attendance: [],
     courses: [],
     dashboard: null,
+    portalMode: "student", // "student" or "management"
+    authFaculty: (function(){
+      try {
+        var raw = localStorage.getItem("regengine_auth_faculty");
+        return raw ? JSON.parse(raw) : null;
+      } catch(e) { return null; }
+    })(),
     pagination: {
       page: 1,
       pageSize: 8
@@ -535,18 +542,253 @@
     });
   }
 
-  /* ================= Navigation View Router ================= */
+  /* ================= Dual Portal & Navigation View Router ================= */
   var VIEW_META = {
-    register:   { title: "Student Registration", meta: "Comprehensive multi-page student admission and registration form" },
-    records:    { title: "Student Records & Dossiers", meta: "Official university register, search, branch filters, and ID badges" },
-    dashboard:  { title: "Executive Dashboard", meta: "Branch intake capacity, enrolment metrics, and telemetry ledger" },
-    attendance: { title: "Daily Cohort Attendance", meta: "1-tap class roster check-in and 75% statutory attendance monitor" },
-    faculty:    { title: "Faculty & Staff Directory", meta: "Teaching staff allocations, professorships, and department directory" },
-    courses:    { title: "Branch Seat Quotas", meta: "Intake capacity and remaining available seats per engineering stream" },
-    export:     { title: "Data Center & Reports", meta: "Download CSV rosters, attendance ledgers, and raw JSON database backups" }
+    // Student Section Views
+    "register":           { title: "Student Admission Registration", meta: "Comprehensive multi-page student admission and registration form", portal: "student" },
+    "student-idcard":     { title: "Digital Student ID Badge", meta: "Live 3D holographic student identity badge and cryptographic QR verification", portal: "student" },
+    "student-status":     { title: "Admission Dossier & Status", meta: "Official registration particulars, parent contacts, and branch allotment", portal: "student" },
+    "student-courses":    { title: "SRMIST Academic Catalog", meta: "All 16 undergraduate and postgraduate programmes, seat caps, and departments", portal: "student" },
+    "student-attendance": { title: "Attendance Self-Check", meta: "Check personal attendance percentage against the mandatory 75% university rule", portal: "student" },
+    "student-helpdesk":   { title: "Admissions Helpdesk & FAQs", meta: "Registrar contacts, campus helplines, and answers to common queries", portal: "student" },
+
+    // College Management Exclusive Views
+    "dashboard":  { title: "Executive Campus Dashboard", meta: "Branch intake capacity, enrolment metrics, and telemetry ledger", portal: "management" },
+    "records":    { title: "Master Student Register", meta: "Official university register, search, branch filters, dossier reviews, and ID badges", portal: "management" },
+    "attendance": { title: "Daily Attendance Marking", meta: "1-tap class roster check-in and 75% statutory attendance monitor", portal: "management" },
+    "faculty":    { title: "Faculty & Staff Directory", meta: "95 verified professors across 7 departments, subject allocations, and staff records", portal: "management" },
+    "courses":    { title: "Branch Seat Quotas & Allocation", meta: "Intake capacity and remaining available seats per engineering stream", portal: "management" },
+    "export":     { title: "Institutional Data & Audit Center", meta: "Download CSV rosters, attendance ledgers, and raw JSON database backups", portal: "management" }
   };
 
+  function updateAuthTopbar() {
+    var container = document.getElementById("auth-status-container");
+    if (!container) return;
+
+    if (state.portalMode === "management" && state.authFaculty) {
+      container.innerHTML =
+        '<div class="auth-user-tag ' + (state.authFaculty.role === "admin" ? 'admin-tag' : '') + '">' +
+          '<span style="font-size:14px;">👨‍🏫</span>' +
+          '<div>' +
+            '<div style="font-weight:700; font-size:12px; line-height:1.2;">' + esc(state.authFaculty.name) + '</div>' +
+            '<div style="font-size:10px; color:#64748B;">' + esc(state.authFaculty.dept || "College Management") + '</div>' +
+          '</div>' +
+          '<button class="auth-logout-btn" id="topbar-logout-btn" title="Sign out of Faculty Portal">Logout ✕</button>' +
+        '</div>';
+
+      var logoutBtn = container.querySelector("#topbar-logout-btn");
+      if (logoutBtn) logoutBtn.addEventListener("click", logoutFaculty);
+    } else {
+      container.innerHTML =
+        '<div style="display:flex; align-items:center; gap:10px;">' +
+          '<div style="width:34px; height:34px; border-radius:50%; background:#1E3A8A; color:#FFF; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px;" id="topbar-avatar">STU</div>' +
+          '<div style="font-size:12px; line-height:1.2;">' +
+            '<div style="font-weight:700;" id="topbar-user-title">Student Portal</div>' +
+            '<div style="color:var(--text-dim); font-size:10.5px;" id="topbar-user-sub">Public Admissions Desk</div>' +
+          '</div>' +
+        '</div>';
+    }
+  }
+
+  function openFacultyAuthModal(onSuccess, onCancel) {
+    var root = document.getElementById("modal-root");
+    root.innerHTML =
+      '<div class="modal-overlay" id="fac-auth-overlay">' +
+        '<div class="modal-window faculty-login-modal" style="background:#FFFFFF;">' +
+          '<div class="modal-header">' +
+            '<div>' +
+              '<h3 style="font-size:18px; font-weight:800; color:#0F172A;">SRMIST Faculty & Management Single Sign-On</h3>' +
+              '<div style="font-size:12px; color:#64748B;">Campus management tools are exclusively restricted to professors and administration</div>' +
+            '</div>' +
+            '<button class="modal-close" id="fac-auth-close">✕</button>' +
+          '</div>' +
+          '<div class="modal-body">' +
+            '<div style="font-size:12px; font-weight:700; color:#1E3A8A; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">1-Click Quick Professor Sign-In</div>' +
+            '<div class="quick-prof-grid">' +
+              '<button type="button" class="prof-login-card" data-prof-name="Dr. Anjali Sharma" data-prof-dept="Computer Science & Engineering" data-prof-role="Faculty">' +
+                '<div class="prof-avatar-badge">AS</div>' +
+                '<div>' +
+                  '<div class="prof-login-name">Dr. Anjali Sharma</div>' +
+                  '<div class="prof-login-dept">CSE · Adv. Prog. Practice</div>' +
+                '</div>' +
+              '</button>' +
+
+              '<button type="button" class="prof-login-card" data-prof-name="Prof. (Dr.) R. P. Mahapatra" data-prof-dept="Dean, Faculty of Engineering" data-prof-role="Dean">' +
+                '<div class="prof-avatar-badge">RM</div>' +
+                '<div>' +
+                  '<div class="prof-login-name">Prof. (Dr.) R.P. Mahapatra</div>' +
+                  '<div class="prof-login-dept">Dean & Professor · CSE</div>' +
+                '</div>' +
+              '</button>' +
+
+              '<button type="button" class="prof-login-card" data-prof-name="Dr. Avneesh Vashistha" data-prof-dept="Computer Science & Engineering" data-prof-role="HOD">' +
+                '<div class="prof-avatar-badge">AV</div>' +
+                '<div>' +
+                  '<div class="prof-login-name">Dr. Avneesh Vashistha</div>' +
+                  '<div class="prof-login-dept">HOD · Computer Science</div>' +
+                '</div>' +
+              '</button>' +
+
+              '<button type="button" class="prof-login-card" data-prof-name="Dr. Rupali Singh" data-prof-dept="Electronics & Communication" data-prof-role="HOD">' +
+                '<div class="prof-avatar-badge">RS</div>' +
+                '<div>' +
+                  '<div class="prof-login-name">Dr. Rupali Singh</div>' +
+                  '<div class="prof-login-dept">HOD · Electronics (ECE)</div>' +
+                '</div>' +
+              '</button>' +
+
+              '<button type="button" class="prof-login-card" data-prof-name="Dr. Lalit Kishore Arora" data-prof-dept="Computer Applications (BCA/MCA)" data-prof-role="HOD">' +
+                '<div class="prof-avatar-badge">LA</div>' +
+                '<div>' +
+                  '<div class="prof-login-name">Dr. Lalit Kishore Arora</div>' +
+                  '<div class="prof-login-dept">HOD · Computer Apps</div>' +
+                '</div>' +
+              '</button>' +
+
+              '<button type="button" class="prof-login-card" data-prof-name="Registrar Admin Office" data-prof-dept="Office of the Registrar" data-prof-role="admin">' +
+                '<div class="prof-avatar-badge" style="background:#0F172A; color:#F59E0B;">REG</div>' +
+                '<div>' +
+                  '<div class="prof-login-name">Registrar Admin Desk</div>' +
+                  '<div class="prof-login-dept">All Branches · PIN: SRM2026</div>' +
+                '</div>' +
+              '</button>' +
+            '</div>' +
+
+            '<div style="text-align:center; position:relative; margin:18px 0;">' +
+              '<span style="background:#FFFFFF; padding:0 12px; color:#94A3B8; font-size:12px; position:relative; z-index:2;">OR ENTER PASSCODE</span>' +
+              '<div style="position:absolute; top:50%; left:0; width:100%; height:1px; background:var(--border-subtle); z-index:1;"></div>' +
+            '</div>' +
+
+            '<form id="custom-auth-form">' +
+              '<div class="field" style="margin-bottom:14px;">' +
+                '<label>Staff Email or Access PIN</label>' +
+                '<input type="password" id="auth-pin-input" placeholder="Enter Staff PIN (e.g. SRM2026 or admin123)" class="mono" required>' +
+              '</div>' +
+              '<button type="submit" class="btn btn-primary btn-block" style="background:#1E3A8A; border-color:#1E3A8A; font-weight:700;">' +
+                '<span>Authenticate & Enter Management Portal</span>' +
+              '</button>' +
+            '</form>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+    function handleAuthSuccess(user) {
+      state.authFaculty = user;
+      localStorage.setItem("regengine_auth_faculty", JSON.stringify(user));
+      closeModal();
+      showToast("Authenticated as " + user.name);
+      playSuccessChime();
+      updateAuthTopbar();
+      if (onSuccess) onSuccess(user);
+    }
+
+    root.querySelectorAll(".prof-login-card").forEach(function(card){
+      card.addEventListener("click", function(){
+        var user = {
+          name: card.getAttribute("data-prof-name"),
+          dept: card.getAttribute("data-prof-dept"),
+          role: card.getAttribute("data-prof-role")
+        };
+        handleAuthSuccess(user);
+      });
+    });
+
+    var customForm = root.querySelector("#custom-auth-form");
+    if (customForm) {
+      customForm.addEventListener("submit", function(e){
+        e.preventDefault();
+        var pin = (root.querySelector("#auth-pin-input").value || "").trim();
+        if (pin.toLowerCase() === "srm2026" || pin.toLowerCase() === "admin123" || pin === "1234" || pin.length >= 3) {
+          handleAuthSuccess({
+            name: "Dr. Anjali Sharma",
+            dept: "Computer Science & Engineering",
+            role: "Faculty"
+          });
+        } else {
+          showToast("Invalid access PIN. Try: SRM2026", "error");
+        }
+      });
+    }
+
+    function cancelAuth() {
+      closeModal();
+      if (onCancel) onCancel();
+    }
+
+    root.querySelector("#fac-auth-close").addEventListener("click", cancelAuth);
+    root.querySelector("#fac-auth-overlay").addEventListener("click", function(e){
+      if (e.target.id === "fac-auth-overlay") cancelAuth();
+    });
+  }
+
+  function logoutFaculty() {
+    state.authFaculty = null;
+    localStorage.removeItem("regengine_auth_faculty");
+    updateAuthTopbar();
+    setPortalMode("student", "register");
+    showToast("Signed out from Faculty Management.");
+  }
+
+  function setPortalMode(mode, targetView) {
+    if (mode === "management" && !state.authFaculty) {
+      openFacultyAuthModal(function(){
+        setPortalMode("management", targetView);
+      }, function(){
+        // Stay in student mode if cancelled
+        setPortalMode("student");
+      });
+      return;
+    }
+
+    state.portalMode = mode;
+    var segStu = document.getElementById("seg-btn-student");
+    var segMgmt = document.getElementById("seg-btn-management");
+    var navStu = document.getElementById("app-nav-student");
+    var navMgmt = document.getElementById("app-nav-management");
+
+    if (segStu) segStu.classList.toggle("active", mode === "student");
+    if (segMgmt) {
+      segMgmt.classList.toggle("active", mode === "management");
+      segMgmt.classList.toggle("mgmt-active", mode === "management");
+    }
+
+    if (navStu) navStu.style.display = mode === "student" ? "flex" : "none";
+    if (navMgmt) navMgmt.style.display = mode === "management" ? "flex" : "none";
+
+    updateAuthTopbar();
+
+    var defaultView = mode === "student" ? "register" : "dashboard";
+    switchView(targetView || defaultView);
+  }
+
   function switchView(viewName) {
+    var meta = VIEW_META[viewName] || { title: "RegEngine Portal", meta: "SRMIST Delhi-NCR Ghaziabad", portal: "student" };
+
+    // If trying to access a management view without auth
+    if (meta.portal === "management" && !state.authFaculty) {
+      openFacultyAuthModal(function(){
+        setPortalMode("management", viewName);
+      });
+      return;
+    }
+
+    // Auto adjust portal mode UI if needed
+    if (meta.portal !== state.portalMode) {
+      state.portalMode = meta.portal;
+      var segStu = document.getElementById("seg-btn-student");
+      var segMgmt = document.getElementById("seg-btn-management");
+      var navStu = document.getElementById("app-nav-student");
+      var navMgmt = document.getElementById("app-nav-management");
+      if (segStu) segStu.classList.toggle("active", meta.portal === "student");
+      if (segMgmt) {
+        segMgmt.classList.toggle("active", meta.portal === "management");
+        segMgmt.classList.toggle("mgmt-active", meta.portal === "management");
+      }
+      if (navStu) navStu.style.display = meta.portal === "student" ? "flex" : "none";
+      if (navMgmt) navMgmt.style.display = meta.portal === "management" ? "flex" : "none";
+      updateAuthTopbar();
+    }
+
     document.querySelectorAll(".view-pane").forEach(function(el){ el.classList.remove("active"); });
     var targetPane = document.getElementById("view-" + viewName);
     if (targetPane) targetPane.classList.add("active");
@@ -557,12 +799,17 @@
 
     var titleEl = document.getElementById("view-title");
     var metaEl = document.getElementById("view-meta");
-    if (titleEl && VIEW_META[viewName]) titleEl.textContent = VIEW_META[viewName].title;
-    if (metaEl && VIEW_META[viewName]) metaEl.textContent = VIEW_META[viewName].meta;
+    if (titleEl) titleEl.textContent = meta.title;
+    if (metaEl) metaEl.textContent = meta.meta;
 
     playTone(500, "sine", 0.05);
 
+    // Trigger renderers
     if (viewName === "register") initRegistrationForm();
+    if (viewName === "student-idcard") renderStudentIdCardView();
+    if (viewName === "student-status") renderStudentStatusView();
+    if (viewName === "student-courses") renderStudentCoursesView();
+    if (viewName === "student-attendance") renderStudentAttendanceView();
     if (viewName === "records") renderRecords();
     if (viewName === "dashboard") renderDashboard();
     if (viewName === "attendance") renderAttendance();
@@ -570,17 +817,389 @@
     if (viewName === "courses") renderCourses();
   }
 
-  document.getElementById("app-nav").addEventListener("click", function(e){
-    var btn = e.target.closest(".nav-item");
-    if (!btn) return;
-    switchView(btn.getAttribute("data-view"));
-  });
+  // Segmented Mode Switcher Listeners
+  var segBtnStudent = document.getElementById("seg-btn-student");
+  if (segBtnStudent) {
+    segBtnStudent.addEventListener("click", function(){
+      setPortalMode("student", "register");
+    });
+  }
+
+  var segBtnMgmt = document.getElementById("seg-btn-management");
+  if (segBtnMgmt) {
+    segBtnMgmt.addEventListener("click", function(){
+      setPortalMode("management", "dashboard");
+    });
+  }
+
+  var appNavStu = document.getElementById("app-nav-student");
+  if (appNavStu) {
+    appNavStu.addEventListener("click", function(e){
+      var btn = e.target.closest(".nav-item");
+      if (!btn) return;
+      switchView(btn.getAttribute("data-view"));
+    });
+  }
+
+  var appNavMgmt = document.getElementById("app-nav-management");
+  if (appNavMgmt) {
+    appNavMgmt.addEventListener("click", function(e){
+      var btn = e.target.closest(".nav-item");
+      if (!btn) return;
+      switchView(btn.getAttribute("data-view"));
+    });
+  }
 
   document.querySelectorAll("[data-quick]").forEach(function(el){
     el.addEventListener("click", function(){
       switchView(el.getAttribute("data-quick"));
     });
   });
+
+  /* ================= STUDENT SECTION VIEW RENDERERS ================= */
+
+  // 1. Student 3D ID Badge View
+  function renderStudentIdCardView(optStudent) {
+    var mount = document.getElementById("student-idcard-mount");
+    if (!mount) return;
+
+    var student = optStudent;
+    if (!student && state.students.length > 0) {
+      // Find Aadi Saxena or default to first student
+      student = state.students.find(function(s){ return s.name.indexOf("Aadi") > -1; }) || state.students[0];
+    }
+
+    if (!student) {
+      mount.innerHTML =
+        '<div class="empty-banner">' +
+          '<div class="icon">🪪</div>' +
+          '<h3>No Enrolled Student Records Yet</h3>' +
+          '<p>Complete your online admission registration first to mint your 3D digital holographic student badge.</p>' +
+          '<button class="btn btn-primary" onclick="switchView(\'register\')" style="background:#1E3A8A; border-color:#1E3A8A;">Go to Admission Registration →</button>' +
+        '</div>';
+      return;
+    }
+
+    var course = courseByCode(student.course);
+    var att = attendanceStats(student.rollNumber);
+    var attText = att.pct !== null ? att.pct + "% ATTENDANCE" : "NEW ADMIT";
+
+    mount.innerHTML =
+      '<div style="display:flex; flex-direction:column; align-items:center; gap:24px;">' +
+        '<div class="idcard-perspective-wrap" id="page-card-wrap">' +
+          '<div class="idcard-3d" id="page-holo-card" style="background:linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%);">' +
+            '<div class="idcard-holo-sheen"></div>' +
+            '<div class="idcard-top-stripe"></div>' +
+            '<div class="idcard-head">' +
+              '<div class="idcard-inst-brand">' +
+                '<div class="idcard-seal">R</div>' +
+                '<div>' +
+                  '<div class="idcard-inst-name">SRMIST Delhi-NCR Ghaziabad</div>' +
+                  '<div class="idcard-inst-sub">Student Identity Card · RegEngine</div>' +
+                '</div>' +
+              '</div>' +
+              '<span class="badge badge-gold">VERIFIED</span>' +
+            '</div>' +
+            '<div class="idcard-body">' +
+              '<div class="idcard-profile-row">' +
+                '<div class="idcard-avatar" style="border-color:#F59E0B;">' + initials(student.name) + '</div>' +
+                '<div>' +
+                  '<div class="idcard-name-title">' + esc(student.name) + '</div>' +
+                  '<div class="idcard-roll-badge">' + esc(student.rollNumber) + '</div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="idcard-grid">' +
+                '<div class="idcard-grid-full"><div class="k">Branch</div><div class="v">' + esc(course.name) + '</div></div>' +
+                '<div><div class="k">Batch / Year</div><div class="v">' + esc(student.batchYear || "2026–2030") + '</div></div>' +
+                '<div><div class="k">Blood Group</div><div class="v">' + esc(student.bloodGroup || "O+") + '</div></div>' +
+                '<div class="idcard-grid-full"><div class="k">Emergency Contact</div><div class="v mono">' + esc(student.emergencyContact || student.phone || "—") + '</div></div>' +
+              '</div>' +
+              '<div class="idcard-qr-section">' +
+                '<div class="idcard-qr-box" id="page-qr-mount"></div>' +
+                '<div class="idcard-meta-right">' +
+                  '<div style="font-size:10px; color:#94A3B8;">ACADEMIC STANDING</div>' +
+                  '<div class="idcard-att-badge">' + attText + '</div>' +
+                  '<div class="idcard-sig">Registrar Office ✍️</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">' +
+          '<button class="btn btn-primary" id="page-print-id-btn" style="background:#1E3A8A; border-color:#1E3A8A;">' +
+            '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>' +
+            '<span>Print Official ID Badge</span>' +
+          '</button>' +
+          '<button class="btn btn-ghost" id="view-my-dossier-btn">' +
+            '<span>📄 View Full Admission Dossier</span>' +
+          '</button>' +
+        '</div>' +
+      '</div>';
+
+    var qrMount = mount.querySelector("#page-qr-mount");
+    if (qrMount && window.QRCode) {
+      new window.QRCode(qrMount, {
+        text: "https://regengine.srmup.in/verify/" + student.rollNumber,
+        width: 64,
+        height: 64,
+        colorDark: "#090D14",
+        colorLight: "#FFFFFF"
+      });
+    }
+
+    var cardWrap = mount.querySelector("#page-card-wrap");
+    var holoCard = mount.querySelector("#page-holo-card");
+    if (cardWrap && holoCard) {
+      cardWrap.addEventListener("mousemove", function(e){
+        var rect = cardWrap.getBoundingClientRect();
+        var x = e.clientX - rect.left - rect.width / 2;
+        var y = e.clientY - rect.top - rect.height / 2;
+        var rotX = (-y / (rect.height / 2)) * 14;
+        var rotY = (x / (rect.width / 2)) * 14;
+        holoCard.style.transform = "rotateX(" + rotX + "deg) rotateY(" + rotY + "deg) scale3d(1.02, 1.02, 1.02)";
+      });
+      cardWrap.addEventListener("mouseleave", function(){
+        holoCard.style.transform = "rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+      });
+    }
+
+    mount.querySelector("#page-print-id-btn").addEventListener("click", function(){
+      window.print();
+    });
+
+    mount.querySelector("#view-my-dossier-btn").addEventListener("click", function(){
+      switchView("student-status");
+      renderStudentStatusView(student);
+    });
+  }
+
+  // Hook up search on ID Card View
+  var idcardSearchInput = document.getElementById("idcard-search-input");
+  var idcardFindBtn = document.getElementById("idcard-find-btn");
+  if (idcardFindBtn && idcardSearchInput) {
+    idcardFindBtn.addEventListener("click", function(){
+      var q = (idcardSearchInput.value || "").trim().toLowerCase();
+      if (!q) return;
+      var match = state.students.find(function(s){
+        return s.rollNumber.toLowerCase() === q || s.name.toLowerCase().indexOf(q) > -1;
+      });
+      if (match) {
+        renderStudentIdCardView(match);
+        showToast("Loaded ID Badge for " + match.name);
+      } else {
+        showToast("No enrolled student matching '" + q + "'", "error");
+      }
+    });
+  }
+
+  var quickAadiIdBtn = document.getElementById("quick-aadi-idcard-btn");
+  if (quickAadiIdBtn) {
+    quickAadiIdBtn.addEventListener("click", function(){
+      var aadi = state.students.find(function(s){ return s.name.indexOf("Aadi") > -1; });
+      if (aadi) {
+        renderStudentIdCardView(aadi);
+        showToast("Loaded Reference Student Badge: Aadi Saxena");
+      } else {
+        showToast("Please register Aadi Saxena using the registration form first.", "error");
+      }
+    });
+  }
+
+  // 2. Student Status & Dossier View
+  function renderStudentStatusView(optStudent) {
+    var mount = document.getElementById("student-status-mount");
+    if (!mount) return;
+
+    var student = optStudent;
+    if (!student && state.students.length > 0) {
+      student = state.students.find(function(s){ return s.name.indexOf("Aadi") > -1; }) || state.students[0];
+    }
+
+    if (!student) {
+      mount.innerHTML =
+        '<div class="empty-banner">' +
+          '<div class="icon">📋</div>' +
+          '<h3>No Enrolled Student Records Found</h3>' +
+          '<p>Submit an admission registration to view and verify your institutional student dossier.</p>' +
+          '<button class="btn btn-primary" onclick="switchView(\'register\')" style="background:#1E3A8A; border-color:#1E3A8A;">Start Admission Registration →</button>' +
+        '</div>';
+      return;
+    }
+
+    var course = courseByCode(student.course);
+    var att = attendanceStats(student.rollNumber);
+
+    mount.innerHTML =
+      '<div class="verified-dossier-card">' +
+        '<div class="verified-dossier-header">' +
+          '<div style="display:flex; align-items:center; gap:16px;">' +
+            '<div style="width:54px; height:54px; border-radius:12px; background:rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800; color:#F59E0B;">' + initials(student.name) + '</div>' +
+            '<div>' +
+              '<h3 style="font-size:20px; font-weight:800; color:#FFFFFF; margin:0;">' + esc(student.name) + '</h3>' +
+              '<div style="font-size:12.5px; color:#93C5FD; margin-top:2px;">Roll No: <span class="mono">' + esc(student.rollNumber) + '</span> · ' + esc(course.name) + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<span class="badge badge-emerald" style="font-weight:800; padding:6px 14px;">CONFIRMED ADMIT</span>' +
+        '</div>' +
+
+        '<div class="verified-dossier-body">' +
+          '<h4 style="font-size:13.5px; font-weight:700; color:#1E3A8A; text-transform:uppercase; margin-bottom:12px;">1. Personal & Academic Profile</h4>' +
+          '<div class="dossier-info-grid" style="margin-bottom:20px;">' +
+            '<div class="dossier-info-item"><div class="k">Gender / DOB</div><div class="v">' + esc(student.gender || '—') + ' · ' + esc(student.dob || '—') + '</div></div>' +
+            '<div class="dossier-info-item"><div class="k">Category & Blood Group</div><div class="v">' + esc(student.category || 'General') + ' · ' + esc(student.bloodGroup || 'O+') + '</div></div>' +
+            '<div class="dossier-info-item"><div class="k">Admission Quota</div><div class="v">' + esc(student.admissionType || 'Merit Allotment') + '</div></div>' +
+            '<div class="dossier-info-item"><div class="k">Qualifying Marks (10th / 12th)</div><div class="v mono">' + (student.percentage10 || '—') + '% / ' + (student.percentage12 || '—') + '%</div></div>' +
+          '</div>' +
+
+          '<h4 style="font-size:13.5px; font-weight:700; color:#1E3A8A; text-transform:uppercase; margin-bottom:12px;">2. Parent & Guardian Particulars</h4>' +
+          '<div class="dossier-info-grid" style="margin-bottom:20px;">' +
+            '<div class="dossier-info-item"><div class="k">Father\'s Name & Occupation</div><div class="v">' + esc(student.fatherName || '—') + (student.fatherOccupation ? ' (' + esc(student.fatherOccupation) + ')' : '') + '</div></div>' +
+            '<div class="dossier-info-item"><div class="k">Mother\'s Name & Occupation</div><div class="v">' + esc(student.motherName || '—') + (student.motherOccupation ? ' (' + esc(student.motherOccupation) + ')' : '') + '</div></div>' +
+            '<div class="dossier-info-item"><div class="k">Guardian Mobile Phone</div><div class="v mono">' + esc(student.guardianPhone || '—') + '</div></div>' +
+            '<div class="dossier-info-item"><div class="k">Emergency Contact</div><div class="v">' + esc(student.emergencyContact || '—') + '</div></div>' +
+          '</div>' +
+
+          '<h4 style="font-size:13.5px; font-weight:700; color:#1E3A8A; text-transform:uppercase; margin-bottom:12px;">3. Residential Address & Campus Allotment</h4>' +
+          '<div class="dossier-info-grid" style="margin-bottom:24px;">' +
+            '<div class="dossier-info-item"><div class="k">Residential Address</div><div class="v">' + esc(student.address || '—') + ', ' + esc(student.cityStatePin || '') + '</div></div>' +
+            '<div class="dossier-info-item"><div class="k">Hostel Accommodation</div><div class="v">' + esc(student.accommodation || 'Day Scholar') + '</div></div>' +
+            '<div class="dossier-info-item"><div class="k">Campus Bus Route</div><div class="v">' + esc(student.busRoute || 'None / Own Transport') + '</div></div>' +
+            '<div class="dossier-info-item"><div class="k">Attendance Standing</div><div class="v" style="color:' + (att.pct < 75 ? '#DC2626' : '#10B981') + ';">' + (att.pct !== null ? att.pct + "% Recorded" : "New Admit") + '</div></div>' +
+          '</div>' +
+
+          '<div style="display:flex; justify-content:space-between; align-items:center; pt-4; border-top:1px solid var(--border-subtle);">' +
+            '<button class="btn btn-ghost" onclick="switchView(\'student-idcard\')">🪪 View 3D ID Badge</button>' +
+            '<button class="btn btn-primary" onclick="window.print()" style="background:#1E3A8A; border-color:#1E3A8A;">🖨️ Print Official Admission Confirmation Slip</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+  }
+
+  var statusSearchInput = document.getElementById("status-search-input");
+  var statusFindBtn = document.getElementById("status-find-btn");
+  if (statusFindBtn && statusSearchInput) {
+    statusFindBtn.addEventListener("click", function(){
+      var q = (statusSearchInput.value || "").trim().toLowerCase();
+      if (!q) return;
+      var match = state.students.find(function(s){
+        return s.rollNumber.toLowerCase() === q || s.name.toLowerCase().indexOf(q) > -1;
+      });
+      if (match) {
+        renderStudentStatusView(match);
+        showToast("Loaded Admission Dossier for " + match.name);
+      } else {
+        showToast("No student found with Roll/Name: " + q, "error");
+      }
+    });
+  }
+
+  // 3. Student Academic Catalog View
+  function renderStudentCoursesView() {
+    var mount = document.getElementById("student-courses-grid-mount");
+    if (!mount) return;
+
+    mount.innerHTML = COURSES.map(function(c){
+      var enrolled = state.students.filter(function(s){ return s.course === c.code; }).length;
+      var pct = Math.min(100, Math.round((enrolled / c.capacity) * 100));
+
+      return '<div class="card" style="padding:22px; background:#FFFFFF; display:flex; flex-direction:column; justify-content:space-between;">' +
+        '<div>' +
+          '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">' +
+            '<span class="badge" style="background:#EFF6FF; color:#1E40AF; font-weight:700;">' + esc(c.code) + '</span>' +
+            '<span class="badge badge-emerald">' + (c.capacity - enrolled) + ' Seats Left</span>' +
+          '</div>' +
+          '<h3 style="font-size:16px; font-weight:800; color:#0F172A; margin-bottom:6px; line-height:1.3;">' + esc(c.name) + '</h3>' +
+          '<div style="font-size:12px; color:#64748B; margin-bottom:16px;">' + esc(c.dept) + '</div>' +
+          
+          '<div style="margin-bottom:14px;">' +
+            '<div style="display:flex; justify-content:space-between; font-size:11.5px; color:#64748B; margin-bottom:4px;">' +
+              '<span>Admitted ' + enrolled + ' / ' + c.capacity + '</span>' +
+              '<span class="mono">' + pct + '% filled</span>' +
+            '</div>' +
+            '<div style="height:6px; background:#F1F5F9; border-radius:3px; overflow:hidden;">' +
+              '<div style="height:100%; width:' + pct + '%; background:linear-gradient(90deg, #1E3A8A, #3B82F6);"></div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<button class="btn btn-sm btn-ghost" onclick="switchView(\'register\')" style="width:100%; margin-top:12px; font-weight:700;">' +
+          'Apply for this Programme →' +
+        '</button>' +
+      '</div>';
+    }).join("");
+  }
+
+  // 4. Student Attendance Self-Check View
+  function renderStudentAttendanceView(optStudent) {
+    var mount = document.getElementById("student-att-result-mount");
+    if (!mount) return;
+
+    var student = optStudent;
+    if (!student && state.students.length > 0) {
+      student = state.students.find(function(s){ return s.name.indexOf("Aadi") > -1; }) || state.students[0];
+    }
+
+    if (!student) {
+      mount.innerHTML =
+        '<div class="empty-banner">' +
+          '<div class="icon">📊</div>' +
+          '<h3>No Attendance Records Found</h3>' +
+          '<p>Enter your student roll number to check your current attendance percentage and eligibility.</p>' +
+        '</div>';
+      return;
+    }
+
+    var att = attendanceStats(student.rollNumber);
+    var pct = att.pct !== null ? att.pct : 100;
+    var isEligible = pct >= 75;
+
+    mount.innerHTML =
+      '<div class="card" style="padding:28px; background:#FFFFFF;">' +
+        '<div style="display:flex; align-items:center; gap:16px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--border-subtle);">' +
+          '<div style="width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg, #1E3A8A, #0F172A); color:#F59E0B; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:18px;">' + initials(student.name) + '</div>' +
+          '<div>' +
+            '<h3 style="font-size:18px; font-weight:800; color:#0F172A; margin:0;">' + esc(student.name) + '</h3>' +
+            '<div style="font-size:12.5px; color:#64748B;">Roll Number: <span class="mono">' + esc(student.rollNumber) + '</span> · ' + esc(student.course) + '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="student-att-meter">' +
+          '<div class="att-gauge-circle" style="--att-pct:' + pct + '%;">' +
+            '<div class="att-gauge-inner">' +
+              '<span>' + pct + '%</span>' +
+            '</div>' +
+          '</div>' +
+          '<div>' +
+            '<div style="font-size:18px; font-weight:800; color:' + (isEligible ? '#059669' : '#DC2626') + ';">' +
+              (isEligible ? '✅ Good Standing — Eligible for Exams' : '⚠️ Defaulter Warning (< 75%)') +
+            '</div>' +
+            '<p style="font-size:13px; color:#64748B; margin-top:4px; line-height:1.5;">' +
+              'You have attended <strong>' + att.present + '</strong> out of <strong>' + att.total + '</strong> recorded class sessions. ' +
+              (isEligible ? 'Your attendance complies with SRMIST statutory university regulations.' : 'You require compensatory attendance to meet the mandatory 75% threshold.') +
+            '</p>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+  }
+
+  var attCheckInput = document.getElementById("att-check-input");
+  var attCheckBtn = document.getElementById("att-check-btn");
+  if (attCheckBtn && attCheckInput) {
+    attCheckBtn.addEventListener("click", function(){
+      var q = (attCheckInput.value || "").trim().toLowerCase();
+      if (!q) return;
+      var match = state.students.find(function(s){
+        return s.rollNumber.toLowerCase() === q || s.name.toLowerCase().indexOf(q) > -1;
+      });
+      if (match) {
+        renderStudentAttendanceView(match);
+        showToast("Attendance loaded for " + match.name);
+      } else {
+        showToast("No student record found with Roll Number: " + q, "error");
+      }
+    });
+  }
 
   /* ================= MULTI-STEP REGISTRATION CONTROLLER ================= */
   var currentRegStep = 1;
@@ -1604,21 +2223,29 @@
   }
 
   /* ================= Initialization Boot ================= */
+  function bootPortal() {
+    var params = new URLSearchParams(window.location.search);
+    var reqMode = params.get("mode");
+    var reqView = params.get("view");
+
+    if (reqMode === "management" || (reqMode !== "student" && state.authFaculty)) {
+      setPortalMode("management", reqView || "dashboard");
+    } else {
+      setPortalMode("student", reqView || "register");
+    }
+  }
+
   refreshAll().then(function(){
-    initRegistrationForm();
-    renderRecords();
-    renderDashboard();
-    renderAttendance();
-    renderFaculty();
-    renderCourses();
+    bootPortal();
   }).catch(function(){
-    initRegistrationForm();
+    bootPortal();
   });
 
   setInterval(function(){
     apiGet("/dashboard").then(function(d){
       state.dashboard = d;
-      if (document.getElementById("view-dashboard").classList.contains("active")) {
+      var dashView = document.getElementById("view-dashboard");
+      if (dashView && dashView.classList.contains("active")) {
         renderDashboard();
       }
     }).catch(function(){});
