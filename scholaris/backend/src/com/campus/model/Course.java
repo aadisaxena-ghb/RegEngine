@@ -32,8 +32,7 @@ public class Course {
         new Course("MCA", "Master of Computer Applications (MCA)", "Computer Applications", 60),
         new Course("MCA-AI", "MCA (Generative AI)", "Computer Applications", 60),
         new Course("BBA", "Bachelor of Business Administration (BBA)", "Management Studies", 60),
-        new Course("MBA", "Master of Business Administration (MBA)", "Management Studies", 60),
-        new Course("BPHARM", "Bachelor of Pharmacy (B.Pharm)", "Pharmaceutical Sciences", 60)
+        new Course("MBA", "Master of Business Administration (MBA)", "Management Studies", 60)
     );
 
     public static Course byCode(String code) {

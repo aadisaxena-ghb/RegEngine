@@ -1,1 +1,50 @@
-[{"id":"not-20772e49","refNumber":"SRM/NCR/ACAD/2026/108","title":"Continuous Internal Assessment (CIA-1) Schedule for Odd Semester 2026","category":"Examination","priority":"Urgent","publishDate":"2026-09-18","author":"Office of the Controller of Examinations","department":"Examination Cell","content":"All registered undergraduate and postgraduate students of B.Tech, BCA, MCA, MBA, and B.Pharm are hereby informed that Continuous Internal Assessment (CIA-1) will commence from October 14, 2026. Hall tickets and seating arrangements will be available on the Student Portal. 75% attendance rule strictly enforced.","attachmentUrl":"https://srmist.edu.in/downloads/cia1_schedule_2026.pdf"},{"id":"not-1e5ebab7","refNumber":"SRM/NCR/REG/2026/092","title":"Mandatory Submission of Anti-Ragging & Demographic Undertakings","category":"Administration","priority":"Normal","publishDate":"2026-09-15","author":"Dr. Avneesh Vashistha (Chief Proctor)","department":"Office of the Proctor","content":"As per UGC and Supreme Court of India statutory directives, all newly enrolled 1st-year students must upload their online Anti-Ragging affidavit reference number through the Student Registration Dossier before October 10, 2026.","attachmentUrl":"https://antiragging.in"},{"id":"not-77953b00","refNumber":"SRM/NCR/FEE/2026/044","title":"Odd Semester 2026 Tuition Fee Payment & Institutional Digital Receipts","category":"Financial","priority":"Urgent","publishDate":"2026-09-12","author":"Finance & Accounts Secretariat","department":"Accounts Section","content":"Students are notified that the last date for payment of Odd Semester tuition and laboratory fees without late fine is October 05, 2026. Payments can be completed online via the RegEngine Fee Desk. Official digitally stamped receipts with cryptographic QR verification will be minted immediately.","attachmentUrl":""},{"id":"not-7121ebea","refNumber":"SRM/NCR/EVENT/2026/021","title":"Annual National Hackathon & Innovation Conclave 'CodeCraft 2026'","category":"Events","priority":"Normal","publishDate":"2026-09-08","author":"Dr. Anjali Sharma (Faculty Coordinator)","department":"Department of Computer Science & Engineering","content":"The Department of Computer Science & Engineering is thrilled to announce 'CodeCraft 2026' — 36-Hour National Inter-College Hackathon on AI & Decentralized Systems with a total prize pool of ₹3,00,000. Registrations open on the portal.","attachmentUrl":"https://srmist.edu.in/codecraft2026"},{"id":"not-9563d017","refNumber":"SRM/NCR/HOST/2026/015","title":"Campus Hostel Outpass & Gate Pass Protocol Update","category":"Administration","priority":"Normal","publishDate":"2026-09-02","author":"Hostel Warden Committee","department":"Residential Services","content":"All hostellers must submit digital outpass applications at least 6 hours prior to departure via the Student Portal. Biometric check-in before 08:30 PM is mandatory on all weekdays.","attachmentUrl":""}]
+[
+  {
+    "id": "not-1e5ebab7",
+    "refNumber": "SRM/NCR/REG/2026/092",
+    "title": "Mandatory Submission of Anti-Ragging & Demographic Undertakings",
+    "category": "Administration",
+    "priority": "Normal",
+    "publishDate": "2026-09-15",
+    "author": "Dr. Avneesh Vashistha (Chief Proctor)",
+    "department": "Office of the Proctor",
+    "content": "As per UGC and Supreme Court of India statutory directives, all newly enrolled 1st-year students must upload their online Anti-Ragging affidavit reference number through the Student Registration Dossier before October 10, 2026.",
+    "attachmentUrl": "https://antiragging.in"
+  },
+  {
+    "id": "not-lib2026",
+    "refNumber": "SRM/NCR/LIB/2026/052",
+    "title": "Digital IEEE Xplore & ACM Digital Library Research Access",
+    "category": "Academic",
+    "priority": "Normal",
+    "publishDate": "2026-09-16",
+    "author": "Central Library Committee",
+    "department": "Central Library",
+    "content": "All enrolled undergraduate and postgraduate students have been granted institutional remote access to IEEE Xplore, ScienceDirect, and ACM Digital Library. Access credentials can be activated using student institutional emails.",
+    "attachmentUrl": "https://srmist.edu.in/library"
+  },
+  {
+    "id": "not-7121ebea",
+    "refNumber": "SRM/NCR/EVENT/2026/021",
+    "title": "Annual National Hackathon & Innovation Conclave 'CodeCraft 2026'",
+    "category": "Events",
+    "priority": "Normal",
+    "publishDate": "2026-09-08",
+    "author": "Dr. Anjali Sharma (Faculty Coordinator)",
+    "department": "Department of Computer Science & Engineering",
+    "content": "The Department of Computer Science & Engineering is thrilled to announce 'CodeCraft 2026' — 36-Hour National Inter-College Hackathon on AI & Decentralized Systems with a total prize pool of ₹3,00,000. Registrations open on the portal.",
+    "attachmentUrl": "https://srmist.edu.in/codecraft2026"
+  },
+  {
+    "id": "not-9563d017",
+    "refNumber": "SRM/NCR/HOST/2026/015",
+    "title": "Campus Hostel Outpass & Gate Pass Protocol Update",
+    "category": "Administration",
+    "priority": "Normal",
+    "publishDate": "2026-09-02",
+    "author": "Hostel Warden Committee",
+    "department": "Residential Services",
+    "content": "All hostellers must submit digital outpass applications at least 6 hours prior to departure via the Student Portal. Biometric check-in before 08:30 PM is mandatory on all weekdays.",
+    "attachmentUrl": ""
+  }
+]

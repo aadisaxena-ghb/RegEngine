@@ -11,6 +11,7 @@ module.exports = async function handler(req, res) {
     if (req.method === "POST") {
       const body = req.body || {};
       const course = body.course;
+      const section = body.section || "Section A";
       const date = body.date;
 
       if (!course) return res.status(400).json({ error: "Missing course." });
@@ -26,12 +27,12 @@ module.exports = async function handler(req, res) {
       const presentCount = records.filter(function (r) { return r.present; }).length;
 
       const sessions = await getCollection("attendance", function () { return []; });
-      const idx = sessions.findIndex(function (s) { return s.course === course && s.date === date; });
-      const session = { id: idx >= 0 ? sessions[idx].id : newId("att"), course: course, date: date, records: records };
+      const idx = sessions.findIndex(function (s) { return s.course === course && (s.section || "Section A") === section && s.date === date; });
+      const session = { id: idx >= 0 ? sessions[idx].id : newId("att"), course: course, section: section, date: date, records: records };
       if (idx >= 0) sessions[idx] = session; else sessions.push(session);
 
       await setCollection("attendance", sessions);
-      await logActivity("Attendance recorded for " + courseDef.name + " on " + date + " (" + presentCount + "/" + records.length + " present).");
+      await logActivity("Attendance recorded for " + courseDef.name + " (" + section + ") on " + date + " (" + presentCount + "/" + records.length + " present).");
       return res.status(200).json(session);
     }
 

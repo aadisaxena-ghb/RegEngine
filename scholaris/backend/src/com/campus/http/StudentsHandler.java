@@ -74,6 +74,7 @@ public class StudentsHandler implements HttpHandler {
             str(body, "category"),
             str(body, "aadharNumber"),
             course,
+            str(body, "section"),
             str(body, "batchYear"),
             str(body, "admissionType"),
             str(body, "percentage10"),

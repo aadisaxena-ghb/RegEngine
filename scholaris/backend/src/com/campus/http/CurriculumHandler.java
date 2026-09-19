@@ -98,18 +98,6 @@ public class CurriculumHandler implements HttpHandler {
                 )
         ));
 
-        // 6. B.Pharm
-        list.add(createCourseCurriculum(
-                "BPHARM",
-                "Bachelor of Pharmacy (B.Pharm)",
-                "4 Years (8 Semesters)",
-                "208 Credits",
-                List.of(
-                        createSubject("BP101T", "Human Anatomy and Physiology I", "3-1-0-4", "Semester 1", "Cellular organization, muscular system, skeletal system, cardiovascular system, and lymphatic pathways.", List.of("Unit 1: Cellular Physiology & Tissues", "Unit 2: Integumentary & Skeletal System", "Unit 3: Body Fluids & Blood Composition", "Unit 4: Cardiovascular Hemodynamics", "Unit 5: Lymphatic & Immune Anatomy"), "Ross & Wilson (Elsevier), Tortora & Grabowski"),
-                        createSubject("BP201T", "Pharmaceutical Organic Chemistry", "3-1-0-4", "Semester 2", "Nomenclature, stereochemistry, reaction mechanisms of aliphatic/aromatic hydrocarbons, synthesis of drug intermediates.", List.of("Unit 1: IUPAC Nomenclature & Isomerism", "Unit 2: Alkanes, Alkenes & Dienes Reactions", "Unit 3: Alkyl Halides & Elimination SN1/SN2", "Unit 4: Carbonyl Compounds & Aldol Condensation", "Unit 5: Carboxylic Acids & Aliphatic Amines"), "Morrison & Boyd, Arun Bahl & B.S. Bahl")
-                )
-        ));
-
         return list;
     }
 

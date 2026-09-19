@@ -24,8 +24,7 @@
     { code: "MCA",       name: "Master of Computer Applications (MCA)", capacity: 60, dept: "Computer Applications" },
     { code: "MCA-AI",    name: "MCA (Generative AI)", capacity: 60, dept: "Computer Applications" },
     { code: "BBA",       name: "Bachelor of Business Administration (BBA)", capacity: 60, dept: "Management Studies" },
-    { code: "MBA",       name: "Master of Business Administration (MBA)", capacity: 60, dept: "Management Studies" },
-    { code: "BPHARM",    name: "Bachelor of Pharmacy (B.Pharm)", capacity: 60, dept: "Pharmaceutical Sciences" }
+    { code: "MBA",       name: "Master of Business Administration (MBA)", capacity: 60, dept: "Management Studies" }
   ];
 
   function courseByCode(c) {
@@ -46,8 +45,6 @@
     calendar: [],
     timetable: [],
     curriculum: [],
-    feeStructures: [],
-    feePayments: [],
     activeTimetableDay: "Monday",
     activeTimetableCourse: "CSE-CORE",
     activeCalendarFilter: "all",
@@ -160,8 +157,7 @@
       apiGet("/notices"),
       apiGet("/calendar"),
       apiGet("/timetable"),
-      apiGet("/curriculum"),
-      apiGet("/fees")
+      apiGet("/curriculum")
     ]).then(function(results){
       state.students = results[0] || [];
       state.faculty = results[1] || [];
@@ -172,9 +168,6 @@
       state.calendar = results[6] || [];
       state.timetable = results[7] || [];
       state.curriculum = results[8] || [];
-      var feeData = results[9] || {};
-      state.feeStructures = feeData.feeStructures || [];
-      state.feePayments = feeData.payments || [];
 
       updateBadges();
       return state;
@@ -383,7 +376,7 @@
                     '</div>' +
                   '</div>' +
                   '<div class="idcard-grid">' +
-                    '<div class="idcard-grid-full"><div class="k">Branch</div><div class="v">' + esc(course.name) + '</div></div>' +
+                    '<div class="idcard-grid-full"><div class="k">Branch & Section</div><div class="v">' + esc(course.name) + ' (' + esc(student.section || "Section A") + ')</div></div>' +
                     '<div><div class="k">Batch / Year</div><div class="v">' + esc(student.batchYear || "2026–2030") + '</div></div>' +
                     '<div><div class="k">Blood Group</div><div class="v">' + esc(student.bloodGroup || "O+") + '</div></div>' +
                     '<div class="idcard-grid-full"><div class="k">Emergency Contact</div><div class="v mono">' + esc(student.emergencyContact || student.phone || "—") + '</div></div>' +
@@ -471,6 +464,7 @@
                 '<div style="display:flex; gap:8px; margin-top:4px; flex-wrap:wrap;">' +
                   '<span class="badge badge-gold mono">' + esc(student.rollNumber) + '</span>' +
                   '<span class="badge course-' + student.course + '">' + esc(course.name) + '</span>' +
+                  '<span class="badge" style="background:#EEF2FF; color:#4338CA; font-weight:700;">' + esc(student.section || 'Section A') + '</span>' +
                   '<span class="badge" style="background:#EFF6FF; color:#1E40AF;">Batch ' + esc(student.batchYear || '2026–2030') + '</span>' +
                 '</div>' +
               '</div>' +
@@ -492,10 +486,11 @@
             '<div style="margin-bottom:18px;">' +
               '<h4 style="font-size:13.5px; font-weight:700; color:#1E3A8A; text-transform:uppercase; margin-bottom:10px;">2. Academic Merit & Admission Allotment</h4>' +
               '<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:13px; background:#F8FAFC; padding:14px; border-radius:10px;">' +
+                '<div><span style="color:#64748B;">Assigned Section:</span> <strong>' + esc(student.section || 'Section A') + '</strong></div>' +
                 '<div><span style="color:#64748B;">Admission Type:</span> <strong>' + esc(student.admissionType || 'Merit Allotment') + '</strong></div>' +
                 '<div><span style="color:#64748B;">10th Score:</span> <strong>' + (student.percentage10 ? student.percentage10 + "%" : '—') + '</strong></div>' +
                 '<div><span style="color:#64748B;">12th / Qualifying Score:</span> <strong>' + (student.percentage12 ? student.percentage12 + "%" : '—') + '</strong></div>' +
-                '<div><span style="color:#64748B;">Previous Institution:</span> <strong>' + esc(student.previousSchool || '—') + '</strong></div>' +
+                '<div style="grid-column:span 2;"><span style="color:#64748B;">Previous Institution:</span> <strong>' + esc(student.previousSchool || '—') + '</strong></div>' +
               '</div>' +
             '</div>' +
 
@@ -575,8 +570,7 @@
     "calendar":           { title: "Academic Calendar (2026–2027)", meta: "Examination dates, semester milestones, continuous assessments, and holidays", portal: "student" },
     "syllabus":           { title: "Course Curriculum & Syllabus", meta: "5-unit syllabus breakdown, L-T-P-C credits, and reference textbooks", portal: "student" },
     "notices":            { title: "Campus Notices & Circulars", meta: "Official authenticated notifications issued by the Registrar and Examination Cell", portal: "student" },
-    "feepay":             { title: "Online Student Fee Payment Desk", meta: "Instant digital receipt minting with cryptographic university verification", portal: "student" },
-    "student-courses":    { title: "SRMIST Academic Catalog", meta: "All 16 undergraduate and postgraduate programmes, seat caps, and departments", portal: "student" },
+    "student-courses":    { title: "SRMIST Academic Catalog", meta: "All 15 undergraduate and postgraduate programmes, seat caps, and departments", portal: "student" },
     "student-attendance": { title: "Attendance Self-Check", meta: "Check personal attendance percentage against the mandatory 75% university rule", portal: "student" },
     "student-helpdesk":   { title: "Admissions Helpdesk & FAQs", meta: "Registrar contacts, campus helplines, and answers to common queries", portal: "student" },
 
@@ -585,8 +579,7 @@
     "records":    { title: "Master Student Register", meta: "Official university register, search, branch filters, dossier reviews, and ID badges", portal: "management" },
     "attendance": { title: "Daily Attendance Marking", meta: "1-tap class roster check-in and 75% statutory attendance monitor", portal: "management" },
     "notice-mgr": { title: "Publish Official Circulars", meta: "Disseminate notices to the student portal and campus mobile feeds", portal: "management" },
-    "fee-ledger": { title: "Institutional Fee Ledger", meta: "Real-time fee collection analytics, student dues ledger, and payment audit", portal: "management" },
-    "faculty":    { title: "Faculty & Staff Directory", meta: "95 verified professors across 7 departments, subject allocations, and staff records", portal: "management" },
+    "faculty":    { title: "Faculty & Staff Directory", meta: "87 verified professors across 6 departments, subject allocations, and staff records", portal: "management" },
     "courses":    { title: "Branch Seat Quotas & Allocation", meta: "Intake capacity and remaining available seats per engineering stream", portal: "management" },
     "export":     { title: "Institutional Data & Audit Center", meta: "Download CSV rosters, attendance ledgers, and raw JSON database backups", portal: "management" }
   };
@@ -842,14 +835,12 @@
     if (viewName === "calendar") renderCalendar();
     if (viewName === "syllabus") renderCurriculum();
     if (viewName === "notices") renderNotices();
-    if (viewName === "feepay") renderFeePay();
     if (viewName === "student-courses") renderStudentCoursesView();
     if (viewName === "student-attendance") renderStudentAttendanceView();
     if (viewName === "records") renderRecords();
     if (viewName === "dashboard") renderDashboard();
     if (viewName === "attendance") renderAttendance();
     if (viewName === "notice-mgr") initNoticePublisher();
-    if (viewName === "fee-ledger") renderFeeLedger();
     if (viewName === "faculty") renderFaculty();
     if (viewName === "courses") renderCourses();
   }
@@ -946,7 +937,7 @@
                 '</div>' +
               '</div>' +
               '<div class="idcard-grid">' +
-                '<div class="idcard-grid-full"><div class="k">Branch</div><div class="v">' + esc(course.name) + '</div></div>' +
+                '<div class="idcard-grid-full"><div class="k">Branch & Section</div><div class="v">' + esc(course.name) + ' (' + esc(student.section || "Section A") + ')</div></div>' +
                 '<div><div class="k">Batch / Year</div><div class="v">' + esc(student.batchYear || "2026–2030") + '</div></div>' +
                 '<div><div class="k">Blood Group</div><div class="v">' + esc(student.bloodGroup || "O+") + '</div></div>' +
                 '<div class="idcard-grid-full"><div class="k">Emergency Contact</div><div class="v mono">' + esc(student.emergencyContact || student.phone || "—") + '</div></div>' +
@@ -1083,9 +1074,10 @@
         '<div class="verified-dossier-body">' +
           '<h4 style="font-size:13.5px; font-weight:700; color:#1E3A8A; text-transform:uppercase; margin-bottom:12px;">1. Personal & Academic Profile</h4>' +
           '<div class="dossier-info-grid" style="margin-bottom:20px;">' +
+            '<div class="dossier-info-item"><div class="k">Assigned Class Section</div><div class="v"><span class="badge" style="background:#EEF2FF; color:#4338CA; font-weight:700;">' + esc(student.section || 'Section A') + '</span></div></div>' +
+            '<div class="dossier-info-item"><div class="k">Admission Quota</div><div class="v">' + esc(student.admissionType || 'Merit Allotment') + '</div></div>' +
             '<div class="dossier-info-item"><div class="k">Gender / DOB</div><div class="v">' + esc(student.gender || '—') + ' · ' + esc(student.dob || '—') + '</div></div>' +
             '<div class="dossier-info-item"><div class="k">Category & Blood Group</div><div class="v">' + esc(student.category || 'General') + ' · ' + esc(student.bloodGroup || 'O+') + '</div></div>' +
-            '<div class="dossier-info-item"><div class="k">Admission Quota</div><div class="v">' + esc(student.admissionType || 'Merit Allotment') + '</div></div>' +
             '<div class="dossier-info-item"><div class="k">Qualifying Marks (10th / 12th)</div><div class="v mono">' + (student.percentage10 || '—') + '% / ' + (student.percentage12 || '—') + '%</div></div>' +
           '</div>' +
 
@@ -1191,17 +1183,51 @@
     var pct = att.pct !== null ? att.pct : 100;
     var isEligible = pct >= 75;
 
+    var course = courseByCode(student.course);
+    var studentSection = student.section || "Section A";
+
+    // Gather date sessions for this student
+    var sessionLogs = [];
+    state.attendance.forEach(function(session){
+      var rec = (session.records || []).find(function(r){ return r.rollNumber === student.rollNumber; });
+      if (rec) {
+        sessionLogs.push({
+          date: session.date,
+          course: session.course,
+          section: session.section || "Section A",
+          present: rec.present
+        });
+      }
+    });
+
+    var logRows = sessionLogs.length === 0
+      ? '<tr><td colspan="4" style="text-align:center; color:#64748B; padding:16px;">No dated attendance sessions marked for this cohort yet.</td></tr>'
+      : sessionLogs.map(function(l){
+          return '<tr>' +
+            '<td class="mono" style="font-weight:700; color:#1E3A8A;">' + esc(l.date) + '</td>' +
+            '<td><span class="badge" style="background:#EEF2FF; color:#4338CA; font-weight:700; font-size:11px;">' + esc(l.section) + '</span></td>' +
+            '<td>' + esc(course.name) + '</td>' +
+            '<td>' + (l.present ? '<span class="badge badge-emerald">✓ Present</span>' : '<span class="badge badge-rose">✗ Absent</span>') + '</td>' +
+          '</tr>';
+        }).join("");
+
     mount.innerHTML =
       '<div class="card" style="padding:28px; background:#FFFFFF;">' +
-        '<div style="display:flex; align-items:center; gap:16px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--border-subtle);">' +
-          '<div style="width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg, #1E3A8A, #0F172A); color:#F59E0B; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:18px;">' + initials(student.name) + '</div>' +
-          '<div>' +
-            '<h3 style="font-size:18px; font-weight:800; color:#0F172A; margin:0;">' + esc(student.name) + '</h3>' +
-            '<div style="font-size:12.5px; color:#64748B;">Roll Number: <span class="mono">' + esc(student.rollNumber) + '</span> · ' + esc(student.course) + '</div>' +
+        '<div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--border-subtle); flex-wrap:wrap;">' +
+          '<div style="display:flex; align-items:center; gap:16px;">' +
+            '<div style="width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg, #1E3A8A, #0F172A); color:#F59E0B; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:18px;">' + initials(student.name) + '</div>' +
+            '<div>' +
+              '<h3 style="font-size:18px; font-weight:800; color:#0F172A; margin:0;">' + esc(student.name) + '</h3>' +
+              '<div style="font-size:12.5px; color:#64748B; margin-top:2px;">Roll Number: <span class="mono" style="font-weight:700;">' + esc(student.rollNumber) + '</span> · ' + esc(course.name) + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div style="display:flex; gap:8px;">' +
+            '<span class="badge" style="background:#EEF2FF; color:#4338CA; font-weight:800; font-size:12px; padding:6px 12px;">' + esc(studentSection) + '</span>' +
+            '<span class="badge ' + (isEligible ? 'badge-emerald' : 'badge-rose') + '" style="font-weight:800; padding:6px 12px;">' + (isEligible ? 'ELIGIBLE' : 'SHORTAGE') + '</span>' +
           '</div>' +
         '</div>' +
 
-        '<div class="student-att-meter">' +
+        '<div class="student-att-meter" style="margin-bottom:24px;">' +
           '<div class="att-gauge-circle" style="--att-pct:' + pct + '%;">' +
             '<div class="att-gauge-inner">' +
               '<span>' + pct + '%</span>' +
@@ -1209,13 +1235,21 @@
           '</div>' +
           '<div>' +
             '<div style="font-size:18px; font-weight:800; color:' + (isEligible ? '#059669' : '#DC2626') + ';">' +
-              (isEligible ? '✅ Good Standing — Eligible for Exams' : '⚠️ Defaulter Warning (< 75%)') +
+              (isEligible ? '✅ Good Standing — Eligible for Examinations' : '⚠️ Statutory Defaulter Warning (< 75%)') +
             '</div>' +
             '<p style="font-size:13px; color:#64748B; margin-top:4px; line-height:1.5;">' +
-              'You have attended <strong>' + att.present + '</strong> out of <strong>' + att.total + '</strong> recorded class sessions. ' +
-              (isEligible ? 'Your attendance complies with SRMIST statutory university regulations.' : 'You require compensatory attendance to meet the mandatory 75% threshold.') +
+              'You have attended <strong>' + att.present + '</strong> out of <strong>' + att.total + '</strong> recorded classes in ' + esc(studentSection) + '. ' +
+              (isEligible ? 'Your attendance fulfills SRMIST university requirements for final exam hall ticket issuance.' : 'You must attend remaining lectures to clear the 75% statutory requirement.') +
             '</p>' +
           '</div>' +
+        '</div>' +
+
+        '<div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--border-subtle);">' +
+          '<h4 style="font-size:14px; font-weight:800; color:#0F172A; margin-bottom:12px;">Recent Class Attendance Log (' + esc(studentSection) + ')</h4>' +
+          '<table class="data-table" style="font-size:13px;">' +
+            '<thead><tr><th>Date</th><th>Section</th><th>Subject / Programme</th><th>Attendance Status</th></tr></thead>' +
+            '<tbody>' + logRows + '</tbody>' +
+          '</table>' +
         '</div>' +
       '</div>';
   }
@@ -1283,7 +1317,7 @@
       var demoStudents = [
         {
           name: "Aadi Saxena", gender: "Male", dob: "2006-10-11", blood: "O+", cat: "General",
-          aadhar: "5482 9102 3841", roll: "RA2611003010001", batch: "2026–2030", c: "CSE-CORE",
+          aadhar: "5482 9102 3841", roll: "RA2611003010001", batch: "2026–2030", c: "CSE-CORE", section: "Section A",
           admtype: "National Entrance (JEE Main)", p10: "95.4", p12: "96.8", school: "Delhi Public School, Ghaziabad",
           father: "Anupam Saxena", fathocc: "Senior Director of Technology", mother: "Meera Saxena", mothocc: "Professor & Academician",
           gphone: "+91 98450 12345", gemail: "anupam.saxena@gmail.com", phone: "+91 98765 43210", email: "aadi.saxena@regengine.edu",
@@ -1292,7 +1326,7 @@
         },
         {
           name: "Riya Verma", gender: "Female", dob: "2006-08-22", blood: "A+", cat: "General",
-          aadhar: "8721 3491 8023", roll: "RA2611003010042", batch: "2026–2030", c: "CSE-AIML",
+          aadhar: "8721 3491 8023", roll: "RA2611003010042", batch: "2026–2030", c: "CSE-AIML", section: "Section B",
           admtype: "State Merit Entrance", p10: "96.0", p12: "97.5", school: "St. Thomas School, Indirapuram",
           father: "Rajesh Verma", fathocc: "Executive Director", mother: "Sunita Verma", mothocc: "Chartered Accountant",
           gphone: "+91 99880 54321", gemail: "rajesh.verma@gmail.com", phone: "+91 99123 45678", email: "riya.verma@regengine.edu",
@@ -1313,6 +1347,7 @@
       document.getElementById("reg-aadhar").value = pick.aadhar;
 
       document.getElementById("reg-roll").value = "26" + rollCode.slice(0, 2) + randNum;
+      if (document.getElementById("reg-section")) document.getElementById("reg-section").value = pick.section || "Section A";
       document.getElementById("reg-batch").value = pick.batch;
       document.getElementById("reg-course").value = pick.c;
       document.getElementById("reg-admtype").value = pick.admtype;
@@ -1357,6 +1392,7 @@
         aadharNumber: document.getElementById("reg-aadhar").value.trim(),
 
         rollNumber: document.getElementById("reg-roll").value.trim(),
+        section: (document.getElementById("reg-section") && document.getElementById("reg-section").value) || "Section A",
         batchYear: document.getElementById("reg-batch").value,
         course: document.getElementById("reg-course").value,
         admissionType: document.getElementById("reg-admtype").value,
@@ -1456,7 +1492,7 @@
         '<td><strong class="mono" style="color:#1E3A8A;">' + esc(s.rollNumber) + '</strong></td>' +
         '<td>' +
           '<div style="font-weight:700; color:#0F172A;">' + esc(s.name) + '</div>' +
-          '<div style="font-size:11px; color:#64748B;">' + (s.gender ? s.gender + ' · ' : '') + (s.category || 'General') + '</div>' +
+          '<div style="font-size:11px; color:#64748B;">' + (s.gender ? s.gender + ' · ' : '') + (s.category || 'General') + ' · <span class="badge" style="background:#EEF2FF; color:#4338CA; font-weight:700; font-size:10px; padding:1px 6px;">' + esc(s.section || 'Section A') + '</span></div>' +
         '</td>' +
         '<td><span class="badge course-' + s.course + '">' + esc(course.name) + '</span></td>' +
         '<td><span class="mono" style="font-size:12px;">' + esc(s.phone || '—') + '</span></td>' +
@@ -1606,12 +1642,14 @@
   /* ================= ATTENDANCE SUITE CONTROLLER ================= */
   var attState = {
     course: "CSE-CORE",
+    section: "Section A",
     date: new Date().toISOString().slice(0, 10),
     draft: {}
   };
 
   function renderAttendance() {
     var progSelect = document.getElementById("att-prog-select");
+    var sectionSelect = document.getElementById("att-section-select");
     var dateInput = document.getElementById("att-date-input");
 
     if (progSelect) {
@@ -1620,6 +1658,15 @@
       }).join("");
       progSelect.onchange = function(e){
         attState.course = e.target.value;
+        attState.draft = {};
+        paintAttendanceRoster();
+      };
+    }
+
+    if (sectionSelect) {
+      sectionSelect.value = attState.section || "Section A";
+      sectionSelect.onchange = function(e){
+        attState.section = e.target.value;
         attState.draft = {};
         paintAttendanceRoster();
       };
@@ -1643,22 +1690,38 @@
     var host = document.getElementById("att-roster-mount");
     if (!host) return;
 
-    var roster = state.students.filter(function(s){ return s.course === attState.course; });
-    var existingSession = state.attendance.find(function(s){ return s.course === attState.course && s.date === attState.date; });
+    var roster = state.students.filter(function(s){
+      var matchC = s.course === attState.course;
+      var matchSec = !attState.section || attState.section === "ALL" || (s.section || "Section A") === attState.section;
+      return matchC && matchSec;
+    });
+
+    var existingSession = state.attendance.find(function(s){
+      var matchC = s.course === attState.course;
+      var matchSec = !attState.section || attState.section === "ALL" || (s.section || "Section A") === attState.section;
+      return matchC && matchSec && s.date === attState.date;
+    });
+
+    var secLabel = attState.section && attState.section !== "ALL" ? " (" + attState.section + ")" : " (All Sections)";
 
     if (!roster.length) {
       host.innerHTML = '<div class="empty-banner" style="padding:32px;">' +
         '<div class="icon">📋</div>' +
-        '<h3>No Students Enrolled in this Branch</h3>' +
-        '<p>Register students into this branch to take daily attendance.</p>' +
+        '<h3>No Students Enrolled in this Cohort' + esc(secLabel) + '</h3>' +
+        '<p>Register students into this branch & section to take dated class attendance.</p>' +
       '</div>';
+      var summaryBadge = document.getElementById("att-summary-badge");
+      if (summaryBadge) {
+        summaryBadge.textContent = "0 Students";
+        summaryBadge.className = "badge";
+      }
       return;
     }
 
     roster.forEach(function(s){
       if (!attState.draft.hasOwnProperty(s.rollNumber)) {
         if (existingSession) {
-          var rec = existingSession.records.find(function(r){ return r.rollNumber === s.rollNumber; });
+          var rec = (existingSession.records || []).find(function(r){ return r.rollNumber === s.rollNumber; });
           attState.draft[s.rollNumber] = rec ? rec.present : true;
         } else {
           attState.draft[s.rollNumber] = true;
@@ -1678,7 +1741,7 @@
       var isPresent = !!attState.draft[s.rollNumber];
       return '<div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:#F8FAFC; border-radius:8px; border:1px solid var(--border-subtle); margin-bottom:8px;">' +
         '<div>' +
-          '<div style="font-weight:700; font-size:13.5px; color:#0F172A;">' + esc(s.name) + '</div>' +
+          '<div style="font-weight:700; font-size:13.5px; color:#0F172A;">' + esc(s.name) + ' <span class="badge" style="background:#EEF2FF; color:#4338CA; font-size:10.5px; padding:1px 6px; font-weight:700;">' + esc(s.section || "Section A") + '</span></div>' +
           '<div class="mono" style="font-size:11.5px; color:#64748B;">' + esc(s.rollNumber) + '</div>' +
         '</div>' +
         '<div style="display:flex; gap:6px;">' +
@@ -1688,18 +1751,26 @@
       '</div>';
     }).join("");
 
+    var sessionStatusTag = existingSession 
+      ? '<span style="font-size:11px; color:#059669; font-weight:700; background:#ECFDF5; padding:3px 8px; border-radius:4px;">● Saved on Server</span>'
+      : '<span style="font-size:11px; color:#D97706; font-weight:700; background:#FFFBEB; padding:3px 8px; border-radius:4px;">● Ready to Mark</span>';
+
     host.innerHTML =
-      '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">' +
-        '<span style="font-size:12.5px; font-weight:700; color:#64748B; text-transform:uppercase;">Class Roster (' + roster.length + ' Students)</span>' +
+      '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">' +
+        '<div style="display:flex; align-items:center; gap:8px;">' +
+          '<span style="font-size:12.5px; font-weight:700; color:#64748B; text-transform:uppercase;">Class Roster' + esc(secLabel) + ' · ' + roster.length + ' Students</span>' +
+          sessionStatusTag +
+        '</div>' +
         '<div style="display:flex; gap:8px;">' +
           '<button class="btn btn-sm btn-ghost" id="att-all-present">All Present</button>' +
           '<button class="btn btn-sm btn-ghost" id="att-all-absent">All Absent</button>' +
         '</div>' +
       '</div>' +
       '<div style="max-height:360px; overflow-y:auto; padding-right:4px;">' + rows + '</div>' +
-      '<div style="margin-top:18px; display:flex; justify-content:flex-end;">' +
+      '<div style="margin-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">' +
+        '<div style="font-size:12px; color:#64748B;">Date: <strong class="mono">' + esc(attState.date) + '</strong> · Section: <strong>' + esc(attState.section || "Section A") + '</strong></div>' +
         '<button class="btn btn-primary btn-lg" id="save-attendance-btn" style="background:#1E3A8A; border-color:#1E3A8A;">' +
-          '<span>Save Attendance Record</span>' +
+          '<span>💾 Save Attendance for ' + esc(attState.section || "Section A") + '</span>' +
         '</button>' +
       '</div>';
 
@@ -1737,11 +1808,12 @@
 
         apiPost("/attendance", {
           course: attState.course,
+          section: attState.section || "Section A",
           date: attState.date,
           records: records
         }).then(function(){
           if (pct === 100) triggerConfetti();
-          showToast("Attendance saved — " + presentCount + " of " + records.length + " present.");
+          showToast("Attendance saved for " + (attState.section || "Section A") + " — " + presentCount + " of " + records.length + " present.");
           return refreshAll();
         }).then(function(){
           renderDashboard();
@@ -2581,324 +2653,6 @@
         showToast("Publishing Failed: " + err.message, "error");
       });
     });
-  }
-
-  /* ================= 5. Online Student Fee Payment & Minted Receipts ================= */
-  function renderFeePay() {
-    var form = document.getElementById("fee-pay-form");
-    var headSelect = document.getElementById("feepay-head");
-    var amtInput = document.getElementById("feepay-amount");
-    var amtDisplay = document.getElementById("btn-amt-display");
-    var autofillBtn = document.getElementById("feepay-autofill-btn");
-
-    if (headSelect && !headSelect.dataset.bound) {
-      headSelect.dataset.bound = "true";
-      headSelect.addEventListener("change", function(){
-        var h = headSelect.value;
-        var amt = 125000;
-        if (h.indexOf("2,50,000") > -1) amt = 250000;
-        else if (h.indexOf("1,10,000") > -1) amt = 110000;
-        else if (h.indexOf("35,000") > -1) amt = 35000;
-        else if (h.indexOf("15,000") > -1) amt = 15000;
-        amtInput.value = amt;
-        if (amtDisplay) amtDisplay.textContent = Number(amt).toLocaleString("en-IN");
-      });
-    }
-
-    if (amtInput && !amtInput.dataset.bound) {
-      amtInput.dataset.bound = "true";
-      amtInput.addEventListener("input", function(){
-        if (amtDisplay) amtDisplay.textContent = Number(amtInput.value || 0).toLocaleString("en-IN");
-      });
-    }
-
-    if (autofillBtn && !autofillBtn.dataset.bound) {
-      autofillBtn.dataset.bound = "true";
-      autofillBtn.addEventListener("click", function(){
-        var stu = state.students[0];
-        if (stu) {
-          document.getElementById("feepay-roll").value = stu.rollNumber;
-          document.getElementById("feepay-name").value = stu.name;
-          document.getElementById("feepay-course").value = stu.course || "B.Tech CSE";
-          showToast("Loaded student: " + stu.name + " (" + stu.rollNumber + ")");
-        } else {
-          showToast("No enrolled students found. Register a student first.", "error");
-        }
-      });
-    }
-
-    if (form && !form.dataset.bound) {
-      form.dataset.bound = "true";
-      form.addEventListener("submit", function(e){
-        e.preventDefault();
-        var roll = document.getElementById("feepay-roll").value.trim();
-        var name = document.getElementById("feepay-name").value.trim();
-        var course = document.getElementById("feepay-course").value.trim();
-        var head = document.getElementById("feepay-head").value;
-        var amount = document.getElementById("feepay-amount").value.trim();
-        var payMode = (form.querySelector("input[name='paymethod']:checked") || {}).value || "Online UPI";
-
-        if (!roll || !name) {
-          showToast("Roll number and student name are required", "error");
-          return;
-        }
-
-        apiPost("/fees", {
-          studentRoll: roll,
-          studentName: name,
-          course: course,
-          feeHead: head,
-          amount: amount,
-          paymentMode: payMode
-        }).then(function(receiptData){
-          state.feePayments.unshift(receiptData);
-          showToast("Payment Successful! Official Receipt Minted.");
-          triggerConfetti();
-          openFeeReceiptModal(receiptData);
-          renderRecentFeeReceipts();
-        }).catch(function(err){
-          showToast("Payment Failed: " + err.message, "error");
-        });
-      });
-    }
-
-    renderFeeStructureSummary();
-    renderRecentFeeReceipts();
-  }
-
-  function renderFeeStructureSummary() {
-    var mount = document.getElementById("feepay-structure-summary");
-    if (!mount) return;
-
-    mount.innerHTML = state.feeStructures.slice(0, 4).map(function(f){
-      return '<div style="background:#F8FAFC; border:1px solid var(--border-subtle); border-radius:8px; padding:10px 12px; display:flex; justify-content:space-between; align-items:center;">' +
-        '<div>' +
-          '<strong style="font-size:12.5px; color:#0F172A;">' + esc(f.courseCode) + '</strong>' +
-          '<div style="font-size:11px; color:#64748B;">Per Sem: ' + esc(f.semesterTuition) + '</div>' +
-        '</div>' +
-        '<span style="font-family:var(--font-mono); font-size:12px; font-weight:700; color:#1E3A8A;">' + esc(f.annualTuition) + '/yr</span>' +
-      '</div>';
-    }).join("");
-  }
-
-  function renderRecentFeeReceipts() {
-    var mount = document.getElementById("feepay-recent-receipts");
-    if (!mount) return;
-
-    if (!state.feePayments.length) {
-      mount.innerHTML = '<div style="font-size:12px; color:#64748B;">No recent payments recorded.</div>';
-      return;
-    }
-
-    mount.innerHTML = state.feePayments.slice(0, 5).map(function(p, idx){
-      return '<div class="card" style="padding:10px 12px; background:#F8FAFC; border:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center; cursor:pointer;" data-payidx="' + idx + '">' +
-        '<div>' +
-          '<div style="font-weight:700; font-size:12px; color:#0F172A;">' + esc(p.studentName) + ' (' + esc(p.studentRoll) + ')</div>' +
-          '<div style="font-size:11px; color:#10B981; font-weight:600;">₹' + Number(p.amount).toLocaleString("en-IN") + ' · ' + esc(p.feeHead) + '</div>' +
-        '</div>' +
-        '<span class="badge badge-emerald" style="font-size:10px;">RECEIPT 🖨️</span>' +
-      '</div>';
-    }).join("");
-
-    mount.querySelectorAll("[data-payidx]").forEach(function(el){
-      el.addEventListener("click", function(){
-        var idx = parseInt(el.getAttribute("data-payidx"), 10);
-        openFeeReceiptModal(state.feePayments[idx]);
-      });
-    });
-  }
-
-  function openFeeReceiptModal(p) {
-    if (!p) return;
-    var root = document.getElementById("modal-root");
-    var qrId = "receipt-qr-" + Math.floor(Math.random() * 10000);
-
-    root.innerHTML =
-      '<div class="modal-overlay" id="receipt-modal-overlay">' +
-        '<div class="modal-window" style="max-width:640px; background:#FFFFFF; padding:0; overflow:hidden;">' +
-          '<div style="padding:16px 20px; background:#0F172A; color:#FFF; display:flex; justify-content:space-between; align-items:center;">' +
-            '<strong style="font-size:14px;">Official Student Fee Payment Receipt</strong>' +
-            '<button class="modal-close" id="receipt-modal-close" style="color:#FFF;">✕</button>' +
-          '</div>' +
-          '<div style="padding:28px;">' +
-            '<div class="official-fee-receipt" id="printable-fee-receipt">' +
-              '<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #0F172A; padding-bottom:14px; margin-bottom:16px;">' +
-                '<div style="display:flex; align-items:center; gap:12px;">' +
-                  '<div class="receipt-crest">R</div>' +
-                  '<div>' +
-                    '<h2 style="font-size:17px; font-weight:800; color:#0F172A; margin:0;">SRM Institute of Science & Technology</h2>' +
-                    '<div style="font-size:11px; color:#64748B;">Delhi-NCR Campus, Modinagar, Ghaziabad (UP) – 201204</div>' +
-                  '</div>' +
-                '</div>' +
-                '<div style="text-align:right;">' +
-                  '<div style="font-weight:800; font-size:13px; color:#1E3A8A;">FEE RECEIPT</div>' +
-                  '<div style="font-family:var(--font-mono); font-size:11px; color:#64748B;">' + esc(p.receiptNumber) + '</div>' +
-                '</div>' +
-              '</div>' +
-
-              '<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:12.5px; margin-bottom:16px;">' +
-                '<div><strong>Student Name:</strong> ' + esc(p.studentName) + '</div>' +
-                '<div><strong>Roll Number:</strong> ' + esc(p.studentRoll) + '</div>' +
-                '<div><strong>Course:</strong> ' + esc(p.course) + '</div>' +
-                '<div><strong>Transaction ID:</strong> <span style="font-family:var(--font-mono);">' + esc(p.transactionId) + '</span></div>' +
-                '<div><strong>Payment Date:</strong> ' + esc(p.paymentDate) + '</div>' +
-                '<div><strong>Payment Mode:</strong> ' + esc(p.paymentMode) + '</div>' +
-              '</div>' +
-
-              '<table class="receipt-table">' +
-                '<thead><tr><th>Description / Particulars</th><th style="text-align:right;">Amount (INR ₹)</th></tr></thead>' +
-                '<tbody>' +
-                  '<tr><td>' + esc(p.feeHead) + '</td><td style="text-align:right; font-weight:700;">₹' + Number(p.amount).toLocaleString("en-IN") + '</td></tr>' +
-                  '<tr><td>Transaction Processing & GST</td><td style="text-align:right; color:#10B981;">₹0.00 (Waived)</td></tr>' +
-                  '<tr style="background:#F8FAFC; font-weight:800;"><td>TOTAL AMOUNT RECEIVED</td><td style="text-align:right; font-size:15px; color:#1E3A8A;">₹' + Number(p.amount).toLocaleString("en-IN") + '</td></tr>' +
-                '</tbody>' +
-              '</table>' +
-
-              '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; border-top:1px solid #E2E8F0; padding-top:16px;">' +
-                '<div style="display:flex; align-items:center; gap:12px;">' +
-                  '<div id="' + qrId + '" style="width:58px; height:58px;"></div>' +
-                  '<div style="font-size:10.5px; color:#64748B; line-height:1.4;">' +
-                    'Verified Institutional Receipt<br>' +
-                    'Status: <strong style="color:#10B981;">PAID & CLEARED</strong>' +
-                  '</div>' +
-                '</div>' +
-                '<div style="text-align:center; font-size:11px; color:#64748B;">' +
-                  '<div style="font-weight:700; color:#0F172A;">Finance & Accounts Officer</div>' +
-                  'SRMIST Delhi-NCR Campus' +
-                '</div>' +
-              '</div>' +
-            '</div>' +
-
-            '<div style="margin-top:20px; display:flex; justify-content:flex-end; gap:10px;">' +
-              '<button class="btn btn-ghost" id="receipt-close-btn2">Close</button>' +
-              '<button class="btn btn-primary" onclick="window.print()" style="background:#1E3A8A; border-color:#1E3A8A; font-weight:700;">🖨️ Print Official Receipt</button>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-      '</div>';
-
-    // Generate QR Code
-    setTimeout(function(){
-      var qrMount = document.getElementById(qrId);
-      if (qrMount && window.QRCode) {
-        new window.QRCode(qrMount, {
-          text: p.qrPayload || ("SRMIST-FEE|" + p.receiptNumber + "|" + p.studentRoll + "|INR" + p.amount),
-          width: 58,
-          height: 58,
-          colorDark: "#0F172A",
-          colorLight: "#FFFFFF"
-        });
-      }
-    }, 50);
-
-    root.querySelector("#receipt-modal-close").addEventListener("click", closeModal);
-    root.querySelector("#receipt-close-btn2").addEventListener("click", closeModal);
-    root.querySelector("#receipt-modal-overlay").addEventListener("click", function(e){
-      if (e.target.id === "receipt-modal-overlay") closeModal();
-    });
-  }
-
-  /* ================= 6. Management Fee Ledger Controller ================= */
-  function renderFeeLedger() {
-    var kpiMount = document.getElementById("fee-kpi-row");
-    var tableMount = document.getElementById("fee-transactions-table");
-    var exportBtn = document.getElementById("export-fees-csv");
-
-    var totalRevenue = 0;
-    state.feePayments.forEach(function(p){ totalRevenue += Number(p.amount || 0); });
-
-    if (kpiMount) {
-      kpiMount.innerHTML =
-        '<div class="kpi-card">' +
-          '<div class="kpi-label">Total Fee Revenue Collected</div>' +
-          '<div class="kpi-value">₹' + totalRevenue.toLocaleString("en-IN") + '</div>' +
-          '<div class="kpi-sub">Across ' + state.feePayments.length + ' verified transactions</div>' +
-        '</div>' +
-        '<div class="kpi-card">' +
-          '<div class="kpi-label">Total Receipts Minted</div>' +
-          '<div class="kpi-value">' + state.feePayments.length + '</div>' +
-          '<div class="kpi-sub">100% Cryptographic QR Verified</div>' +
-        '</div>' +
-        '<div class="kpi-card">' +
-          '<div class="kpi-label">Average Payment Value</div>' +
-          '<div class="kpi-value">₹' + (state.feePayments.length ? Math.round(totalRevenue / state.feePayments.length).toLocaleString("en-IN") : "0") + '</div>' +
-          '<div class="kpi-sub">Per transaction average</div>' +
-        '</div>' +
-        '<div class="kpi-card">' +
-          '<div class="kpi-label">Payment Gateway Status</div>' +
-          '<div class="kpi-value" style="color:#10B981;">HEALTHY</div>' +
-          '<div class="kpi-sub">UPI / NetBanking / Cards Active</div>' +
-        '</div>';
-    }
-
-    if (tableMount) {
-      if (!state.feePayments.length) {
-        tableMount.innerHTML = '<div style="padding:32px; text-align:center; color:#64748B;">No fee transactions recorded yet.</div>';
-      } else {
-        tableMount.innerHTML =
-          '<table class="data-table">' +
-            '<thead>' +
-              '<tr>' +
-                '<th>Receipt No.</th>' +
-                '<th>Student Name</th>' +
-                '<th>Roll No.</th>' +
-                '<th>Fee Head</th>' +
-                '<th>Amount (₹)</th>' +
-                '<th>Payment Mode</th>' +
-                '<th>Date & Time</th>' +
-                '<th>Action</th>' +
-              '</tr>' +
-            '</thead>' +
-            '<tbody>' +
-              state.feePayments.map(function(p, idx){
-                return '<tr>' +
-                  '<td class="mono" style="font-weight:700; color:#1E3A8A;">' + esc(p.receiptNumber) + '</td>' +
-                  '<td><strong>' + esc(p.studentName) + '</strong></td>' +
-                  '<td class="mono">' + esc(p.studentRoll) + '</td>' +
-                  '<td>' + esc(p.feeHead) + '</td>' +
-                  '<td style="font-weight:700; color:#10B981;">₹' + Number(p.amount).toLocaleString("en-IN") + '</td>' +
-                  '<td>' + esc(p.paymentMode) + '</td>' +
-                  '<td style="font-size:12px; color:#64748B;">' + esc(p.paymentDate) + '</td>' +
-                  '<td><button class="btn btn-ghost btn-sm" data-ledger-idx="' + idx + '">🖨️ View Receipt</button></td>' +
-                '</tr>';
-              }).join("") +
-            '</tbody>' +
-          '</table>';
-
-        tableMount.querySelectorAll("[data-ledger-idx]").forEach(function(b){
-          b.addEventListener("click", function(){
-            var idx = parseInt(b.getAttribute("data-ledger-idx"), 10);
-            openFeeReceiptModal(state.feePayments[idx]);
-          });
-        });
-      }
-    }
-
-    if (exportBtn && !exportBtn.dataset.bound) {
-      exportBtn.dataset.bound = "true";
-      exportBtn.addEventListener("click", function(){
-        if (!state.feePayments.length) {
-          showToast("No transactions to export", "error");
-          return;
-        }
-        var headers = ["Receipt Number", "Transaction ID", "Student Roll", "Student Name", "Course", "Fee Head", "Amount", "Payment Mode", "Payment Date", "Status"];
-        var rows = state.feePayments.map(function(p){
-          return [p.receiptNumber, p.transactionId, p.studentRoll, p.studentName, p.course, p.feeHead, p.amount, p.paymentMode, p.paymentDate, p.status];
-        });
-        var csv = [headers.join(",")].concat(rows.map(function(r){
-          return r.map(function(v){ return '"' + String(v || "").replace(/"/g, '""') + '"'; }).join(",");
-        })).join("\n");
-
-        var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement("a");
-        a.href = url;
-        a.download = "SRMIST_Fee_Ledger_" + new Date().toISOString().slice(0,10) + ".csv";
-        a.click();
-        URL.revokeObjectURL(url);
-        showToast("Fee Ledger CSV Downloaded");
-      });
-    }
   }
 
   /* ================= Initialization Boot ================= */

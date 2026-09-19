@@ -4,7 +4,6 @@ import com.campus.model.ActivityEntry;
 import com.campus.model.AttendanceSession;
 import com.campus.model.CalendarEvent;
 import com.campus.model.Faculty;
-import com.campus.model.FeePayment;
 import com.campus.model.Notice;
 import com.campus.model.Student;
 import com.campus.model.TimetableEntry;
@@ -23,7 +22,6 @@ public class AppData {
     public final FileStore<Notice> notices;
     public final FileStore<CalendarEvent> calendar;
     public final FileStore<TimetableEntry> timetable;
-    public final FileStore<FeePayment> feePayments;
 
     public AppData(Path dataDir) {
         students = new FileStore<>(dataDir.resolve("students.json"), Student::toMap, Student::fromMap, ArrayList::new);
@@ -33,7 +31,6 @@ public class AppData {
         notices = new FileStore<>(dataDir.resolve("notices.json"), Notice::toMap, Notice::fromMap, AppData::seedNotices);
         calendar = new FileStore<>(dataDir.resolve("calendar.json"), CalendarEvent::toMap, CalendarEvent::fromMap, AppData::seedCalendar);
         timetable = new FileStore<>(dataDir.resolve("timetable.json"), TimetableEntry::toMap, TimetableEntry::fromMap, AppData::seedTimetable);
-        feePayments = new FileStore<>(dataDir.resolve("feepayments.json"), FeePayment::toMap, FeePayment::fromMap, AppData::seedFeePayments);
     }
 
     public static String newId(String prefix) {
@@ -49,7 +46,7 @@ public class AppData {
 
     private static List<ActivityEntry> seedActivity() {
         List<ActivityEntry> list = new ArrayList<>();
-        list.add(new ActivityEntry(newId("log"), "RegEngine Campus Registration System initialized. Academic & Financial Hubs online.", Instant.now().toString()));
+        list.add(new ActivityEntry(newId("log"), "RegEngine Campus Registration System initialized. Academic Hubs online.", Instant.now().toString()));
         return list;
     }
 
@@ -65,7 +62,7 @@ public class AppData {
                 "2026-09-18",
                 "Office of the Controller of Examinations",
                 "Examination Cell",
-                "All registered undergraduate and postgraduate students of B.Tech, BCA, MCA, MBA, and B.Pharm are hereby informed that Continuous Internal Assessment (CIA-1) will commence from October 14, 2026. Hall tickets and seating arrangements will be available on the Student Portal. 75% attendance rule strictly enforced.",
+                "All registered undergraduate and postgraduate students of B.Tech, BCA, MCA, and MBA are hereby informed that Continuous Internal Assessment (CIA-1) will commence from October 14, 2026. Hall tickets and seating arrangements will be available on the Student Portal. 75% attendance rule strictly enforced.",
                 "https://srmist.edu.in/downloads/cia1_schedule_2026.pdf"
         ));
 
@@ -84,15 +81,15 @@ public class AppData {
 
         list.add(new Notice(
                 newId("not"),
-                "SRM/NCR/FEE/2026/044",
-                "Odd Semester 2026 Tuition Fee Payment & Institutional Digital Receipts",
-                "Financial",
-                "Urgent",
+                "SRM/NCR/LIB/2026/033",
+                "IEEE Xplore & ACM Digital Library Off-Campus Remote Access Credentials",
+                "Academic",
+                "Normal",
                 "2026-09-12",
-                "Finance & Accounts Secretariat",
-                "Accounts Section",
-                "Students are notified that the last date for payment of Odd Semester tuition and laboratory fees without late fine is October 05, 2026. Payments can be completed online via the RegEngine Fee Desk. Official digitally stamped receipts with cryptographic QR verification will be minted immediately.",
-                ""
+                "University Central Library",
+                "Library & Information Center",
+                "Institutional login credentials and remote Shibboleth access for IEEE Xplore, ScienceDirect, ACM Digital Library, and SpringerNature have been updated. Students and faculty can access peer-reviewed journals via their university SSO credentials.",
+                "https://library.srmist.edu.in/remote-access"
         ));
 
         list.add(new Notice(
@@ -184,26 +181,6 @@ public class AppData {
         return list;
     }
 
-    public static List<FeePayment> seedFeePayments() {
-        List<FeePayment> list = new ArrayList<>();
-        list.add(new FeePayment(
-                newId("pay"),
-                "SRM-REC-2026-88192041",
-                "TXN981029482",
-                "26CS696",
-                "Aadi Saxena",
-                "B.Tech CSE (Core)",
-                "Tuition Fee (Semester 1)",
-                "Semester 1",
-                "125000",
-                "Online UPI (HDFC Bank)",
-                "2026-09-18 10:15:30",
-                "SUCCESS",
-                "REF-88192041"
-        ));
-        return list;
-    }
-
     public static List<Faculty> seedFaculty() {
         List<Faculty> list = new ArrayList<>();
         list.add(new Faculty(newId("fac"), "EMP-101", "Dr. Anjali Sharma", "Associate Professor", "Computer Science & Engineering", "Ph.D. Computer Science", "Advanced Programming Practice", "CSE-CORE", "12", "anjali.sharma@regengine.edu", "+91 98101 23456", "Room CS-304", "2018-07-15"));
@@ -217,7 +194,7 @@ public class AppData {
         list.add(new Faculty(newId("fac"), "EMP-109", "Dr. Lalit Kishore Arora", "Associate Professor & HOD", "Computer Applications", "Ph.D. Computer Applications", "Object Oriented Programming & Python", "BCA", "17", "lalit.arora@regengine.edu", "+91 98118 99001", "HOD Office CA-101", "2013-04-14"));
         list.add(new Faculty(newId("fac"), "EMP-110", "Dr. Gyanendra Prasad Bagri", "Professor & HOD", "Mechanical & Automobile Engineering", "Ph.D. Mechanical Engg", "Thermodynamics & Fluid Mechanics", "MECH", "22", "gp.bagri@regengine.edu", "+91 98119 00112", "HOD Office ME-101", "2011-08-25"));
         list.add(new Faculty(newId("fac"), "EMP-111", "Dr. Manoj Kumar Pal", "Associate Professor", "Mechanical & Automobile Engineering", "Ph.D. Manufacturing", "Manufacturing Technology & CAD/CAM", "AUTO", "15", "manoj.pal@regengine.edu", "+91 98120 11223", "Room ME-208", "2016-10-10"));
-        list.add(new Faculty(newId("fac"), "EMP-112", "Dr. Sunil Kumar Yadav", "Associate Professor", "Science & Humanities", "Ph.D. Chemistry", "Applied Chemistry & Materials Science", "BPHARM", "13", "sunil.yadav@regengine.edu", "+91 98121 22334", "Room SH-105", "2017-02-15"));
+        list.add(new Faculty(newId("fac"), "EMP-112", "Dr. Sunil Kumar Yadav", "Associate Professor", "Science & Humanities", "Ph.D. Chemistry", "Applied Chemistry & Materials Science", "SH", "13", "sunil.yadav@regengine.edu", "+91 98121 22334", "Room SH-105", "2017-02-15"));
         return list;
     }
 }

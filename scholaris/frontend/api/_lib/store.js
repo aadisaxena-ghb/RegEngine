@@ -32,11 +32,11 @@ function isoDaysAgo(n) {
 
 function seedStudents() {
   return [
-    { id: newId("stu"), rollNumber: "SIT24CS041", name: "Ananya Sharma", fatherName: "Rakesh Sharma", motherName: "Meena Sharma", phone: "98110 22341", address: "Sector 12, Dwarka, New Delhi", percentage12: "91.4", course: "CSE-CORE", enrollDate: isoDaysAgo(46) },
-    { id: newId("stu"), rollNumber: "SIT24CS118", name: "Vihaan Mehta", fatherName: "Sunil Mehta", motherName: "Pooja Mehta", phone: "99887 65432", address: "Kothrud, Pune", percentage12: "88.7", course: "CSE-AIML", enrollDate: isoDaysAgo(44) },
-    { id: newId("stu"), rollNumber: "SIT24DS027", name: "Ishita Verma", fatherName: "Manoj Verma", motherName: "Suman Verma", phone: "97654 12098", address: "Indiranagar, Bengaluru", percentage12: "93.2", course: "CSE-DS", enrollDate: isoDaysAgo(40) },
-    { id: newId("stu"), rollNumber: "SIT24EC009", name: "Arjun Nair", fatherName: "Prakash Nair", motherName: "Lakshmi Nair", phone: "90210 44556", address: "Vastrapur, Ahmedabad", percentage12: "85.9", course: "ECE", enrollDate: isoDaysAgo(38) },
-    { id: newId("stu"), rollNumber: "SIT24CS204", name: "Kabir Singh", fatherName: "Harpreet Singh", motherName: "Simran Singh", phone: "93123 87765", address: "Model Town, Ludhiana", percentage12: "79.6", course: "CSE-CORE", enrollDate: isoDaysAgo(21) }
+    { id: newId("stu"), rollNumber: "SIT24CS041", name: "Ananya Sharma", section: "Section A", fatherName: "Rakesh Sharma", motherName: "Meena Sharma", phone: "98110 22341", address: "Sector 12, Dwarka, New Delhi", percentage12: "91.4", course: "CSE-CORE", enrollDate: isoDaysAgo(46) },
+    { id: newId("stu"), rollNumber: "SIT24CS118", name: "Vihaan Mehta", section: "Section A", fatherName: "Sunil Mehta", motherName: "Pooja Mehta", phone: "99887 65432", address: "Kothrud, Pune", percentage12: "88.7", course: "CSE-AIML", enrollDate: isoDaysAgo(44) },
+    { id: newId("stu"), rollNumber: "SIT24DS027", name: "Ishita Verma", section: "Section B", fatherName: "Manoj Verma", motherName: "Suman Verma", phone: "97654 12098", address: "Indiranagar, Bengaluru", percentage12: "93.2", course: "CSE-DS", enrollDate: isoDaysAgo(40) },
+    { id: newId("stu"), rollNumber: "SIT24EC009", name: "Arjun Nair", section: "Section A", fatherName: "Prakash Nair", motherName: "Lakshmi Nair", phone: "90210 44556", address: "Vastrapur, Ahmedabad", percentage12: "85.9", course: "ECE", enrollDate: isoDaysAgo(38) },
+    { id: newId("stu"), rollNumber: "SIT24CS204", name: "Kabir Singh", section: "Section B", fatherName: "Harpreet Singh", motherName: "Simran Singh", phone: "93123 87765", address: "Model Town, Ludhiana", percentage12: "79.6", course: "CSE-CORE", enrollDate: isoDaysAgo(21) }
   ];
 }
 

@@ -34,6 +34,7 @@ module.exports = async function handler(req, res) {
         id: newId("stu"),
         rollNumber: roll,
         name: name,
+        section: body.section || "Section A",
         fatherName: body.fatherName || null,
         motherName: body.motherName || null,
         phone: body.phone || null,

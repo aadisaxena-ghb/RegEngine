@@ -6,7 +6,6 @@ import com.campus.http.CoursesHandler;
 import com.campus.http.CurriculumHandler;
 import com.campus.http.DashboardHandler;
 import com.campus.http.FacultyHandler;
-import com.campus.http.FeesHandler;
 import com.campus.http.NoticesHandler;
 import com.campus.http.StaticFileHandler;
 import com.campus.http.StudentsHandler;
@@ -42,7 +41,6 @@ public class Main {
         server.createContext("/api/calendar", new AcademicCalendarHandler(data));
         server.createContext("/api/timetable", new TimetableHandler(data));
         server.createContext("/api/curriculum", new CurriculumHandler());
-        server.createContext("/api/fees", new FeesHandler(data));
         server.createContext("/", new StaticFileHandler(frontendDir));
 
         server.start();
@@ -53,7 +51,6 @@ public class Main {
         System.out.println(" App:    http://localhost:" + port + "/app.html");
         System.out.println(" API:    http://localhost:" + port + "/api/dashboard");
         System.out.println(" Notices: http://localhost:" + port + "/api/notices");
-        System.out.println(" Fees:   http://localhost:" + port + "/api/fees");
         System.out.println(" Data:   " + dataDir.toAbsolutePath());
         System.out.println("========================================================");
     }

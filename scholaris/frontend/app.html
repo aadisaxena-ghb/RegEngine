@@ -349,17 +349,18 @@
         <span>Syllabus & Curriculum</span>
       </button>
 
-      <div class="nav-header">Circulars & Finance</div>
+      <button class="nav-item" data-view="student-courses">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6.5l9-3 9 3-9 3-9-3z"/><path d="M7 9.5v6c0 1.4 2.5 2.5 5 2.5s5-1.1 5-2.5v-6"/></svg>
+        <span>Academic Catalog</span>
+        <span class="nav-badge" style="background:#E0E7FF; color:#3730A3; font-weight:700;">15</span>
+      </button>
+
+      <div class="nav-header">Campus Communications</div>
 
       <button class="nav-item" data-view="notices">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
         <span>Notices & Circulars</span>
         <span class="nav-badge" style="background:#FEE2E2; color:#991B1B; font-weight:700;">NEW</span>
-      </button>
-
-      <button class="nav-item" data-view="feepay">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-        <span>Online Fee Payment</span>
       </button>
 
       <button class="nav-item" data-view="student-attendance">
@@ -393,22 +394,17 @@
         <span>Daily Attendance Marker</span>
       </button>
 
-      <div class="nav-header">Governance & Finance</div>
+      <div class="nav-header">Governance & Academic Staff</div>
 
       <button class="nav-item" data-view="notice-mgr">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
         <span>Publish Circulars</span>
       </button>
 
-      <button class="nav-item" data-view="fee-ledger">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-        <span>Fee Collection Ledger</span>
-      </button>
-
       <button class="nav-item" data-view="faculty">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6"/></svg>
         <span>Faculty Directory</span>
-        <span class="nav-badge" id="nav-badge-faculty">95</span>
+        <span class="nav-badge" id="nav-badge-faculty">87</span>
       </button>
 
       <button class="nav-item" data-view="courses">
@@ -571,6 +567,22 @@
                 <input type="text" id="reg-roll" placeholder="e.g. RA2611003010001" class="mono" required>
               </div>
               <div class="field">
+                <label>Assigned Class Section *</label>
+                <select id="reg-section" required>
+                  <option value="Section A">Section A</option>
+                  <option value="Section B">Section B</option>
+                  <option value="Section C">Section C</option>
+                  <option value="Section D">Section D</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label>Engineering / Academic Programme *</label>
+                <select id="reg-course" required></select>
+              </div>
+              <div class="field">
                 <label>Academic Batch / Year *</label>
                 <select id="reg-batch" required>
                   <option value="2026–2030">Batch 2026–2030 (Fresh Intake)</option>
@@ -582,10 +594,6 @@
 
             <div class="field-row">
               <div class="field">
-                <label>Engineering / Academic Programme *</label>
-                <select id="reg-course" required></select>
-              </div>
-              <div class="field">
                 <label>Admission Quota Type *</label>
                 <select id="reg-admtype" required>
                   <option value="State Merit (KCET/MHT-CET)">State Merit Entrance</option>
@@ -594,6 +602,10 @@
                   <option value="Management Quota">Management Quota</option>
                   <option value="Sports / NRI Quota">Sports / Special Quota</option>
                 </select>
+              </div>
+              <div class="field">
+                <label>Previous High School / Junior College Name</label>
+                <input type="text" id="reg-prevschool" placeholder="e.g. Delhi Public School, Ghaziabad">
               </div>
             </div>
 
@@ -606,11 +618,6 @@
                 <label>12th / Qualifying Score (%) *</label>
                 <input type="number" step="0.1" min="0" max="100" id="reg-pct12" placeholder="e.g. 96.8" class="mono" required>
               </div>
-            </div>
-
-            <div class="field">
-              <label>Previous High School / Junior College Name</label>
-              <input type="text" id="reg-prevschool" placeholder="e.g. Delhi Public School, Ghaziabad">
             </div>
 
             <div style="display:flex; justify-content:space-between; margin-top:24px;">
@@ -794,7 +801,7 @@
       <div style="max-width:1100px; margin:0 auto;">
         <div style="margin-bottom:24px;">
           <h2 style="font-size:22px; font-weight:800; color:#0F172A;">SRMIST Delhi-NCR Ghaziabad Academic Catalog</h2>
-          <div style="font-size:13px; color:#64748B;">Explore all 16 undergraduate and postgraduate programmes, seat caps, and department allocations</div>
+          <div style="font-size:13px; color:#64748B;">Explore all 15 undergraduate and postgraduate programmes, seat caps, and department allocations</div>
         </div>
         <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:20px;" id="student-courses-grid-mount"></div>
       </div>
@@ -953,105 +960,12 @@
             <div style="display:flex; gap:8px;" id="notice-filter-pills">
               <button class="btn btn-sm btn-ghost active" data-notcat="all" style="font-weight:700;">All Circulars</button>
               <button class="btn btn-sm btn-ghost" data-notcat="Examination">Examinations</button>
-              <button class="btn btn-sm btn-ghost" data-notcat="Financial">Fee & Finance</button>
               <button class="btn btn-sm btn-ghost" data-notcat="Administration">Administration</button>
               <button class="btn btn-sm btn-ghost" data-notcat="Events">Events</button>
             </div>
           </div>
 
           <div class="notices-feed" id="notices-list-mount"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- STUDENT VIEW 11: Online Fee Payment & Receipt Minting -->
-    <section id="view-feepay" class="view-pane">
-      <div style="max-width:1050px; margin:0 auto;">
-        <div style="display:grid; grid-template-columns:1.3fr 1fr; gap:24px;">
-          <!-- Left: Fee Payment Checkout -->
-          <div class="card" style="padding:28px; background:#FFFFFF;">
-            <h2 style="font-size:20px; font-weight:800; color:#0F172A; margin:0 0 4px;">Online Student Fee Payment Desk</h2>
-            <div style="font-size:13px; color:#64748B; margin-bottom:20px;">Instant digital receipt minting with cryptographic university verification</div>
-
-            <form id="fee-pay-form">
-              <div class="field">
-                <label>Student Roll Number or Admission ID *</label>
-                <div style="display:flex; gap:10px;">
-                  <input type="text" id="feepay-roll" placeholder="e.g. 26CS696" required style="flex:1;">
-                  <button type="button" class="btn btn-ghost btn-sm" id="feepay-autofill-btn">Fetch Details</button>
-                </div>
-              </div>
-
-              <div class="field-row">
-                <div class="field">
-                  <label>Student Full Name *</label>
-                  <input type="text" id="feepay-name" placeholder="Student name" required>
-                </div>
-                <div class="field">
-                  <label>Enrolled Programme *</label>
-                  <input type="text" id="feepay-course" placeholder="e.g. B.Tech Computer Science (Core)" required>
-                </div>
-              </div>
-
-              <div class="field-row">
-                <div class="field">
-                  <label>Fee Head Category *</label>
-                  <select id="feepay-head">
-                    <option value="Tuition Fee (Semester 1)">Tuition Fee (Semester 1) — ₹1,25,000</option>
-                    <option value="Annual Tuition Fee">Full Year Tuition Fee — ₹2,50,000</option>
-                    <option value="Hostel & Mess Fee">Campus Hostel & Mess (Annual) — ₹1,10,000</option>
-                    <option value="Transport Route Fee">Campus AC Bus Transport — ₹35,000</option>
-                    <option value="Examination & Laboratory Fee">Exam & Lab Fee — ₹15,000</option>
-                  </select>
-                </div>
-
-                <div class="field">
-                  <label>Payment Amount (INR ₹) *</label>
-                  <input type="number" id="feepay-amount" value="125000" required>
-                </div>
-              </div>
-
-              <div class="field">
-                <label>Payment Gateway Method *</label>
-                <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin-top:6px;">
-                  <label style="display:flex; align-items:center; gap:8px; padding:10px; border:1px solid var(--border-medium); border-radius:8px; cursor:pointer; font-size:12.5px; font-weight:600;">
-                    <input type="radio" name="paymethod" value="Online UPI (GPay / PhonePe / Paytm)" checked>
-                    <span>📱 UPI Instant</span>
-                  </label>
-                  <label style="display:flex; align-items:center; gap:8px; padding:10px; border:1px solid var(--border-medium); border-radius:8px; cursor:pointer; font-size:12.5px; font-weight:600;">
-                    <input type="radio" name="paymethod" value="NetBanking (HDFC / SBI / ICICI)">
-                    <span>🏛️ NetBanking</span>
-                  </label>
-                  <label style="display:flex; align-items:center; gap:8px; padding:10px; border:1px solid var(--border-medium); border-radius:8px; cursor:pointer; font-size:12.5px; font-weight:600;">
-                    <input type="radio" name="paymethod" value="Debit / Credit Card (Visa / MC)">
-                    <span>💳 Debit/Credit</span>
-                  </label>
-                </div>
-              </div>
-
-              <div style="margin-top:24px;">
-                <button type="submit" class="btn btn-primary btn-lg" style="width:100%; background:#1E3A8A; border-color:#1E3A8A; font-weight:700;">
-                  <span>🔒 Authorize & Mint Official Receipt (₹<span id="btn-amt-display">1,25,000</span>)</span>
-                </button>
-              </div>
-            </form>
-          </div>
-
-          <!-- Right: Fee Structures Reference & Recent Receipts -->
-          <div style="display:flex; flex-direction:column; gap:20px;">
-            <div class="card" style="padding:22px; background:#FFFFFF;">
-              <h3 style="font-size:16px; font-weight:700; color:#0F172A; margin:0 0 10px;">Programme Fee Highlights</h3>
-              <div style="font-size:12.5px; color:#64748B; line-height:1.6; margin-bottom:14px;">
-                All fees are statutory and payable per semester or annually as per SRMIST guidelines.
-              </div>
-              <div id="feepay-structure-summary" style="display:flex; flex-direction:column; gap:8px;"></div>
-            </div>
-
-            <div class="card" style="padding:22px; background:#FFFFFF;">
-              <h3 style="font-size:16px; font-weight:700; color:#0F172A; margin:0 0 10px;">Recent Paid Receipts</h3>
-              <div id="feepay-recent-receipts" style="display:flex; flex-direction:column; gap:8px;"></div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -1075,7 +989,6 @@
                 <select id="notpub-category">
                   <option value="Academic">Academic Affairs</option>
                   <option value="Examination">Examination & CIA</option>
-                  <option value="Financial">Fee & Accounts</option>
                   <option value="Administration">Administration & Proctor</option>
                   <option value="Events">Campus Events & Fest</option>
                 </select>
@@ -1117,30 +1030,6 @@
               </button>
             </div>
           </form>
-        </div>
-      </div>
-    </section>
-
-    <!-- MANAGEMENT VIEW: Fee Collection Ledger -->
-    <section id="view-fee-ledger" class="view-pane">
-      <div style="max-width:1100px; margin:0 auto;">
-        <div class="card" style="padding:28px; background:#FFFFFF; margin-bottom:24px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:20px;">
-            <div>
-              <h2 style="font-size:20px; font-weight:800; color:#0F172A; margin:0 0 4px;">Institutional Fee Collection Ledger</h2>
-              <div style="font-size:13px; color:#64748B;">Audit trail of all online fee transactions, receipts, and branch collections</div>
-            </div>
-
-            <div style="display:flex; gap:10px;">
-              <button class="btn btn-emerald btn-sm" id="export-fees-csv">
-                <span>📥 Export Fee Ledger (CSV)</span>
-              </button>
-            </div>
-          </div>
-
-          <div class="kpi-grid" id="fee-kpi-row" style="margin-bottom:24px;"></div>
-
-          <div class="table-container" id="fee-transactions-table"></div>
         </div>
       </div>
     </section>
@@ -1196,11 +1085,21 @@
           </div>
 
           <div class="field-row" style="margin-bottom:18px;">
-            <div class="field" style="margin-bottom:0;">
-              <label>Select Branch</label>
+            <div class="field" style="margin-bottom:0; flex:1.2;">
+              <label>Select Programme / Branch</label>
               <select id="att-prog-select"></select>
             </div>
-            <div class="field" style="margin-bottom:0;">
+            <div class="field" style="margin-bottom:0; flex:1;">
+              <label>Class Section</label>
+              <select id="att-section-select">
+                <option value="Section A" selected>Section A</option>
+                <option value="Section B">Section B</option>
+                <option value="Section C">Section C</option>
+                <option value="Section D">Section D</option>
+                <option value="ALL">All Sections (Entire Cohort)</option>
+              </select>
+            </div>
+            <div class="field" style="margin-bottom:0; flex:1;">
               <label>Attendance Date</label>
               <input type="date" id="att-date-input">
             </div>

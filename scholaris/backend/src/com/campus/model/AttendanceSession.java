@@ -8,6 +8,7 @@ import java.util.Map;
 public class AttendanceSession {
     private String id;
     private String course;
+    private String section;
     private String date;
     private List<Record> records;
 
@@ -23,15 +24,17 @@ public class AttendanceSession {
 
     public AttendanceSession() {}
 
-    public AttendanceSession(String id, String course, String date, List<Record> records) {
+    public AttendanceSession(String id, String course, String section, String date, List<Record> records) {
         this.id = id;
         this.course = course;
+        this.section = (section == null || section.isBlank()) ? "Section A" : section;
         this.date = date;
         this.records = records;
     }
 
     public String getId() { return id; }
     public String getCourse() { return course; }
+    public String getSection() { return section; }
     public String getDate() { return date; }
     public List<Record> getRecords() { return records; }
     public void setRecords(List<Record> records) { this.records = records; }
@@ -41,6 +44,7 @@ public class AttendanceSession {
         Map<String, Object> m = new LinkedHashMap<>();
         m.put("id", id);
         m.put("course", course);
+        m.put("section", section != null ? section : "Section A");
         m.put("date", date);
         List<Object> recs = new ArrayList<>();
         for (Record r : records) {
@@ -65,6 +69,6 @@ public class AttendanceSession {
                 records.add(new Record(Student.str(rm, "rollNumber"), present));
             }
         }
-        return new AttendanceSession(Student.str(m, "id"), Student.str(m, "course"), Student.str(m, "date"), records);
+        return new AttendanceSession(Student.str(m, "id"), Student.str(m, "course"), Student.str(m, "section"), Student.str(m, "date"), records);
     }
 }

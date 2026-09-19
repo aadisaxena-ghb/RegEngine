@@ -14,6 +14,7 @@ public class Student {
     private String aadharNumber;
     
     private String course;
+    private String section;
     private String batchYear;
     private String admissionType;
     private String percentage10;
@@ -40,7 +41,7 @@ public class Student {
 
     public Student(String id, String rollNumber, String name, String gender, String dob,
                    String bloodGroup, String category, String aadharNumber, String course,
-                   String batchYear, String admissionType, String percentage10, String percentage12,
+                   String section, String batchYear, String admissionType, String percentage10, String percentage12,
                    String previousSchool, String fatherName, String fatherOccupation,
                    String motherName, String motherOccupation, String guardianPhone,
                    String guardianEmail, String phone, String email, String emergencyContact,
@@ -55,6 +56,7 @@ public class Student {
         this.category = category;
         this.aadharNumber = aadharNumber;
         this.course = course;
+        this.section = (section == null || section.isBlank()) ? "Section A" : section;
         this.batchYear = batchYear;
         this.admissionType = admissionType;
         this.percentage10 = percentage10;
@@ -80,6 +82,7 @@ public class Student {
     public String getRollNumber() { return rollNumber; }
     public String getName() { return name; }
     public String getCourse() { return course; }
+    public String getSection() { return section; }
     public String getEnrollDate() { return enrollDate; }
 
     public Map<String, Object> toMap() {
@@ -93,6 +96,7 @@ public class Student {
         m.put("category", category);
         m.put("aadharNumber", aadharNumber);
         m.put("course", course);
+        m.put("section", section != null ? section : "Section A");
         m.put("batchYear", batchYear);
         m.put("admissionType", admissionType);
         m.put("percentage10", percentage10);
@@ -119,7 +123,7 @@ public class Student {
         return new Student(
             str(m, "id"), str(m, "rollNumber"), str(m, "name"), str(m, "gender"),
             str(m, "dob"), str(m, "bloodGroup"), str(m, "category"), str(m, "aadharNumber"),
-            str(m, "course"), str(m, "batchYear"), str(m, "admissionType"), str(m, "percentage10"),
+            str(m, "course"), str(m, "section"), str(m, "batchYear"), str(m, "admissionType"), str(m, "percentage10"),
             str(m, "percentage12"), str(m, "previousSchool"), str(m, "fatherName"),
             str(m, "fatherOccupation"), str(m, "motherName"), str(m, "motherOccupation"),
             str(m, "guardianPhone"), str(m, "guardianEmail"), str(m, "phone"), str(m, "email"),

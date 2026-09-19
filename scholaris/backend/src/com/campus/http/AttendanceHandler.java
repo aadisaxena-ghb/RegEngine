@@ -49,6 +49,8 @@ public class AttendanceHandler implements HttpHandler {
     private void save(HttpExchange exchange) throws IOException {
         Map<String, Object> body = ApiSupport.readJsonBody(exchange);
         String course = str(body, "course");
+        String section = str(body, "section");
+        if (section == null || section.isBlank()) section = "Section A";
         String date = str(body, "date");
         if (course == null || course.isBlank()) throw new IllegalArgumentException("Missing course.");
         if (date == null || date.isBlank()) throw new IllegalArgumentException("Missing date.");
@@ -68,15 +70,16 @@ public class AttendanceHandler implements HttpHandler {
             records.add(new AttendanceSession.Record(roll, present));
         }
 
+        final String finalSection = section;
         AttendanceSession existing = data.attendance.all().stream()
-            .filter(s -> s.getCourse().equals(course) && s.getDate().equals(date))
+            .filter(s -> s.getCourse().equals(course) && (s.getSection() == null || s.getSection().equals(finalSection)) && s.getDate().equals(date))
             .findFirst().orElse(null);
 
         AttendanceSession session = new AttendanceSession(
-            existing != null ? existing.getId() : AppData.newId("att"), course, date, records
+            existing != null ? existing.getId() : AppData.newId("att"), course, section, date, records
         );
-        data.attendance.upsert(s -> s.getCourse().equals(course) && s.getDate().equals(date), session);
-        data.log("Attendance recorded for " + courseDef.name + " on " + date + " (" + presentCount + "/" + records.size() + " present).");
+        data.attendance.upsert(s -> s.getCourse().equals(course) && (s.getSection() == null || s.getSection().equals(finalSection)) && s.getDate().equals(date), session);
+        data.log("Attendance recorded for " + courseDef.name + " (" + section + ") on " + date + " (" + presentCount + "/" + records.size() + " present).");
         ApiSupport.sendJson(exchange, 200, session.toMap());
     }
 
