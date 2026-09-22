@@ -49,6 +49,7 @@ public class StaticFileHandler implements HttpHandler {
         if (lower.endsWith(".mp3")) return "audio/mpeg";
         if (lower.endsWith(".wav")) return "audio/wav";
         if (lower.endsWith(".csv")) return "text/csv; charset=utf-8";
+        if (lower.endsWith(".pdf")) return "application/pdf";
         return "application/octet-stream";
     }
 }
