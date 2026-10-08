@@ -9,6 +9,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css">
+  <script>
+    (function(){
+      var savedTheme = localStorage.getItem("regengine_theme") || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    })();
+  </script>
   <style>
     .app-layout {
       display: flex;
@@ -294,7 +300,7 @@
       <div class="sidebar-crest">R</div>
       <div>
         <h2>RegEngine</h2>
-        <div class="sub">SRMIST Delhi-NCR Ghaziabad</div>
+        <div class="sub">RegEngine University</div>
       </div>
     </div>
 
@@ -421,9 +427,16 @@
     <div class="sidebar-footer">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <span style="color:#10B981; font-weight:700;">● Server Active</span>
-        <span class="mono" id="latency-tag" style="color:#64748B;">0ms</span>
+        <span class="mono" id="latency-tag" style="color:var(--text-dim);">0ms</span>
       </div>
-      <a href="index.html" style="color:#1E3A8A; font-weight:600; text-decoration:underline;">← Back to College Portal</a>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2px;">
+        <span style="font-size:11.5px; color:var(--text-muted); font-weight:600;">Interface Theme:</span>
+        <button class="btn btn-sm btn-ghost" id="sidebar-theme-btn" style="padding:3px 9px; font-size:11.5px; gap:4px; border-radius:999px;">
+          <span id="sidebar-theme-icon">🌙</span>
+          <span id="sidebar-theme-text">Dark</span>
+        </button>
+      </div>
+      <a href="index.html" style="color:#1E3A8A; font-weight:600; text-decoration:underline; font-size:12px; margin-top:2px;">← Back to College Portal</a>
     </div>
   </aside>
 
@@ -436,11 +449,18 @@
         <div class="sub" id="view-meta">Comprehensive multi-page student admission and registration form</div>
       </div>
 
-      <div style="display:flex; align-items:center; gap:12px;">
+      <div style="display:flex; align-items:center; gap:10px;">
         <button class="cmd-trigger-btn" id="cmd-trigger-btn">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           <span>Search Records…</span>
           <kbd>⌘K</kbd>
+        </button>
+
+        <!-- Light/Dark Mode Switcher -->
+        <button class="theme-toggle-btn" id="theme-toggle-btn" title="Switch Theme (Light / Dark Mode)" aria-label="Toggle Theme">
+          <span class="theme-toggle-icon" id="theme-toggle-icon">🌙</span>
+          <span class="theme-pill-track"><span class="theme-pill-thumb"></span></span>
+          <span class="theme-toggle-label" id="theme-toggle-text">Dark</span>
         </button>
 
         <button class="audio-toggle-btn" id="app-sound-btn" title="Toggle Sound">
@@ -605,7 +625,7 @@
               </div>
               <div class="field">
                 <label>Previous High School / Junior College Name</label>
-                <input type="text" id="reg-prevschool" placeholder="e.g. Delhi Public School, Ghaziabad">
+                <input type="text" id="reg-prevschool" placeholder="e.g. Model Senior Academy">
               </div>
             </div>
 
@@ -764,8 +784,14 @@
           </div>
 
           <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
-            <input type="text" id="idcard-search-input" placeholder="Enter Roll Number (e.g. RA2611003010001) or Name..." style="flex:1; min-width:260px;">
-            <button class="btn btn-primary" id="idcard-find-btn" style="background:#1E3A8A; border-color:#1E3A8A;">
+            <div class="search-bar-pill search-bar-lg" style="flex:1; min-width:280px;">
+              <div class="search-pill-icon">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </div>
+              <input type="text" id="idcard-search-input" class="search-pill-input" placeholder="Enter Roll Number (e.g. RA2611003010001) or Name...">
+              <button type="button" class="search-pill-clear" id="idcard-search-clear" title="Clear search" style="display:none;">✕</button>
+            </div>
+            <button class="btn btn-primary" id="idcard-find-btn" style="background:#1E3A8A; border-color:#1E3A8A; height:48px; padding:0 22px;">
               <span>Search Badge</span>
             </button>
           </div>
@@ -784,8 +810,14 @@
           <div style="font-size:13px; color:#64748B; margin-bottom:16px;">Verify your official registration particulars, parent contacts, and enrolled branch allotment</div>
           
           <div style="display:flex; gap:12px; flex-wrap:wrap;">
-            <input type="text" id="status-search-input" placeholder="Enter Roll Number (e.g. RA2611003010001) or Student Name..." style="flex:1; min-width:260px;">
-            <button class="btn btn-primary" id="status-find-btn" style="background:#1E3A8A; border-color:#1E3A8A;">
+            <div class="search-bar-pill search-bar-lg" style="flex:1; min-width:280px;">
+              <div class="search-pill-icon">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </div>
+              <input type="text" id="status-search-input" class="search-pill-input" placeholder="Enter Roll Number (e.g. RA2611003010001) or Student Name...">
+              <button type="button" class="search-pill-clear" id="status-search-clear" title="Clear search" style="display:none;">✕</button>
+            </div>
+            <button class="btn btn-primary" id="status-find-btn" style="background:#1E3A8A; border-color:#1E3A8A; height:48px; padding:0 22px;">
               <span>Check Admission Status</span>
             </button>
           </div>
@@ -796,11 +828,11 @@
       </div>
     </section>
 
-    <!-- STUDENT VIEW 4: SRMIST Academic Programmes -->
+    <!-- STUDENT VIEW 4: Academic Catalog -->
     <section id="view-student-courses" class="view-pane">
       <div style="max-width:1100px; margin:0 auto;">
         <div style="margin-bottom:24px;">
-          <h2 style="font-size:22px; font-weight:800; color:#0F172A;">SRMIST Delhi-NCR Ghaziabad Academic Catalog</h2>
+          <h2 style="font-size:22px; font-weight:800; color:#0F172A;">RegEngine University Academic Catalog</h2>
           <div style="font-size:13px; color:#64748B;">Explore all 15 undergraduate and postgraduate programmes, seat caps, and department allocations</div>
         </div>
         <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:20px;" id="student-courses-grid-mount"></div>
@@ -815,8 +847,14 @@
           <div style="font-size:13px; color:#64748B; margin-bottom:16px;">Check your statutory attendance percentage against the mandatory university 75% threshold</div>
           
           <div style="display:flex; gap:12px; flex-wrap:wrap;">
-            <input type="text" id="att-check-input" placeholder="Enter Roll Number (e.g. RA2611003010001)..." style="flex:1; min-width:260px;">
-            <button class="btn btn-primary" id="att-check-btn" style="background:#1E3A8A; border-color:#1E3A8A;">
+            <div class="search-bar-pill search-bar-lg" style="flex:1; min-width:280px;">
+              <div class="search-pill-icon">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </div>
+              <input type="text" id="att-check-input" class="search-pill-input" placeholder="Enter Roll Number (e.g. RA2611003010001)...">
+              <button type="button" class="search-pill-clear" id="att-check-clear" title="Clear search" style="display:none;">✕</button>
+            </div>
+            <button class="btn btn-primary" id="att-check-btn" style="background:#1E3A8A; border-color:#1E3A8A; height:48px; padding:0 22px;">
               <span>Check Attendance</span>
             </button>
           </div>
@@ -837,7 +875,7 @@
             <div style="background:#F8FAFC; padding:18px; border-radius:12px; border:1px solid var(--border-subtle);">
               <div style="font-size:24px; margin-bottom:8px;">📍</div>
               <h4 style="font-size:15px; font-weight:700; color:#0F172A; margin-bottom:4px;">Campus Address</h4>
-              <p style="font-size:12.5px; color:#64748B; line-height:1.5;">SRMIST Delhi-NCR Campus, Delhi-Meerut Road, Modinagar, Ghaziabad, UP - 201204</p>
+              <p style="font-size:12.5px; color:#64748B; line-height:1.5;">RegEngine University Main Academic Campus, Knowledge Corridor, Campus Enclave – 201204</p>
             </div>
 
             <div style="background:#F8FAFC; padding:18px; border-radius:12px; border:1px solid var(--border-subtle);">
@@ -849,7 +887,7 @@
             <div style="background:#F8FAFC; padding:18px; border-radius:12px; border:1px solid var(--border-subtle);">
               <div style="font-size:24px; margin-bottom:8px;">✉️</div>
               <h4 style="font-size:15px; font-weight:700; color:#0F172A; margin-bottom:4px;">Official Email</h4>
-              <p style="font-size:12.5px; color:#64748B; line-height:1.5;">admissions.ncr@srmist.edu.in<br>registrar.ncr@srmist.edu.in</p>
+              <p style="font-size:12.5px; color:#64748B; line-height:1.5;">admissions@regengine.edu<br>registrar@regengine.edu</p>
             </div>
           </div>
 
@@ -861,11 +899,11 @@
             </details>
             <details style="background:#F8FAFC; padding:14px 18px; border-radius:10px; border:1px solid var(--border-subtle);">
               <summary style="font-weight:700; font-size:13.5px; cursor:pointer; color:#1E3A8A;">What is the minimum attendance requirement?</summary>
-              <p style="margin-top:10px; font-size:13px; color:#64748B; line-height:1.6;">As per SRMIST university statutory academic regulations, all students must maintain at least 75% aggregate attendance in each registered course to be eligible for end-semester university examinations.</p>
+              <p style="margin-top:10px; font-size:13px; color:#64748B; line-height:1.6;">As per statutory RegEngine university academic regulations, all students must maintain at least 75% aggregate attendance in each registered course to be eligible for end-semester university examinations.</p>
             </details>
             <details style="background:#F8FAFC; padding:14px 18px; border-radius:10px; border:1px solid var(--border-subtle);">
               <summary style="font-weight:700; font-size:13.5px; cursor:pointer; color:#1E3A8A;">Who can access the College Management section?</summary>
-              <p style="margin-top:10px; font-size:13px; color:#64748B; line-height:1.6;">The College Management section is exclusively restricted to verified SRMIST professors (including Dr. Anjali Sharma, Dean Prof. R.P. Mahapatra, and HODs) and administrative registrar officers with secure authentication credentials.</p>
+              <p style="margin-top:10px; font-size:13px; color:#64748B; line-height:1.6;">The College Management section is exclusively restricted to verified professors (including Dr. Arthur Vance, Dean Prof. Alexander Wright, and HODs) and administrative registrar officers with secure authentication credentials.</p>
             </details>
           </div>
         </div>
@@ -912,7 +950,7 @@
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:20px;">
             <div>
               <h2 style="font-size:20px; font-weight:800; color:#0F172A; margin:0 0 4px;">Academic Calendar & Examination Schedule (2026–2027)</h2>
-              <div style="font-size:13px; color:#64748B;">Official milestones for Odd & Even Semesters · SRMIST Delhi-NCR Campus</div>
+              <div style="font-size:13px; color:#64748B;">Official milestones for Odd & Even Semesters · RegEngine University</div>
             </div>
 
             <div style="display:flex; gap:8px;" id="cal-filter-bar">
@@ -1006,7 +1044,7 @@
             <div class="field-row">
               <div class="field">
                 <label>Issuing Authority / Officer *</label>
-                <input type="text" id="notpub-author" value="Prof. (Dr.) R. P. Mahapatra (Dean)" required>
+                <input type="text" id="notpub-author" value="Prof. (Dr.) Alexander Wright (Dean)" required>
               </div>
               <div class="field">
                 <label>Issuing Department *</label>
@@ -1021,7 +1059,7 @@
 
             <div class="field">
               <label>Attachment URL (Optional PDF Link)</label>
-              <input type="url" id="notpub-attach" placeholder="https://srmist.edu.in/downloads/circular.pdf">
+              <input type="url" id="notpub-attach" placeholder="https://regengine.edu/downloads/circular.pdf">
             </div>
 
             <div style="margin-top:20px; display:flex; justify-content:flex-end; gap:12px;">
@@ -1039,9 +1077,16 @@
     <!-- VIEW 2: Student Records & Paginated Dossiers -->
     <section id="view-records" class="view-pane">
       <div style="display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:20px; flex-wrap:wrap;">
-        <div style="display:flex; gap:10px; flex:1; max-width:600px;">
-          <input type="text" id="rec-search-input" placeholder="Search by student name, roll number, or phone..." style="flex:1;">
-          <select id="rec-course-filter" style="max-width:200px;"></select>
+        <div style="display:flex; gap:12px; flex:1; max-width:640px; align-items:center;">
+          <div class="search-bar-pill search-bar-lg" style="flex:1;">
+            <div class="search-pill-icon">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <input type="text" id="rec-search-input" class="search-pill-input" placeholder="Search by student name, roll number, phone, email...">
+            <button type="button" class="search-pill-clear" id="rec-search-clear" title="Clear search" style="display:none;">✕</button>
+            <div class="search-pill-hint"><kbd>/</kbd></div>
+          </div>
+          <select id="rec-course-filter" style="max-width:200px; height:48px; border-radius:var(--radius-full);"></select>
         </div>
 
         <div style="display:flex; gap:10px;">
@@ -1119,8 +1164,14 @@
     <!-- VIEW 5: Faculty Directory -->
     <section id="view-faculty" class="view-pane">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:16px;">
-        <input type="text" id="fac-search-input" placeholder="Search faculty by name, department, or subject..." style="max-width:480px;">
-        <button class="btn btn-primary" id="open-add-fac-btn" style="background:#1E3A8A; border-color:#1E3A8A;">
+        <div class="search-bar-pill search-bar-lg" style="flex:1; max-width:500px;">
+          <div class="search-pill-icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <input type="text" id="fac-search-input" class="search-pill-input" placeholder="Search faculty by name, department, or subject...">
+          <button type="button" class="search-pill-clear" id="fac-search-clear" title="Clear search" style="display:none;">✕</button>
+        </div>
+        <button class="btn btn-primary" id="open-add-fac-btn" style="background:#1E3A8A; border-color:#1E3A8A; height:48px; padding:0 22px;">
           <span>+ Add Faculty Member</span>
         </button>
       </div>

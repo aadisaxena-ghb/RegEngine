@@ -8,7 +8,7 @@
 
   var API = window.SCHOLARIS_API_BASE || "/api";
 
-  /* ================= Academic Disciplines Catalog (SRMIST Delhi-NCR Ghaziabad) ================= */
+  /* ================= Academic Disciplines Catalog (RegEngine University) ================= */
   var COURSES = [
     { code: "CSE-CORE",  name: "B.Tech Computer Science & Engineering (Core)", capacity: 180, dept: "Computer Science & Engineering" },
     { code: "CSE-AIML",  name: "B.Tech CSE (AI & Machine Learning)", capacity: 120, dept: "Computer Science & Engineering" },
@@ -110,6 +110,51 @@
       if (soundEnabled) playSuccessChime();
     });
   }
+
+  /* ================= Theme Switcher (Light / Dark Mode) ================= */
+  function getActiveTheme() {
+    return document.documentElement.getAttribute("data-theme") || "light";
+  }
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("regengine_theme", theme);
+
+    // Update Topbar Theme Button
+    var themeToggleBtn = document.getElementById("theme-toggle-btn");
+    var themeIcon = document.getElementById("theme-toggle-icon");
+    var themeText = document.getElementById("theme-toggle-text");
+    if (themeIcon) themeIcon.textContent = theme === "dark" ? "☀️" : "🌙";
+    if (themeText) themeText.textContent = theme === "dark" ? "Light" : "Dark";
+    if (themeToggleBtn) themeToggleBtn.setAttribute("title", theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode");
+
+    // Update Sidebar Theme Button
+    var sideIcon = document.getElementById("sidebar-theme-icon");
+    var sideText = document.getElementById("sidebar-theme-text");
+    if (sideIcon) sideIcon.textContent = theme === "dark" ? "☀️" : "🌙";
+    if (sideText) sideText.textContent = theme === "dark" ? "Light" : "Dark";
+  }
+
+  function toggleTheme() {
+    var current = getActiveTheme();
+    var next = current === "dark" ? "light" : "dark";
+    applyTheme(next);
+    playTone(next === "dark" ? 440 : 660, "sine", 0.08);
+    showToast("Switched to " + (next === "dark" ? "Dark" : "Light") + " Mode");
+  }
+
+  var themeToggleBtn = document.getElementById("theme-toggle-btn");
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener("click", toggleTheme);
+  }
+
+  var sidebarThemeBtn = document.getElementById("sidebar-theme-btn");
+  if (sidebarThemeBtn) {
+    sidebarThemeBtn.addEventListener("click", toggleTheme);
+  }
+
+  // Initial UI sync
+  applyTheme(getActiveTheme());
 
   /* ================= API Client ================= */
   function api(path, opts) {
@@ -570,7 +615,7 @@
     "calendar":           { title: "Academic Calendar (2026–2027)", meta: "Examination dates, semester milestones, continuous assessments, and holidays", portal: "student" },
     "syllabus":           { title: "Course Curriculum & Syllabus", meta: "5-unit syllabus breakdown, L-T-P-C credits, and reference textbooks", portal: "student" },
     "notices":            { title: "Campus Notices & Circulars", meta: "Official authenticated notifications issued by the Registrar and Examination Cell", portal: "student" },
-    "student-courses":    { title: "SRMIST Academic Catalog", meta: "All 15 undergraduate and postgraduate programmes, seat caps, and departments", portal: "student" },
+    "student-courses":    { title: "RegEngine Academic Catalog", meta: "All 15 undergraduate and postgraduate programmes, seat caps, and departments", portal: "student" },
     "student-attendance": { title: "Attendance Self-Check", meta: "Check personal attendance percentage against the mandatory 75% university rule", portal: "student" },
     "student-helpdesk":   { title: "Admissions Helpdesk & FAQs", meta: "Registrar contacts, campus helplines, and answers to common queries", portal: "student" },
 
@@ -620,7 +665,7 @@
         '<div class="modal-window faculty-login-modal" style="background:#FFFFFF;">' +
           '<div class="modal-header">' +
             '<div>' +
-              '<h3 style="font-size:18px; font-weight:800; color:#0F172A;">SRMIST Faculty & Management Single Sign-On</h3>' +
+              '<h3 style="font-size:18px; font-weight:800; color:#0F172A;">RegEngine Faculty & Management Single Sign-On</h3>' +
               '<div style="font-size:12px; color:#64748B;">Campus management tools are exclusively restricted to professors and administration</div>' +
             '</div>' +
             '<button class="modal-close" id="fac-auth-close">✕</button>' +
@@ -628,43 +673,43 @@
           '<div class="modal-body">' +
             '<div style="font-size:12px; font-weight:700; color:#1E3A8A; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">1-Click Quick Professor Sign-In</div>' +
             '<div class="quick-prof-grid">' +
-              '<button type="button" class="prof-login-card" data-prof-name="Dr. Anjali Sharma" data-prof-dept="Computer Science & Engineering" data-prof-role="Faculty">' +
-                '<div class="prof-avatar-badge">AS</div>' +
+              '<button type="button" class="prof-login-card" data-prof-name="Dr. Arthur Vance" data-prof-dept="Computer Science & Engineering" data-prof-role="Faculty">' +
+                '<div class="prof-avatar-badge">AV</div>' +
                 '<div>' +
-                  '<div class="prof-login-name">Dr. Anjali Sharma</div>' +
+                  '<div class="prof-login-name">Dr. Arthur Vance</div>' +
                   '<div class="prof-login-dept">CSE · Adv. Prog. Practice</div>' +
                 '</div>' +
               '</button>' +
 
-              '<button type="button" class="prof-login-card" data-prof-name="Prof. (Dr.) R. P. Mahapatra" data-prof-dept="Dean, Faculty of Engineering" data-prof-role="Dean">' +
-                '<div class="prof-avatar-badge">RM</div>' +
+              '<button type="button" class="prof-login-card" data-prof-name="Prof. (Dr.) Alexander Wright" data-prof-dept="Dean, Faculty of Engineering" data-prof-role="Dean">' +
+                '<div class="prof-avatar-badge">AW</div>' +
                 '<div>' +
-                  '<div class="prof-login-name">Prof. (Dr.) R.P. Mahapatra</div>' +
+                  '<div class="prof-login-name">Prof. (Dr.) Alexander Wright</div>' +
                   '<div class="prof-login-dept">Dean & Professor · CSE</div>' +
                 '</div>' +
               '</button>' +
 
-              '<button type="button" class="prof-login-card" data-prof-name="Dr. Avneesh Vashistha" data-prof-dept="Computer Science & Engineering" data-prof-role="HOD">' +
-                '<div class="prof-avatar-badge">AV</div>' +
+              '<button type="button" class="prof-login-card" data-prof-name="Dr. Marcus Thorne" data-prof-dept="Computer Science & Engineering" data-prof-role="HOD">' +
+                '<div class="prof-avatar-badge">MT</div>' +
                 '<div>' +
-                  '<div class="prof-login-name">Dr. Avneesh Vashistha</div>' +
+                  '<div class="prof-login-name">Dr. Marcus Thorne</div>' +
                   '<div class="prof-login-dept">HOD · Computer Science</div>' +
                 '</div>' +
               '</button>' +
 
-              '<button type="button" class="prof-login-card" data-prof-name="Dr. Rupali Singh" data-prof-dept="Electronics & Communication" data-prof-role="HOD">' +
-                '<div class="prof-avatar-badge">RS</div>' +
+              '<button type="button" class="prof-login-card" data-prof-name="Dr. Sarah Jenkins" data-prof-dept="Cyber Security & Networks" data-prof-role="HOD">' +
+                '<div class="prof-avatar-badge">SJ</div>' +
                 '<div>' +
-                  '<div class="prof-login-name">Dr. Rupali Singh</div>' +
-                  '<div class="prof-login-dept">HOD · Electronics (ECE)</div>' +
+                  '<div class="prof-login-name">Dr. Sarah Jenkins</div>' +
+                  '<div class="prof-login-dept">HOD · Cyber Security</div>' +
                 '</div>' +
               '</button>' +
 
-              '<button type="button" class="prof-login-card" data-prof-name="Dr. Lalit Kishore Arora" data-prof-dept="Computer Applications (BCA/MCA)" data-prof-role="HOD">' +
-                '<div class="prof-avatar-badge">LA</div>' +
+              '<button type="button" class="prof-login-card" data-prof-name="Dr. David Sterling" data-prof-dept="High Performance Computing" data-prof-role="HOD">' +
+                '<div class="prof-avatar-badge">DS</div>' +
                 '<div>' +
-                  '<div class="prof-login-name">Dr. Lalit Kishore Arora</div>' +
-                  '<div class="prof-login-dept">HOD · Computer Apps</div>' +
+                  '<div class="prof-login-name">Dr. David Sterling</div>' +
+                  '<div class="prof-login-dept">HOD · Systems & Cloud</div>' +
                 '</div>' +
               '</button>' +
 
@@ -672,7 +717,7 @@
                 '<div class="prof-avatar-badge" style="background:#0F172A; color:#F59E0B;">REG</div>' +
                 '<div>' +
                   '<div class="prof-login-name">Registrar Admin Desk</div>' +
-                  '<div class="prof-login-dept">All Branches · PIN: SRM2026</div>' +
+                  '<div class="prof-login-dept">All Branches · PIN: REG2026</div>' +
                 '</div>' +
               '</button>' +
             '</div>' +
@@ -685,7 +730,7 @@
             '<form id="custom-auth-form">' +
               '<div class="field" style="margin-bottom:14px;">' +
                 '<label>Staff Email or Access PIN</label>' +
-                '<input type="password" id="auth-pin-input" placeholder="Enter Staff PIN (e.g. SRM2026 or admin123)" class="mono" required>' +
+                '<input type="password" id="auth-pin-input" placeholder="Enter Staff PIN (e.g. REG2026 or admin123)" class="mono" required>' +
               '</div>' +
               '<button type="submit" class="btn btn-primary btn-block" style="background:#1E3A8A; border-color:#1E3A8A; font-weight:700;">' +
                 '<span>Authenticate & Enter Management Portal</span>' +
@@ -721,14 +766,14 @@
       customForm.addEventListener("submit", function(e){
         e.preventDefault();
         var pin = (root.querySelector("#auth-pin-input").value || "").trim();
-        if (pin.toLowerCase() === "srm2026" || pin.toLowerCase() === "admin123" || pin === "1234" || pin.length >= 3) {
+        if (pin.toLowerCase() === "reg2026" || pin.toLowerCase() === "admin123" || pin === "1234" || pin.length >= 3) {
           handleAuthSuccess({
-            name: "Dr. Anjali Sharma",
+            name: "Dr. Arthur Vance",
             dept: "Computer Science & Engineering",
             role: "Faculty"
           });
         } else {
-          showToast("Invalid access PIN. Try: SRM2026", "error");
+          showToast("Invalid access PIN. Try: REG2026", "error");
         }
       });
     }
@@ -785,7 +830,7 @@
   }
 
   function switchView(viewName) {
-    var meta = VIEW_META[viewName] || { title: "RegEngine Portal", meta: "SRMIST Delhi-NCR Ghaziabad", portal: "student" };
+    var meta = VIEW_META[viewName] || { title: "RegEngine Portal", meta: "RegEngine University Campus", portal: "student" };
 
     // If trying to access a management view without auth
     if (meta.portal === "management" && !state.authFaculty) {
@@ -922,7 +967,7 @@
               '<div class="idcard-inst-brand">' +
                 '<div class="idcard-seal">R</div>' +
                 '<div>' +
-                  '<div class="idcard-inst-name">SRMIST Delhi-NCR Ghaziabad</div>' +
+                  '<div class="idcard-inst-name">RegEngine University Campus</div>' +
                   '<div class="idcard-inst-sub">Student Identity Card · RegEngine</div>' +
                 '</div>' +
               '</div>' +
@@ -2212,14 +2257,71 @@
   var cmdTriggerBtn = document.getElementById("cmd-trigger-btn");
   if (cmdTriggerBtn) cmdTriggerBtn.addEventListener("click", openCommandPalette);
 
+  /* ================= Enhanced Search Pill Controls & Keyboard Shortcut ================= */
+  function bindSearchPill(inputId, clearId, onInputCallback) {
+    var input = document.getElementById(inputId);
+    var clear = document.getElementById(clearId);
+    if (!input) return;
+
+    function syncClear() {
+      if (clear) {
+        clear.style.display = input.value.trim() ? "flex" : "none";
+      }
+    }
+
+    input.addEventListener("input", function() {
+      syncClear();
+      if (typeof onInputCallback === "function") onInputCallback(input.value);
+    });
+
+    if (clear) {
+      clear.addEventListener("click", function() {
+        input.value = "";
+        syncClear();
+        input.focus();
+        if (typeof onInputCallback === "function") onInputCallback("");
+      });
+    }
+
+    syncClear();
+  }
+
+  bindSearchPill("rec-search-input", "rec-search-clear", function() {
+    state.pagination.page = 1;
+    renderRecordsTable();
+  });
+
+  bindSearchPill("fac-search-input", "fac-search-clear", function() {
+    renderFaculty();
+  });
+
+  bindSearchPill("idcard-search-input", "idcard-search-clear");
+  bindSearchPill("status-search-input", "status-search-clear");
+  bindSearchPill("att-check-input", "att-check-clear");
+
   window.addEventListener("keydown", function(e){
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
       e.preventDefault();
-      if (cmdModal.style.display === "flex") closeCommandPalette();
+      if (cmdModal && cmdModal.style.display === "flex") closeCommandPalette();
       else openCommandPalette();
     }
     if (e.key === "Escape" && cmdModal && cmdModal.style.display === "flex") {
       closeCommandPalette();
+    }
+    // '/' shortcut to focus search
+    if (e.key === "/" && !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName)) {
+      var activePane = document.querySelector(".view-pane.active");
+      if (activePane) {
+        var pillInput = activePane.querySelector(".search-pill-input");
+        if (pillInput) {
+          e.preventDefault();
+          pillInput.focus();
+          pillInput.select();
+          return;
+        }
+      }
+      e.preventDefault();
+      openCommandPalette();
     }
   });
 
@@ -2592,17 +2694,17 @@
       '<div class="modal-overlay" id="notice-view-overlay">' +
         '<div class="official-circular-modal">' +
           '<div class="circular-modal-head">' +
-            '<div class="circular-seal">SRMIST OFFICIAL NOTICE · NCR CAMPUS</div>' +
+            '<div class="circular-seal">REGENGINE OFFICIAL NOTICE · CAMPUS ENCLAVE</div>' +
             '<h2 style="font-size:18px; font-weight:800; margin:0 0 6px;">' + esc(notice.title) + '</h2>' +
             '<div style="font-size:12px; color:#DBEAFE; font-family:var(--font-mono);">Ref: ' + esc(notice.refNumber) + ' · Date: ' + esc(notice.publishDate) + '</div>' +
             '<button class="modal-close" id="notice-modal-close" style="position:absolute; top:18px; right:18px; color:#FFF;">✕</button>' +
           '</div>' +
           '<div class="circular-modal-body">' +
             '<div style="font-size:12.5px; color:#1E3A8A; font-weight:700; margin-bottom:14px; text-transform:uppercase;">Issuing Authority: ' + esc(notice.author) + ' (' + esc(notice.department) + ')</div>' +
-            '<div style="white-space:pre-wrap; line-height:1.7; color:#334155; margin-bottom:24px;">' + esc(notice.content) + '</div>' +
+            '<div style="white-space:pre-wrap; line-height:1.7; color:var(--text-secondary); margin-bottom:24px;">' + esc(notice.content) + '</div>' +
             (notice.attachmentUrl ? '<a href="' + esc(notice.attachmentUrl) + '" target="_blank" class="btn btn-sm btn-primary" style="margin-bottom:20px; background:#1E3A8A; border-color:#1E3A8A;">📥 Open Official Circular Attachment</a>' : '') +
-            '<div style="border-top:1px solid #E2E8F0; padding-top:16px; display:flex; justify-content:space-between; align-items:center; font-size:12px; color:#64748B;">' +
-              '<div>Authenticated by SRMIST Registrar Secretariat</div>' +
+            '<div style="border-top:1px solid var(--border-subtle); padding-top:16px; display:flex; justify-content:space-between; align-items:center; font-size:12px; color:#64748B;">' +
+              '<div>Authenticated by RegEngine Registrar Secretariat</div>' +
               '<button class="btn btn-ghost btn-sm" onclick="window.print()">🖨️ Print Notice</button>' +
             '</div>' +
           '</div>' +

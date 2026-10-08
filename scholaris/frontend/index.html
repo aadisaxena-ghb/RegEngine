@@ -3,12 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SRM Institute of Science and Technology — Delhi-NCR Campus, Ghaziabad</title>
-  <meta name="description" content="Official Central Campus Portal for SRMIST Delhi-NCR Campus, Ghaziabad. Explore academic programmes, student admissions, digital ID badges, faculty directory, and campus management.">
+  <title>RegEngine University — Centralized Campus Portal & Academic Platform</title>
+  <meta name="description" content="Official Central Campus Portal for RegEngine University. Explore academic programmes, student admissions, digital ID badges, faculty directory, and campus management.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css">
+  <script>
+    (function(){
+      var savedTheme = localStorage.getItem("regengine_theme") || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    })();
+  </script>
   <script src="assets/qrcode.min.js"></script>
 
   <style>
@@ -640,7 +646,7 @@
       <span>Official Registration Open for 15 Undergraduate & Postgraduate Programmes.</span>
     </div>
     <div style="display:flex; align-items:center; gap:16px;">
-      <span>📍 Modinagar, Ghaziabad</span>
+      <span>📍 University Technology Campus</span>
       <span style="opacity:0.4;">|</span>
       <span>NAAC A++ Accredited</span>
       <span style="opacity:0.4;">|</span>
@@ -656,7 +662,7 @@
       <div class="brand-logo-crest">R</div>
       <div class="brand-titles">
         <h1>RegEngine</h1>
-        <span>SRMIST Delhi-NCR Ghaziabad</span>
+        <span>RegEngine University Campus</span>
       </div>
     </a>
 
@@ -671,6 +677,13 @@
     </nav>
 
     <div class="header-actions">
+      <!-- Theme Switcher Button -->
+      <button class="theme-toggle-btn" id="theme-toggle-btn" title="Switch Theme (Light / Dark Mode)" aria-label="Toggle Theme">
+        <span class="theme-toggle-icon" id="theme-toggle-icon">🌙</span>
+        <span class="theme-pill-track"><span class="theme-pill-thumb"></span></span>
+        <span class="theme-toggle-label" id="theme-toggle-text">Dark</span>
+      </button>
+
       <a href="app.html?mode=student&view=register" class="btn btn-ghost" style="padding:8px 14px; font-size:13px; font-weight:700;">
         <span>🎓 Student Section</span>
       </a>
@@ -686,7 +699,7 @@
   <div class="container hero-layout">
     <div>
       <div class="hero-badge">
-        <span>🏛️ SRM Institute of Science & Technology · Delhi-NCR Campus</span>
+        <span>🏛️ RegEngine University · Centralized Academic Portal</span>
       </div>
 
       <h2 class="hero-title">
@@ -695,7 +708,7 @@
       </h2>
 
       <p class="hero-sub">
-        Welcome to the official digital portal for <strong>SRMIST Delhi-NCR Ghaziabad</strong>. Students and applicants can complete admissions, generate digital ID badges, and track attendance. Verified professors and administrators can access the college management console.
+        Welcome to the official digital portal for <strong>RegEngine University</strong>. Students and applicants can complete admissions, generate digital ID badges, and track attendance. Verified professors and administrators can access the college management console.
       </p>
 
       <div class="hero-actions">
@@ -728,7 +741,7 @@
       </div>
 
       <div style="margin-top:16px; padding-top:12px; border-top:1px solid var(--border-color); font-size:12px; color:#64748B; text-align:center;">
-        Campus Location: Delhi-Meerut Road, Modinagar, Ghaziabad (UP)
+        Campus Location: RegEngine University Main Academic Campus
       </div>
     </div>
   </div>
@@ -809,7 +822,7 @@
             <div class="portal-col-icon">🔒</div>
             <div>
               <h3 style="font-size:19px; font-weight:800; color:#0F172A; margin:0;">College Management Section</h3>
-              <div style="font-size:12px; color:#64748B;">Exclusive access for SRMIST professors and administration</div>
+              <div style="font-size:12px; color:#64748B;">Exclusive access for verified RegEngine professors and administration</div>
             </div>
           </div>
 
@@ -828,7 +841,7 @@
             </li>
             <li>
               <span class="bullet">✓</span>
-              <div><strong>Faculty Roster (87 Faculty):</strong> Comprehensive directory of 87 official SRMIST Ghaziabad professors with "Dr." titles.</div>
+              <div><strong>Faculty Roster (87 Faculty):</strong> Comprehensive directory of 87 official RegEngine University professors with "Dr." titles.</div>
             </li>
           </ul>
         </div>
@@ -890,7 +903,7 @@
     <div class="section-head">
       <span class="section-tag">Academic Disciplines</span>
       <h2 class="section-heading">Undergraduate & Postgraduate Programmes</h2>
-      <p class="section-desc">Explore all 15 accredited academic courses available at SRMIST Delhi-NCR Campus, Ghaziabad.</p>
+      <p class="section-desc">Explore all 15 accredited academic courses available at RegEngine University.</p>
     </div>
 
     <!-- Filter Pills -->
@@ -1036,67 +1049,74 @@
   <div class="container">
     <div class="section-head">
       <span class="section-tag">Academic Leadership</span>
-      <h2 class="section-heading">Distinguished SRMIST Professors (87 Faculty)</h2>
-      <p class="section-desc">Meet our faculty members across 6 departments at SRMIST Delhi-NCR Ghaziabad.</p>
+      <h2 class="section-heading">Distinguished University Professors (87 Faculty)</h2>
+      <p class="section-desc">Meet our faculty members across 6 departments at RegEngine University.</p>
     </div>
 
     <div class="fac-search-box">
-      <input type="text" id="fac-filter-input" placeholder="Search 87 professors by name, department, or subject..." style="width:100%; padding:10px 16px; border-radius:30px; border:1px solid var(--border-color); font-size:13px; outline:none; box-sizing:border-box;">
+      <div class="search-bar-pill search-bar-hero">
+        <div class="search-pill-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <input type="text" id="fac-filter-input" class="search-pill-input" placeholder="Search 87 professors by name, department, or subject...">
+        <button type="button" class="search-pill-clear" id="fac-filter-clear" title="Clear search" style="display:none;">✕</button>
+        <div class="search-pill-badge" id="fac-filter-count">87 Faculty</div>
+      </div>
     </div>
 
     <div class="fac-grid" id="fac-grid-mount">
       <div class="fac-card">
-        <div class="fac-avatar">AS</div>
-        <h4>Dr. Anjali Sharma</h4>
+        <div class="fac-avatar">AV</div>
+        <h4>Dr. Arthur Vance</h4>
         <div class="dept">Associate Professor · CSE</div>
         <div class="subj">Advanced Programming Practice</div>
       </div>
 
       <div class="fac-card">
-        <div class="fac-avatar">RM</div>
-        <h4>Prof. (Dr.) R. P. Mahapatra</h4>
+        <div class="fac-avatar">AW</div>
+        <h4>Prof. (Dr.) Alexander Wright</h4>
         <div class="dept">Professor & Dean · CSE</div>
         <div class="subj">Cloud & Distributed Systems</div>
       </div>
 
       <div class="fac-card">
-        <div class="fac-avatar">DB</div>
-        <h4>Dr. Dhowmya Bhatt</h4>
+        <div class="fac-avatar">ER</div>
+        <h4>Dr. Elena Rostova</h4>
         <div class="dept">Professor & Dean IQAC</div>
         <div class="subj">Software Engg & Data Analytics</div>
       </div>
 
       <div class="fac-card">
-        <div class="fac-avatar">AV</div>
-        <h4>Dr. Avneesh Vashistha</h4>
+        <div class="fac-avatar">MT</div>
+        <h4>Dr. Marcus Thorne</h4>
         <div class="dept">Associate Professor & HOD</div>
         <div class="subj">Machine Learning & AI</div>
       </div>
 
       <div class="fac-card">
-        <div class="fac-avatar">NL</div>
-        <h4>Dr. Niranjan Lal</h4>
+        <div class="fac-avatar">SJ</div>
+        <h4>Dr. Sarah Jenkins</h4>
         <div class="dept">Associate Professor & Deputy HOD</div>
         <div class="subj">Cyber Security & Cryptography</div>
       </div>
 
       <div class="fac-card">
-        <div class="fac-avatar">RS</div>
-        <h4>Dr. Rupali Singh</h4>
+        <div class="fac-avatar">DS</div>
+        <h4>Dr. David Sterling</h4>
         <div class="dept">Associate Professor & HOD · ECE</div>
         <div class="subj">Digital Signal Processing & VLSI</div>
       </div>
 
       <div class="fac-card">
-        <div class="fac-avatar">LA</div>
-        <h4>Dr. Lalit Kishore Arora</h4>
+        <div class="fac-avatar">ML</div>
+        <h4>Dr. Maya Lin</h4>
         <div class="dept">Associate Professor & HOD · CA</div>
         <div class="subj">OOP & Python Applications</div>
       </div>
 
       <div class="fac-card">
-        <div class="fac-avatar">GB</div>
-        <h4>Dr. Gyanendra Prasad Bagri</h4>
+        <div class="fac-avatar">JC</div>
+        <h4>Dr. James Chen</h4>
         <div class="dept">Professor & HOD · Mechanical</div>
         <div class="subj">Thermodynamics & Fluid Dynamics</div>
       </div>
@@ -1117,7 +1137,7 @@
       <div class="card" style="padding:22px; background:#F8FAFC; border:1px solid var(--border-medium); border-radius:14px; display:flex; flex-direction:column; justify-content:space-between;">
         <div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <span style="font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; color:#1E3A8A; background:#DBEAFE; padding:2px 7px; border-radius:4px;">SRM/NCR/ACAD/2026/108</span>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; color:#1E3A8A; background:#DBEAFE; padding:2px 7px; border-radius:4px;">REG/ACAD/2026/108</span>
             <span class="badge badge-danger" style="font-size:10px;">🔴 URGENT</span>
           </div>
           <h3 style="font-size:15px; font-weight:800; color:#0F172A; margin:0 0 6px;">Continuous Internal Assessment (CIA-1) Schedule</h3>
@@ -1254,7 +1274,7 @@
           <span>▼</span>
         </div>
         <div class="faq-a">
-          As per statutory SRMIST university academic guidelines, students must maintain at least 75% aggregate attendance in all registered theory and laboratory courses to remain eligible for end-semester examinations.
+          As per statutory RegEngine university academic guidelines, students must maintain at least 75% aggregate attendance in all registered theory and laboratory courses to remain eligible for end-semester examinations.
         </div>
       </div>
 
@@ -1264,7 +1284,7 @@
           <span>▼</span>
         </div>
         <div class="faq-a">
-          The College Management section is exclusively restricted to verified SRMIST professors (including Dr. Anjali Sharma, Dean Prof. R.P. Mahapatra, and HODs) and administrative registrar officers with secure single sign-on credentials.
+          The College Management section is exclusively restricted to verified university professors (including Dr. Arthur Vance, Dean Prof. Alexander Wright, and HODs) and administrative registrar officers with secure single sign-on credentials.
         </div>
       </div>
     </div>
@@ -1277,9 +1297,9 @@
     <div>
       <h3 style="font-size:22px; font-weight:800; margin:0 0 6px;">Admissions & Registrar Secretariat</h3>
       <p style="font-size:13.5px; color:#DBEAFE; margin:0; line-height:1.5;">
-        SRM Institute of Science and Technology, Delhi-NCR Campus<br>
-        Delhi-Meerut Road, Modinagar, Ghaziabad (UP) – 201204<br>
-        Helpline: <strong>1800 200 4776</strong> · Email: <strong>admissions.ncr@srmist.edu.in</strong>
+        RegEngine University Main Academic Campus<br>
+        Knowledge Corridor, Campus Enclave – 201204<br>
+        Helpline: <strong>1800 200 4776</strong> · Email: <strong>admissions@regengine.edu</strong>
       </p>
     </div>
 
@@ -1301,7 +1321,7 @@
           <strong style="font-size:17px; color:#FFFFFF;">RegEngine</strong>
         </div>
         <p style="font-size:12.5px; color:#94A3B8; line-height:1.6; margin:0;">
-          Campus Registration & Student Lifecycle Management System for SRM Institute of Science and Technology, Delhi-NCR Campus, Ghaziabad.
+          Campus Registration & Student Lifecycle Management System for RegEngine University.
         </p>
       </div>
 
@@ -1340,7 +1360,7 @@
     </div>
 
     <div class="footer-bottom">
-      <div>© 2026 SRMIST Delhi-NCR Ghaziabad. RegEngine Registrar Platform.</div>
+      <div>© 2026 RegEngine University. RegEngine Registrar Platform.</div>
       <div>NAAC A++ Accredited • 87 Verified Professors • Pure Java Backend</div>
     </div>
   </div>
@@ -1373,15 +1393,33 @@
   // 2. Faculty Live Search Filter
   (function(){
     var facInput = document.getElementById("fac-filter-input");
+    var facClear = document.getElementById("fac-filter-clear");
+    var facCount = document.getElementById("fac-filter-count");
     var facCards = document.querySelectorAll(".fac-card");
 
+    function filterFaculty() {
+      var q = (facInput.value || "").trim().toLowerCase();
+      if (facClear) facClear.style.display = q ? "flex" : "none";
+      var visible = 0;
+      facCards.forEach(function(c){
+        var text = c.textContent.toLowerCase();
+        var match = !q || text.indexOf(q) > -1;
+        c.style.display = match ? "block" : "none";
+        if (match) visible++;
+      });
+      if (facCount) {
+        facCount.textContent = q ? (visible + " Found") : "87 Faculty";
+      }
+    }
+
     if (facInput) {
-      facInput.addEventListener("input", function(e){
-        var q = (e.target.value || "").trim().toLowerCase();
-        facCards.forEach(function(c){
-          var text = c.textContent.toLowerCase();
-          c.style.display = (!q || text.indexOf(q) > -1) ? "block" : "none";
-        });
+      facInput.addEventListener("input", filterFaculty);
+    }
+    if (facClear) {
+      facClear.addEventListener("click", function(){
+        facInput.value = "";
+        filterFaculty();
+        facInput.focus();
       });
     }
   })();
@@ -1395,6 +1433,32 @@
         item.classList.toggle("open");
       });
     });
+  })();
+
+  // 4. Landing Page Theme Switcher
+  (function(){
+    var themeBtn = document.getElementById("theme-toggle-btn");
+    var themeIcon = document.getElementById("theme-toggle-icon");
+    var themeText = document.getElementById("theme-toggle-text");
+
+    function updateThemeUI(t) {
+      if (themeIcon) themeIcon.textContent = t === "dark" ? "☀️" : "🌙";
+      if (themeText) themeText.textContent = t === "dark" ? "Light" : "Dark";
+      if (themeBtn) themeBtn.setAttribute("title", t === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode");
+    }
+
+    var currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+    updateThemeUI(currentTheme);
+
+    if (themeBtn) {
+      themeBtn.addEventListener("click", function(){
+        var cur = document.documentElement.getAttribute("data-theme") || "light";
+        var next = cur === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("regengine_theme", next);
+        updateThemeUI(next);
+      });
+    }
   })();
 </script>
 

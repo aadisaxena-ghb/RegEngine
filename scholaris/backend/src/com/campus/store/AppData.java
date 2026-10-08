@@ -55,7 +55,7 @@ public class AppData {
 
         list.add(new Notice(
                 newId("not"),
-                "SRM/NCR/ACAD/2026/108",
+                "REG/ACAD/2026/108",
                 "Continuous Internal Assessment (CIA-1) Schedule for Odd Semester 2026",
                 "Examination",
                 "Urgent",
@@ -63,25 +63,25 @@ public class AppData {
                 "Office of the Controller of Examinations",
                 "Examination Cell",
                 "All registered undergraduate and postgraduate students of B.Tech, BCA, MCA, and MBA are hereby informed that Continuous Internal Assessment (CIA-1) will commence from October 14, 2026. Hall tickets and seating arrangements will be available on the Student Portal. 75% attendance rule strictly enforced.",
-                "https://srmist.edu.in/downloads/cia1_schedule_2026.pdf"
+                "https://regengine.edu/downloads/cia1_schedule_2026.pdf"
         ));
 
         list.add(new Notice(
                 newId("not"),
-                "SRM/NCR/REG/2026/092",
-                "Mandatory Submission of Anti-Ragging & Demographic Undertakings",
+                "REG/ACAD/2026/092",
+                "Mandatory Submission of Student Demographic Undertakings",
                 "Administration",
                 "Normal",
                 "2026-09-15",
-                "Dr. Avneesh Vashistha (Chief Proctor)",
+                "Academic Proctor Office",
                 "Office of the Proctor",
-                "As per UGC and Supreme Court of India statutory directives, all newly enrolled 1st-year students must upload their online Anti-Ragging affidavit reference number through the Student Registration Dossier before October 10, 2026.",
-                "https://antiragging.in"
+                "All newly enrolled students must upload their verified identity particulars and demographic affidavit reference number through the Student Registration Dossier before October 10, 2026.",
+                "https://regengine.edu/undertaking"
         ));
 
         list.add(new Notice(
                 newId("not"),
-                "SRM/NCR/LIB/2026/033",
+                "REG/LIB/2026/033",
                 "IEEE Xplore & ACM Digital Library Off-Campus Remote Access Credentials",
                 "Academic",
                 "Normal",
@@ -89,25 +89,25 @@ public class AppData {
                 "University Central Library",
                 "Library & Information Center",
                 "Institutional login credentials and remote Shibboleth access for IEEE Xplore, ScienceDirect, ACM Digital Library, and SpringerNature have been updated. Students and faculty can access peer-reviewed journals via their university SSO credentials.",
-                "https://library.srmist.edu.in/remote-access"
+                "https://regengine.edu/library-access"
         ));
 
         list.add(new Notice(
                 newId("not"),
-                "SRM/NCR/EVENT/2026/021",
+                "REG/EVENT/2026/021",
                 "Annual National Hackathon & Innovation Conclave 'CodeCraft 2026'",
                 "Events",
                 "Normal",
                 "2026-09-08",
-                "Dr. Anjali Sharma (Faculty Coordinator)",
+                "Dr. Arthur Vance (Faculty Coordinator)",
                 "Department of Computer Science & Engineering",
                 "The Department of Computer Science & Engineering is thrilled to announce 'CodeCraft 2026' — 36-Hour National Inter-College Hackathon on AI & Decentralized Systems with a total prize pool of ₹3,00,000. Registrations open on the portal.",
-                "https://srmist.edu.in/codecraft2026"
+                "https://regengine.edu/codecraft2026"
         ));
 
         list.add(new Notice(
                 newId("not"),
-                "SRM/NCR/HOST/2026/015",
+                "REG/HOST/2026/015",
                 "Campus Hostel Outpass & Gate Pass Protocol Update",
                 "Administration",
                 "Normal",
@@ -124,7 +124,7 @@ public class AppData {
     public static List<CalendarEvent> seedCalendar() {
         List<CalendarEvent> list = new ArrayList<>();
 
-        list.add(new CalendarEvent(newId("cal"), "Freshers Orientation & Induction Programme", "2026-08-10", "2026-08-14", "Commencement", "Semester 1", "Campus orientation, library tour, mentor allotment, and academic regulations briefing.", "Main Auditorium, SRMIST"));
+        list.add(new CalendarEvent(newId("cal"), "Freshers Orientation & Induction Programme", "2026-08-10", "2026-08-14", "Commencement", "Semester 1", "Campus orientation, library tour, mentor allotment, and academic regulations briefing.", "Main University Auditorium"));
         list.add(new CalendarEvent(newId("cal"), "Commencement of Regular Academic Classes", "2026-08-16", "2026-08-16", "Academic", "All Odd Semesters", "Formal start of theory lectures and laboratory sessions as per semester timetables.", "Respective Academic Blocks"));
         list.add(new CalendarEvent(newId("cal"), "Last Date for Odd Semester Course Registration & Elective Choice", "2026-08-30", "2026-08-30", "Deadline", "All Semesters", "Students must finalize core elective selections through the student desk.", "RegEngine Portal"));
         list.add(new CalendarEvent(newId("cal"), "Continuous Internal Assessment (CIA-1) Theory Exams", "2026-10-14", "2026-10-20", "Examination", "All Semesters", "Mid-term written tests covering Units 1 & 2 of all registered courses.", "Examination Halls A & B"));
@@ -135,7 +135,7 @@ public class AppData {
         list.add(new CalendarEvent(newId("cal"), "End-Semester University Theory Examinations", "2026-12-18", "2026-12-31", "Examination", "All Semesters", "Official statutory theory exams conducted by the Controller of Examinations.", "Central Exam Complex"));
         list.add(new CalendarEvent(newId("cal"), "Winter Vacation & Semester Break", "2027-01-01", "2027-01-14", "Holiday", "All Semesters", "Winter vacation for undergraduate and postgraduate cohorts.", "Campus Wide"));
         list.add(new CalendarEvent(newId("cal"), "Commencement of Even Semester 2027", "2027-01-15", "2027-01-15", "Commencement", "All Even Semesters", "Reopening of campus for Even Semester theory lectures.", "Academic Blocks"));
-        list.add(new CalendarEvent(newId("cal"), "Annual National Cultural Fest 'Milan 2027'", "2027-02-20", "2027-02-23", "Event", "All Semesters", "Flagship university 4-day cultural extravaganza with musical concerts, fashion, and art.", "SRMIST Sports Ground"));
+        list.add(new CalendarEvent(newId("cal"), "Annual National Cultural Fest 'RegFest 2027'", "2027-02-20", "2027-02-23", "Event", "All Semesters", "Flagship university 4-day cultural extravaganza with musical concerts, fashion, and art.", "University Sports Complex"));
 
         return list;
     }
@@ -144,38 +144,38 @@ public class AppData {
         List<TimetableEntry> list = new ArrayList<>();
 
         // Monday
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Monday", "09:00 - 10:00 AM", "21CS101J", "Programming for Problem Solving (C/C++)", "Dr. Anjali Sharma", "Room CS-304", "Theory"));
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Monday", "10:00 - 11:00 AM", "21MA101T", "Calculus & Linear Algebra", "Dr. Sunil Kumar Yadav", "Room CS-304", "Theory"));
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Monday", "11:15 - 01:15 PM", "21CS101P", "Programming Lab (Batch A & B)", "Dr. Anjali Sharma & Lab Instructor", "Computer Lab 4", "Lab"));
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Monday", "02:00 - 03:00 PM", "21EE101T", "Basic Electrical & Electronics Engg", "Dr. Rupali Singh", "Room CS-304", "Theory"));
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Monday", "03:00 - 04:00 PM", "21EN101T", "Communicative English & Soft Skills", "Dr. Meenakshi Sharma", "Room CS-304", "Theory"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Monday", "09:00 - 10:00 AM", "21CS101J", "Programming for Problem Solving (C/C++)", "Dr. Arthur Vance", "Room CS-304", "Theory"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Monday", "10:00 - 11:00 AM", "21MA101T", "Calculus & Linear Algebra", "Dr. Lucas Vance", "Room CS-304", "Theory"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Monday", "11:15 - 01:15 PM", "21CS101P", "Programming Lab (Batch A & B)", "Dr. Arthur Vance & Lab Instructor", "Computer Lab 4", "Lab"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Monday", "02:00 - 03:00 PM", "21EE101T", "Basic Electrical & Electronics Engg", "Dr. David Sterling", "Room CS-304", "Theory"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Monday", "03:00 - 04:00 PM", "21EN101T", "Communicative English & Soft Skills", "Dr. Clara Oswald", "Room CS-304", "Theory"));
 
         // Tuesday
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Tuesday", "09:00 - 10:00 AM", "21MA101T", "Calculus & Linear Algebra", "Dr. Sunil Kumar Yadav", "Room CS-304", "Theory"));
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Tuesday", "10:00 - 11:00 AM", "21CS101J", "Programming for Problem Solving (C/C++)", "Dr. Anjali Sharma", "Room CS-304", "Theory"));
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Tuesday", "11:15 - 12:15 PM", "21PH101T", "Applied Engineering Physics", "Dr. R.C. Joshi", "Room CS-304", "Theory"));
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Tuesday", "01:15 - 03:15 PM", "21PH101P", "Physics Laboratory", "Dr. R.C. Joshi", "Physics Lab 2", "Lab"));
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Tuesday", "03:15 - 04:15 PM", "21CS102T", "Design Thinking & Innovation", "Dr. Dhowmya Bhatt", "Room CS-304", "Theory"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Tuesday", "09:00 - 10:00 AM", "21MA101T", "Calculus & Linear Algebra", "Dr. Lucas Vance", "Room CS-304", "Theory"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Tuesday", "10:00 - 11:00 AM", "21CS101J", "Programming for Problem Solving (C/C++)", "Dr. Arthur Vance", "Room CS-304", "Theory"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Tuesday", "11:15 - 12:15 PM", "21PH101T", "Applied Engineering Physics", "Dr. Ethan Miller", "Room CS-304", "Theory"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Tuesday", "01:15 - 03:15 PM", "21PH101P", "Physics Laboratory", "Dr. Ethan Miller", "Physics Lab 2", "Lab"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Tuesday", "03:15 - 04:15 PM", "21CS102T", "Design Thinking & Innovation", "Dr. Elena Rostova", "Room CS-304", "Theory"));
 
         // Wednesday
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Wednesday", "09:00 - 10:00 AM", "21EE101T", "Basic Electrical & Electronics Engg", "Dr. Rupali Singh", "Room CS-304", "Theory"));
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Wednesday", "10:00 - 11:00 AM", "21CS101J", "Programming for Problem Solving (C/C++)", "Dr. Anjali Sharma", "Room CS-304", "Theory"));
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Wednesday", "11:15 - 01:15 PM", "21ME101P", "Engineering Workshop & CAD Practice", "Dr. Manoj Kumar Pal", "Central Workshop", "Lab"));
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Wednesday", "02:00 - 03:00 PM", "21MA101T", "Calculus & Linear Algebra (Tutorial)", "Dr. Sunil Kumar Yadav", "Room CS-304", "Tutorial"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Wednesday", "09:00 - 10:00 AM", "21EE101T", "Basic Electrical & Electronics Engg", "Dr. David Sterling", "Room CS-304", "Theory"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Wednesday", "10:00 - 11:00 AM", "21CS101J", "Programming for Problem Solving (C/C++)", "Dr. Arthur Vance", "Room CS-304", "Theory"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Wednesday", "11:15 - 01:15 PM", "21ME101P", "Engineering Workshop & CAD Practice", "Dr. Rachel Evans", "Central Workshop", "Lab"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Wednesday", "02:00 - 03:00 PM", "21MA101T", "Calculus & Linear Algebra (Tutorial)", "Dr. Lucas Vance", "Room CS-304", "Tutorial"));
         list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Wednesday", "03:00 - 04:30 PM", "21SA101", "Sports & Extracurricular Activity", "Director of Physical Education", "Sports Complex", "Practical"));
 
         // Thursday
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Thursday", "09:00 - 10:00 AM", "21PH101T", "Applied Engineering Physics", "Dr. R.C. Joshi", "Room CS-304", "Theory"));
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Thursday", "10:00 - 11:00 AM", "21CS101J", "Data Structures Fundamentals", "Dr. Abhilasha Singh", "Room CS-304", "Theory"));
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Thursday", "11:15 - 12:15 PM", "21MA101T", "Calculus & Linear Algebra", "Dr. Sunil Kumar Yadav", "Room CS-304", "Theory"));
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Thursday", "01:15 - 03:15 PM", "21EE101P", "Basic Electrical Lab", "Dr. Rupali Singh", "EE Lab 1", "Lab"));
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Thursday", "03:15 - 04:15 PM", "21CS103T", "Environmental Studies & Ethics", "Dr. Niranjan Lal", "Room CS-304", "Theory"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Thursday", "09:00 - 10:00 AM", "21PH101T", "Applied Engineering Physics", "Dr. Ethan Miller", "Room CS-304", "Theory"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Thursday", "10:00 - 11:00 AM", "21CS101J", "Data Structures Fundamentals", "Dr. Vincent Brooks", "Room CS-304", "Theory"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Thursday", "11:15 - 12:15 PM", "21MA101T", "Calculus & Linear Algebra", "Dr. Lucas Vance", "Room CS-304", "Theory"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Thursday", "01:15 - 03:15 PM", "21EE101P", "Basic Electrical Lab", "Dr. David Sterling", "EE Lab 1", "Lab"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Thursday", "03:15 - 04:15 PM", "21CS103T", "Environmental Studies & Ethics", "Dr. James Chen", "Room CS-304", "Theory"));
 
         // Friday
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Friday", "09:00 - 10:00 AM", "21CS101J", "Advanced Programming Practice", "Dr. Anjali Sharma", "Room CS-304", "Theory"));
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Friday", "10:00 - 11:00 AM", "21PH101T", "Applied Engineering Physics", "Dr. R.C. Joshi", "Room CS-304", "Theory"));
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Friday", "11:15 - 01:15 PM", "21CS102P", "C++ Competitive Coding Lab", "Dr. Anjali Sharma", "Computer Lab 4", "Lab"));
-        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Friday", "02:00 - 03:30 PM", "21DE101", "Dean's Special Lecture on Distributed & Cloud Systems", "Prof. (Dr.) R. P. Mahapatra", "Main Seminar Hall", "Lecture"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Friday", "09:00 - 10:00 AM", "21CS101J", "Advanced Programming Practice", "Dr. Arthur Vance", "Room CS-304", "Theory"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Friday", "10:00 - 11:00 AM", "21PH101T", "Applied Engineering Physics", "Dr. Ethan Miller", "Room CS-304", "Theory"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Friday", "11:15 - 01:15 PM", "21CS102P", "C++ Competitive Coding Lab", "Dr. Arthur Vance", "Computer Lab 4", "Lab"));
+        list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Friday", "02:00 - 03:30 PM", "21DE101", "Dean's Special Lecture on Distributed & Cloud Systems", "Prof. (Dr.) Alexander Wright", "Main Seminar Hall", "Lecture"));
         list.add(new TimetableEntry(newId("tt"), "CSE-CORE", "1", "Friday", "03:30 - 04:30 PM", "21LIB1", "Library & Self-Study Research Hour", "Librarian", "Central Library", "Practical"));
 
         return list;
@@ -183,18 +183,18 @@ public class AppData {
 
     public static List<Faculty> seedFaculty() {
         List<Faculty> list = new ArrayList<>();
-        list.add(new Faculty(newId("fac"), "EMP-101", "Dr. Anjali Sharma", "Associate Professor", "Computer Science & Engineering", "Ph.D. Computer Science", "Advanced Programming Practice", "CSE-CORE", "12", "anjali.sharma@regengine.edu", "+91 98101 23456", "Room CS-304", "2018-07-15"));
-        list.add(new Faculty(newId("fac"), "EMP-102", "Prof. (Dr.) R. P. Mahapatra", "Professor & Dean", "Computer Science & Engineering", "Ph.D., M.Tech", "Cloud Computing & Distributed Systems", "CSE-CLOUD", "24", "rp.mahapatra@regengine.edu", "+91 98111 22334", "Dean Office CS-101", "2010-06-01"));
-        list.add(new Faculty(newId("fac"), "EMP-103", "Dr. Dhowmya Bhatt", "Professor & Dean IQAC", "Computer Science & Engineering", "Ph.D. CSE", "Software Engineering & Data Analytics", "CSE-DS", "18", "dhowmya.bhatt@regengine.edu", "+91 98112 33445", "Room CS-202", "2014-08-10"));
-        list.add(new Faculty(newId("fac"), "EMP-104", "Dr. Avneesh Vashistha", "Associate Professor & HOD", "Computer Science & Engineering", "Ph.D. AI/ML", "Machine Learning & Soft Computing", "CSE-AIML", "15", "avneesh.vashistha@regengine.edu", "+91 98113 44556", "HOD Office CS-201", "2016-01-20"));
-        list.add(new Faculty(newId("fac"), "EMP-105", "Dr. Niranjan Lal", "Associate Professor & Deputy HOD", "Computer Science & Engineering", "Ph.D. Information Security", "Cyber Security & Cryptography", "CSE-CYBER", "14", "niranjan.lal@regengine.edu", "+91 98114 55667", "Room CS-205", "2017-03-12"));
-        list.add(new Faculty(newId("fac"), "EMP-106", "Dr. Abhilasha Singh", "Assistant Professor", "Computer Science & Engineering", "Ph.D. Computer Science", "Design & Analysis of Algorithms", "CSE-CORE", "9", "abhilasha.singh@regengine.edu", "+91 98115 66778", "Room CS-310", "2020-09-01"));
-        list.add(new Faculty(newId("fac"), "EMP-107", "Dr. Rupali Singh", "Associate Professor & HOD", "Electronics & Communication Engineering", "Ph.D. ECE", "Digital Signal Processing & VLSI", "ECE", "16", "rupali.singh@regengine.edu", "+91 98116 77889", "HOD Office EC-101", "2015-05-18"));
-        list.add(new Faculty(newId("fac"), "EMP-108", "Dr. Satya Sai Srikant", "Professor", "Electronics & Communication Engineering", "Ph.D. VLSI & Embedded", "Embedded Systems & IoT", "ECE-VLSI", "20", "satyasai.srikant@regengine.edu", "+91 98117 88990", "Room EC-204", "2012-11-05"));
-        list.add(new Faculty(newId("fac"), "EMP-109", "Dr. Lalit Kishore Arora", "Associate Professor & HOD", "Computer Applications", "Ph.D. Computer Applications", "Object Oriented Programming & Python", "BCA", "17", "lalit.arora@regengine.edu", "+91 98118 99001", "HOD Office CA-101", "2013-04-14"));
-        list.add(new Faculty(newId("fac"), "EMP-110", "Dr. Gyanendra Prasad Bagri", "Professor & HOD", "Mechanical & Automobile Engineering", "Ph.D. Mechanical Engg", "Thermodynamics & Fluid Mechanics", "MECH", "22", "gp.bagri@regengine.edu", "+91 98119 00112", "HOD Office ME-101", "2011-08-25"));
-        list.add(new Faculty(newId("fac"), "EMP-111", "Dr. Manoj Kumar Pal", "Associate Professor", "Mechanical & Automobile Engineering", "Ph.D. Manufacturing", "Manufacturing Technology & CAD/CAM", "AUTO", "15", "manoj.pal@regengine.edu", "+91 98120 11223", "Room ME-208", "2016-10-10"));
-        list.add(new Faculty(newId("fac"), "EMP-112", "Dr. Sunil Kumar Yadav", "Associate Professor", "Science & Humanities", "Ph.D. Chemistry", "Applied Chemistry & Materials Science", "SH", "13", "sunil.yadav@regengine.edu", "+91 98121 22334", "Room SH-105", "2017-02-15"));
+        list.add(new Faculty(newId("fac"), "EMP-101", "Dr. Arthur Vance", "Associate Professor", "Computer Science & Engineering", "Ph.D. Computer Science", "Advanced Programming Practice", "CSE-CORE", "12", "arthur.vance@regengine.edu", "+91 98101 23456", "Room CS-304", "2018-07-15"));
+        list.add(new Faculty(newId("fac"), "EMP-102", "Prof. (Dr.) Alexander Wright", "Professor & Dean", "Computer Science & Engineering", "Ph.D., M.Tech", "Cloud Computing & Distributed Systems", "CSE-CLOUD", "24", "alexander.wright@regengine.edu", "+91 98111 22334", "Dean Office CS-101", "2010-06-01"));
+        list.add(new Faculty(newId("fac"), "EMP-103", "Dr. Elena Rostova", "Professor & Dean IQAC", "Computer Science & Engineering", "Ph.D. CSE", "Software Engineering & Data Analytics", "CSE-DS", "18", "elena.rostova@regengine.edu", "+91 98112 33445", "Room CS-202", "2014-08-10"));
+        list.add(new Faculty(newId("fac"), "EMP-104", "Dr. Marcus Thorne", "Associate Professor & HOD", "Computer Science & Engineering", "Ph.D. AI/ML", "Machine Learning & Soft Computing", "CSE-AIML", "15", "marcus.thorne@regengine.edu", "+91 98113 44556", "HOD Office CS-201", "2016-01-20"));
+        list.add(new Faculty(newId("fac"), "EMP-105", "Dr. Sarah Jenkins", "Associate Professor & Deputy HOD", "Computer Science & Engineering", "Ph.D. Information Security", "Cyber Security & Cryptography", "CSE-CYBER", "14", "sarah.jenkins@regengine.edu", "+91 98114 55667", "Room CS-205", "2017-03-12"));
+        list.add(new Faculty(newId("fac"), "EMP-106", "Dr. Vincent Brooks", "Assistant Professor", "Computer Science & Engineering", "Ph.D. Computer Science", "Design & Analysis of Algorithms", "CSE-CORE", "9", "vincent.brooks@regengine.edu", "+91 98115 66778", "Room CS-310", "2020-09-01"));
+        list.add(new Faculty(newId("fac"), "EMP-107", "Dr. David Sterling", "Associate Professor & HOD", "Electronics & Communication Engineering", "Ph.D. ECE", "Digital Signal Processing & VLSI", "ECE", "16", "david.sterling@regengine.edu", "+91 98116 77889", "HOD Office EC-101", "2015-05-18"));
+        list.add(new Faculty(newId("fac"), "EMP-108", "Dr. Julian Mercer", "Professor", "Electronics & Communication Engineering", "Ph.D. VLSI & Embedded", "Embedded Systems & IoT", "ECE-VLSI", "20", "julian.mercer@regengine.edu", "+91 98117 88990", "Room EC-204", "2012-11-05"));
+        list.add(new Faculty(newId("fac"), "EMP-109", "Dr. Maya Lin", "Associate Professor & HOD", "Computer Applications", "Ph.D. Computer Applications", "Object Oriented Programming & Python", "BCA", "17", "maya.lin@regengine.edu", "+91 98118 99001", "HOD Office CA-101", "2013-04-14"));
+        list.add(new Faculty(newId("fac"), "EMP-110", "Dr. James Chen", "Professor & HOD", "Mechanical & Automobile Engineering", "Ph.D. Mechanical Engg", "Thermodynamics & Fluid Mechanics", "MECH", "22", "james.chen@regengine.edu", "+91 98119 00112", "HOD Office ME-101", "2011-08-25"));
+        list.add(new Faculty(newId("fac"), "EMP-111", "Dr. Rachel Evans", "Associate Professor", "Mechanical & Automobile Engineering", "Ph.D. Manufacturing", "Manufacturing Technology & CAD/CAM", "AUTO", "15", "rachel.evans@regengine.edu", "+91 98120 11223", "Room ME-208", "2016-10-10"));
+        list.add(new Faculty(newId("fac"), "EMP-112", "Dr. Lucas Vance", "Associate Professor", "Science & Humanities", "Ph.D. Chemistry", "Applied Chemistry & Materials Science", "SH", "13", "lucas.vance@regengine.edu", "+91 98121 22334", "Room SH-105", "2017-02-15"));
         return list;
     }
 }

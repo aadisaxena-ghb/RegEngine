@@ -22,7 +22,7 @@ public record CalendarEvent(
                 (String) m.getOrDefault("category", "Academic"),
                 (String) m.getOrDefault("semester", "All Semesters"),
                 (String) m.getOrDefault("description", ""),
-                (String) m.getOrDefault("location", "SRMIST Delhi-NCR Campus")
+                (String) m.getOrDefault("location", "RegEngine University Campus")
         );
     }
 

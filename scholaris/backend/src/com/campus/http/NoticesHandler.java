@@ -53,7 +53,7 @@ public class NoticesHandler implements HttpHandler {
         }
 
         String id = AppData.newId("not");
-        String refNumber = (String) body.getOrDefault("refNumber", "SRM/NCR/CIR/2026/" + (int)(Math.random() * 900 + 100));
+        String refNumber = (String) body.getOrDefault("refNumber", "REG/CIR/2026/" + (int)(Math.random() * 900 + 100));
         String category = (String) body.getOrDefault("category", "Academic");
         String priority = (String) body.getOrDefault("priority", "Normal");
         String publishDate = (String) body.getOrDefault("publishDate", LocalDate.now().toString());
